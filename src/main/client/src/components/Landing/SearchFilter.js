@@ -49,7 +49,7 @@ const SearchFilter = ({ searchParams, setSearchParams }) => {
       }}
     >
       <div className="sf-item">
-        <div className="sf-text">Location</div>
+        <div className="sf-text">지역</div>
         <Select
           className="sf-select"
           bordered={false}

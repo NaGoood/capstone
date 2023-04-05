@@ -36,10 +36,6 @@ const AppFooter = () => {
       <Col className="footer-col" span={8}>
         &#169; 2022 Forx News
       </Col>
-
-      <Col>
-          <Button onClick={goTest1}>버튼</Button>
-      </Col>
     </Row>
   );
 };

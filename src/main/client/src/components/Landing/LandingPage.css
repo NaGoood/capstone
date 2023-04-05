@@ -42,6 +42,64 @@
   margin-bottom: 20px;
 }
 
+.div-container-food{
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+}
+
+.div-food{
+  width: 100px;
+  height: 80px;
+  margin: 45px;
+}
+
+.div-container-location{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.input-location{
+  font-size: 10px;
+  background: #e6e6e6;
+  border-radius: 7px;
+  border: none;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  cursor: pointer;
+  color: #e6e6e6;
+}
+
+label {
+  margin-right: 23px;
+  line-height: 32px;
+  font-size: 28px;
+  font-family: "Jua";
+}
+
+input {
+  appearance: none;
+
+  border-radius: 30%;
+  width: 20px;
+  height: 20px;
+
+  background: #e6e6e6;
+  border: 2px solid #e6e6e6;
+  transition: 0.2s all linear;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+}
+
+input:checked {
+  border: 10px solid black;
+}
+
+
 @media only screen and (max-width: 428px) {
   .landing-logo {
     width: 280px;

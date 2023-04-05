@@ -4,6 +4,10 @@ import { Layout, Input, Affix, Tooltip } from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import SearchFilter from "./SearchFilter";
+import MeatIcon from "../../icons/meaticon.png"
+import PizzaIcon from "../../icons/pizzaicon.png"
+import HamburgerIcon from "../../icons/hamburgericon.png"
+
 
 const { Content, Footer } = Layout;
 
@@ -11,6 +15,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const [showSearchFilter, setShowSearchFilter] = useState(false);
+  const [inputLocation, setLocation] = useState("");
   const [searchParams, setSearchParams] = useState({
     name: "",
     city: "",
@@ -20,6 +25,10 @@ const LandingPage = () => {
     open: "Y",
     sort: "avgRating",
   });
+
+    const handleChangeLocation = (e) =>{
+        setLocation(e.target.value);
+    }
 
   const onInputChange = (e) => {
     setSearchParams({ ...searchParams, name: e.target.value });
@@ -74,6 +83,37 @@ const LandingPage = () => {
             </Tooltip>
           }
         />
+
+          <div className="div-container-location">
+              <input
+                  className="input-location"
+                  id="서울"
+                  type="radio"
+                  value="서울"
+                  checked={inputLocation === '서울'}
+                  onChange={handleChangeLocation}
+              /><label>서울</label>
+              <input
+                  className="input-location"
+                  type="radio"
+                  value="대전"
+                  checked={inputLocation === '대전'}
+                  onChange={handleChangeLocation}
+              /><label>대전</label>
+              <input
+                  className="input-location"
+                  type="radio"
+                  value="제주"
+                  checked={inputLocation === '제주'}
+                  onChange={handleChangeLocation}
+              /><label>제주</label>
+          </div>
+
+          <div className="div-container-food">
+              <img src={PizzaIcon} alt="pizza" className="div-food"></img>
+              <img src={HamburgerIcon} alt="hamburger" className="div-food"></img>
+              <img src={MeatIcon} alt="meat" className="div-food"></img>
+          </div>
 
         <div>
           {!showSearchFilter ? null : (

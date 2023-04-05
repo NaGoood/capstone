@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "Lobster";
+    src: url("./Lobster/Lobster-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Anton";
+    src: url("./Anton/Anton-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Jua";
+    src: url("./Jua/Jua-Regular.ttf") format("truetype");
+}

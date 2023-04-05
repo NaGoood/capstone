@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button, Form, Input, Row, Divider, message } from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
+import axios from "axios";
 
 const SignupPage = () => {
   const [isSigningUp, signup] = useSignup();
