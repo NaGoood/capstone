@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.capstone.dao.UserMapper">
+    <select id="selectName" resultType="String" parameterType="project.capstone.domain.UserDto">
+        SELECT userName
+        FROM user
+        where userId= #{userId} AND userPW = #{userPW};
+    </select>
+
+    <select id="select" resultType="project.capstone.domain.UserDto" parameterType="String">
+        SELECT *
+        FROM user
+        where userId= #{userId};
+    </select>
+    
+    <insert id="insert" parameterType="project.capstone.domain.UserDto">
+        insert into user
+        (userName,userId,userPW,phoneNumber,userBirth)
+        values
+            (#{userName},#{userId},#{userPW},#{phoneNumber},#{userBirth})
+    </insert>
+</mapper>

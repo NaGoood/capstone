@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button, Form, Input, Row, Divider, message } from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
-import axios from "axios";
 
 const SignupPage = () => {
   const [isSigningUp, signup] = useSignup();
@@ -11,10 +10,13 @@ const SignupPage = () => {
   const [form] = Form.useForm();
 
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    userName: "",
+    userId:"",
+    userPW: "",
+    phoneNumber: "",
+    birthDay: ""
   });
-  const { username, password } = formData;
+  const { userName, userId, userPW, phoneNumber, birthDay } = formData;
 
   const onInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,7 +24,7 @@ const SignupPage = () => {
 
   const onInputFinish = async () => {
     form.resetFields();
-    const responseStatus = await signup(username, password);
+    const responseStatus = await signup(userName, userId, userPW, phoneNumber, birthDay);
     switch (responseStatus) {
       case 201:
         message.success(`Registration Success!`);
@@ -38,91 +40,145 @@ const SignupPage = () => {
   };
 
   return (
-    <>
-      <img
-        className="auth-logo"
-        src="/images/logo.svg"
-        alt="logo"
-        onClick={() =>
-          navigate("/", { state: { from: window.location.pathname } })
-        }
-      />
-      <SplitLayout imageUrl="images/signup.jpeg" contentLayout="right">
-        <Row className="auth-form-container" justify="center">
-          <div className="auth-form">
-            <div className="auth-form-header"> Sign Up </div>
-            <Form
-              name="signup-form"
-              layout="vertical"
-              form={form}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onInputFinish}
-              requiredMark={false}
-              autoComplete="off"
-            >
-              <Form.Item
-                label="Username"
-                name="username"
-                rules={[
-                  {
-                    required: true,
-                    message: "Username is required",
-                  },
-                ]}
+      <>
+        <img
+            className="auth-logo"
+            src="/images/logo.svg"
+            alt="logo"
+            onClick={() =>
+                navigate("/", { state: { from: window.location.pathname } })
+            }
+        />
+        <SplitLayout imageUrl="images/signup.jpeg" contentLayout="right">
+          <Row className="auth-form-container" justify="center">
+            <div className="auth-form">
+              <div className="auth-form-header"> 회원가입 </div>
+              <Form
+                  name="signup-form"
+                  layout="vertical"
+                  form={form}
+                  initialValues={{
+                    remember: true,
+                  }}
+                  onFinish={onInputFinish}
+                  requiredMark={false}
+                  autoComplete="off"
               >
-                <Input
-                  placeholder="Username"
-                  name="username"
-                  value={formData.username}
-                  onChange={onInputChange}
-                />
-              </Form.Item>
-
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Password is required",
-                  },
-                ]}
-              >
-                <Input.Password
-                  placeholder="Password"
-                  name="password"
-                  value={formData.password}
-                  onChange={onInputChange}
-                />
-              </Form.Item>
-
-              <Form.Item>
-                <Button
-                  className="auth-form-button"
-                  htmlType="submit"
-                  type="primary"
-                  block
-                  loading={isSigningUp}
+                <Form.Item
+                    label="이름"
+                    name="userName"
+                    rules={[
+                      {
+                        required: true,
+                        message: "이름을 입력하지 않았습니다.",
+                      },
+                    ]}
                 >
-                  Sign Up
-                </Button>
-              </Form.Item>
-            </Form>
+                  <Input
+                      placeholder="이름을 입력해주세요"
+                      name="userName"
+                      value={formData.username}
+                      onChange={onInputChange}
+                  />
+                </Form.Item>
 
-            <Row className="auth-prompt">
-              <div>
-                <span>Already have an account? </span>
-                <Link to="/login" state={{ from: window.location.pathname }}>
-                  Log in
-                </Link>
-              </div>
-            </Row>
+                <Form.Item
+                    label="아이디"
+                    name="userId"
+                    rules={[
+                      {
+                        required: true,
+                        message: "아이디를 입력하지 않았습니다.",
+                      },
+                    ]}
+                >
+                  <Input
+                      placeholder="아이디를 입력해주세요"
+                      name="userId"
+                      value={formData.id}
+                      onChange={onInputChange}
+                  />
+                </Form.Item>
 
-            <Divider plain>OR</Divider>
+                <Form.Item
+                    label="비밀번호"
+                    name="userPW"
+                    rules={[
+                      {
+                        required: true,
+                        message: "비밀번호를 입력하지 않았습니다.",
+                      },
+                    ]}
+                >
+                  <Input.Password
+                      placeholder="비밀번호를 입력해주세요"
+                      name="userPW"
+                      value={formData.userPW}
+                      onChange={onInputChange}
+                  />
+                </Form.Item>
 
-            <div className="auth-icon-container">
+                <Form.Item
+                    label="전화번호"
+                    name="phoneNumber"
+                    rules={[
+                      {
+                        required: true,
+                        message: "전화번호를 입력하지 않았습니다.",
+                      },
+                    ]}
+                >
+                  <Input
+                      placeholder="전화번호를 입력해주세요"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={onInputChange}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                    label="생일"
+                    name="birthDay"
+                    rules={[
+                      {
+                        required: true,
+                        message: "생일을 입력하지 않았습니다.",
+                      },
+                    ]}
+                >
+                  <Input
+                      placeholder="Password"
+                      name="birthDay"
+                      value={formData.birthDay}
+                      onChange={onInputChange}
+                  />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                      className="auth-form-button"
+                      htmlType="submit"
+                      type="primary"
+                      block
+                      loading={isSigningUp}
+                  >
+                    Sign Up
+                  </Button>
+                </Form.Item>
+              </Form>
+
+              <Row className="auth-prompt">
+                <div>
+                  <span>Already have an account? </span>
+                  <Link to="/login" state={{ from: window.location.pathname }}>
+                    Log in
+                  </Link>
+                </div>
+              </Row>
+
+              {/*<Divider plain>OR</Divider>*/}
+
+              {/*<div className="auth-icon-container">
               <a href="/auth/google">
                 <img
                   className="auth-icon-google"
@@ -138,11 +194,11 @@ const SignupPage = () => {
                   alt="twitter"
                 />
               </a>
+            </div>*/}
             </div>
-          </div>
-        </Row>
-      </SplitLayout>
-    </>
+          </Row>
+        </SplitLayout>
+      </>
   );
 };
 

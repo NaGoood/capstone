@@ -15,7 +15,7 @@ const RightMenu = () => {
     const fetchUser = async () => {
       const user = await fetchCurrentUser();
       if (user) {
-        setCurrentUser(user.username);
+        setCurrentUser(user.userName);
       }
     };
     fetchUser();
@@ -32,62 +32,62 @@ const RightMenu = () => {
   };
 
   const SignUp = (
-    <div
-      className="rmenu-text"
-      onClick={() =>
-        navigate("/signup", { state: { from: window.location.pathname } })
-      }
-    >
-      Sign up
-    </div>
+      <div
+          className="rmenu-text"
+          onClick={() =>
+              navigate("/signup", { state: { from: window.location.pathname } })
+          }
+      >
+        Sign up
+      </div>
   );
 
   const Login = (
-    <div
-      className="rmenu-text"
-      onClick={() =>
-        navigate("/login", { state: { from: window.location.pathname } })
-      }
-    >
-      Login
-    </div>
+      <div
+          className="rmenu-text"
+          onClick={() =>
+              navigate("/login", { state: { from: window.location.pathname } })
+          }
+      >
+        Login
+      </div>
   );
 
   const Logout = (
-    <div className="rmenu-text" onClick={handleLogout}>
-      Log out
-    </div>
+      <div className="rmenu-text" onClick={handleLogout}>
+        Log out
+      </div>
   );
 
   const AnalyticsUnloggedIn = (
-    <Tooltip placement="bottom" title={"Forx Analytics"}>
-      <img
-        className="rmenu-analytics"
-        src="/icons/analytics.png"
-        alt="analytics"
-        onClick={() => {
-          navigate("/login", {
-            state: { from: window.location.pathname },
-          });
-          message.error("You need to log in first!");
-        }}
-      />
-    </Tooltip>
+      <Tooltip placement="bottom" title={"Forx Analytics"}>
+        <img
+            className="rmenu-analytics"
+            src="/icons/analytics.png"
+            alt="analytics"
+            onClick={() => {
+              navigate("/login", {
+                state: { from: window.location.pathname },
+              });
+              message.error("You need to log in first!");
+            }}
+        />
+      </Tooltip>
   );
 
   const AnalyticsLoggedIn = (
-    <Tooltip placement="bottom" title={"Forx Analytics"}>
-      <img
-        className="rmenu-analytics"
-        src="/icons/analytics.png"
-        alt="analytics"
-        onClick={() => {
-          navigate("/analytics", {
-            state: { from: window.location.pathname },
-          });
-        }}
-      />
-    </Tooltip>
+      <Tooltip placement="bottom" title={"Forx Analytics"}>
+        <img
+            className="rmenu-analytics"
+            src="/icons/analytics.png"
+            alt="analytics"
+            onClick={() => {
+              navigate("/analytics", {
+                state: { from: window.location.pathname },
+              });
+            }}
+        />
+      </Tooltip>
   );
 
   const menuItemsUnloggedIn = [
@@ -113,20 +113,20 @@ const RightMenu = () => {
     {
       key: "avatar",
       label: (
-        <Tooltip placement="bottom" title="Saved Restaurants">
-          <Badge dot>
-            <Avatar
-              className="rmenu-avatar"
-              onClick={() => {
-                navigate("/user", {
-                  state: { from: window.location.pathname },
-                });
-              }}
-            >
-              {getInitial(currentUser)}
-            </Avatar>
-          </Badge>
-        </Tooltip>
+          <Tooltip placement="bottom" title="Saved Restaurants">
+            <Badge dot>
+              <Avatar
+                  className="rmenu-avatar"
+                  onClick={() => {
+                    navigate("/user", {
+                      state: { from: window.location.pathname },
+                    });
+                  }}
+              >
+                {getInitial(currentUser)}
+              </Avatar>
+            </Badge>
+          </Tooltip>
       ),
     },
     {
@@ -136,12 +136,12 @@ const RightMenu = () => {
   ];
 
   return (
-    <Menu
-      mode="horizontal"
-      style={{ display: "flex", flexDirection: "row-reverse" }}
-      items={currentUser ? menuItemsLoggedIn : menuItemsUnloggedIn}
-      overflowedIndicator={<MenuOutlined style={{ fontSize: "16px" }} />}
-    />
+      <Menu
+          mode="horizontal"
+          style={{ display: "flex", flexDirection: "row-reverse" }}
+          items={currentUser ? menuItemsLoggedIn : menuItemsUnloggedIn}
+          overflowedIndicator={<MenuOutlined style={{ fontSize: "16px" }} />}
+      />
   );
 };
 

@@ -4,15 +4,15 @@ import { useState } from "react";
 const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const login = async (username, password) => {
+  const login = async (userId, userPW) => {
     setIsLoggingIn(true);
 
     try {
       const response = await axios.post("/api/login", {
-        username,
-        password,
+        userId,
+        userPW,
       });
-      return response.status;
+      return response;
     } catch (error) {
       console.log(error.message);
       return error.response.status;
