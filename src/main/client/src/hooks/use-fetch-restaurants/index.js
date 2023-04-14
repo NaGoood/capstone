@@ -6,9 +6,10 @@ const useFetchRestaurants = () => {
 
   const fetchRestaurants = async (params) => {
     setIsFetchingRestaurants(true);
+    console.log("params",params);
     try {
       const response = await axios.get("/api/restaurants", { params });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.log(error.message);
     } finally {

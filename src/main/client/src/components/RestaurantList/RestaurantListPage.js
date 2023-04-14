@@ -28,10 +28,13 @@ const RestaurantListPage = () => {
     const fetchPageData = async () => {
       window.scrollTo(0, 0);
 
+      console.log("RestaurantListPage currentSearchParams.toString()",currentSearchParams.toString());
+
       const restaurantResults = await fetchRestaurants(
         paramsToObject(currentSearchParams.entries())
       );
       if (restaurantResults) {
+        console.log(restaurantResults);
         setTotalItems(restaurantResults.length);
         setRestaurantListData(restaurantResults);
       } else {
@@ -85,13 +88,13 @@ const RestaurantListPage = () => {
           </Col>
 
           <Col className="restlist-map">
-            <GoogleMap
-              restaurantItems={paginateResults(
-                restaurantListData,
-                currentPage,
-                pageSize
-              )}
-            />
+            {/*<GoogleMap*/}
+            {/*  restaurantItems={paginateResults(*/}
+            {/*    restaurantListData,*/}
+            {/*    currentPage,*/}
+            {/*    pageSize*/}
+            {/*  )}*/}
+            {/*/>*/}
           </Col>
         </Row>
       </Content>

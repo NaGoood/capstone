@@ -8,7 +8,6 @@ import project.capstone.domain.UserDto;
 
 
 @Repository
-@Mapper
 public class UserDaoImpl implements UserDao {
 
     String namespace = "project.capstone.dao.UserMapper.";
