@@ -28,9 +28,14 @@ const RestaurantListPage = () => {
     const fetchPageData = async () => {
       window.scrollTo(0, 0);
 
+      console.log("RestaurantListPage's QueryString",currentSearchParams.toString());
+
       const restaurantResults = await fetchRestaurants(
         paramsToObject(currentSearchParams.entries())
       );
+
+      console.log("RestaurantListPage's restaurantResults",restaurantResults);
+
       if (restaurantResults) {
         setTotalItems(restaurantResults.length);
         setRestaurantListData(restaurantResults);

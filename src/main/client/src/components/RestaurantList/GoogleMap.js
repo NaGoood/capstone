@@ -41,7 +41,7 @@ const GoogleMap = ({ google, restaurantItems }) => {
   return (
     <Map
       google={google}
-      zoom={10}
+      zoom={16}
       mapTypeControl={false}
       initialCenter={centerCoords}
       center={centerCoords}
@@ -67,5 +67,5 @@ const GoogleMap = ({ google, restaurantItems }) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+  apiKey: "AIzaSyDifjhQXIWUxkmdt8nRDHHu8bUqM58tmfM",
 })(GoogleMap);

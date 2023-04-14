@@ -1,17 +1,27 @@
 package project.capstone.controller;
 
+import java.util.ArrayList;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import project.capstone.domain.Restaurant;
 import project.capstone.domain.UserDto;
 import project.capstone.service.UserService;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -76,6 +86,45 @@ public class UserController {
         else{
             return HttpStatus.REQUEST_TIMEOUT;
         }
+    }
 
+    @PostMapping("/searchMenu")
+    public String menu(HttpServletRequest request) throws IOException {
+        ServletInputStream inputStream = request.getInputStream();
+        String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("messageBody={}" , messageBody);
+        return "ok";
+    }
+
+    @GetMapping("/restaurants")
+    public List<Restaurant> searchRestaurants(@RequestParam("location") String location) throws IOException {
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        log.info("location={}",location);
+
+        Restaurant restaurant = new Restaurant("1", "빅스타피자", 5, "대전 동구 동대전로 193-1", "pizza", "4.8", "Y", "bigstart",36.338911,127.448419);
+        Restaurant restaurant2 = new Restaurant("2", "명륜진사갈비", 4, "대전 동구 동대전로 184-3", "meat", "5", "N", "meatImg",36.338074,127.448611);
+
+        restaurants.add(restaurant);
+        restaurants.add(restaurant2);
+
+        return restaurants;
+    }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public ArrayList<Restaurant> restaurantInfo(@PathVariable String restaurantId){
+
+        log.info("restaurantId={}", restaurantId);
+
+        ArrayList<Restaurant> list = new ArrayList<>();
+
+        for(int i=0; i < list.size(); i++){
+            if(list.get(i).getRestaurantId().equals(restaurantId)){
+                list.add(list.get(i));
+                log.info("list={}", list);
+            }
+        }
+
+        return list;
     }
 }

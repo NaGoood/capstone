@@ -38,7 +38,7 @@ const RestaurantItem = ({ restaurantItemData, savedIcon, userId }) => {
       }
     >
       <Col>
-        <img src={imageUrl} className="restitem-image" alt="restaurant" />
+        <img src={imageUrl} className="restitem-image" alt="restaurant"/>
       </Col>
 
       <Col>
