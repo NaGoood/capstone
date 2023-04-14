@@ -4,9 +4,9 @@ import { Layout, Input, Affix, Tooltip } from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import SearchFilter from "./SearchFilter";
-import MeatIcon from "../../icons/meaticon.png"
-import PizzaIcon from "../../icons/pizzaicon.png"
-import HamburgerIcon from "../../icons/hamburgericon.png"
+import MeatIcon from "icons/meaticon.png";
+import PizzaIcon from "icons/pizzaicon.png";
+import HamburgerIcon from "icons/hamburgericon.png";
 
 
 const { Content, Footer } = Layout;
@@ -14,23 +14,34 @@ const { Content, Footer } = Layout;
 const LandingPage = () => {
   const navigate = useNavigate();
 
+  //const [isMenu, Menu] = useSearchMenu();
+
   const [showSearchFilter, setShowSearchFilter] = useState(false);
   const [inputLocation, setLocation] = useState("");
+  const [category, setCategory] = useState("");
   const [searchParams, setSearchParams] = useState({
-    name: "",
-    city: "",
+    location: "",
     category: "",
-    ratingLow: "1",
-    ratingHigh: "5",
-    open: "Y",
-    sort: "avgRating",
   });
 
-    const handleChangeLocation = (e) =>{
-        setLocation(e.target.value);
-    }
+  const PostMenu = () =>{
+      //const response = isMenu(inputLocation , category);
+      navigateToSearch();
+  }
+
+  const handleChangeCategory = (e) =>{
+      setCategory(e.target.value);
+      setSearchParams({ ...searchParams, category: e.target.value });
+  }
+
+
+  const handleChangeLocation = (e) =>{
+      setLocation(e.target.value);
+      setSearchParams({ ...searchParams, location: e.target.value });
+  }
 
   const onInputChange = (e) => {
+      console.log(e.target.value);
     setSearchParams({ ...searchParams, name: e.target.value });
   };
 
@@ -110,9 +121,36 @@ const LandingPage = () => {
           </div>
 
           <div className="div-container-food">
-              <img src={PizzaIcon} alt="pizza" className="div-food"></img>
-              <img src={HamburgerIcon} alt="hamburger" className="div-food"></img>
-              <img src={MeatIcon} alt="meat" className="div-food"></img>
+              <input
+                  className="input-location"
+                  id="pizza"
+                  type="radio"
+                  value="피자"
+                  checked={category === '피자'}
+                  onChange={handleChangeCategory}
+              /><img src={PizzaIcon} alt="피자"/>
+
+              <input
+                  className="input-location"
+                  id="hamburger"
+                  type="radio"
+                  value="햄버거"
+                  checked={category === '햄버거'}
+                  onChange={handleChangeCategory}
+              /><img src={HamburgerIcon} alt="햄버거"/>
+
+              <input
+                  className="input-location"
+                  id="meat"
+                  type="radio"
+                  value="고기"
+                  checked={category === '고기'}
+                  onChange={handleChangeCategory}
+              /><img src={MeatIcon} alt="고기"/>
+          </div>
+
+          <div>
+              <button onClick={PostMenu}>검색</button>
           </div>
 
         <div>
