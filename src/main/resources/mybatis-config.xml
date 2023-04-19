@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <typeAliases>
+        <typeAlias type="UserDto" alias="project.capstone.domain.UserDto"></typeAlias>
+        <typeAlias type="RestaurantDto" alias="project.capstone.domain.RestaurantDto"></typeAlias>
+    </typeAliases>
+
     <mappers>
         <mapper resource="mapper/UserMapper.xml"></mapper>
+        <mapper resource="mapper/RestaurantMapper.xml"></mapper>
     </mappers>
 </configuration>

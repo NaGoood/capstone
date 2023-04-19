@@ -1,14 +1,7 @@
-import React, {useState} from "react";
-import {Button, Col, Row} from "antd";
-import axios from "axios";
+import React from "react";
+import { Col, Row} from "antd";
 
 const AppFooter = () => {
-
-    function goTest1(){
-        axios.get('/test1')
-            .then(response => console.log(response.data))
-            .catch(error => console.log(error))
-    }
 
   return (
     <Row justify="space-evenly">
@@ -33,9 +26,6 @@ const AppFooter = () => {
         </a>
       </Col>
 
-      <Col className="footer-col" span={8}>
-        &#169; 2022 Forx News
-      </Col>
     </Row>
   );
 };

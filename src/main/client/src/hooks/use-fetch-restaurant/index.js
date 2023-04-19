@@ -8,7 +8,7 @@ const useFetchRestaurant = () => {
     setIsFetchingRestaurant(true);
     try {
       const response = await axios.get(`/api/restaurant/${restaurantId}`);
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.log(error.message);
     } finally {

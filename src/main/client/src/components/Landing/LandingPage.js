@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { Layout, Input, Affix, Tooltip } from "antd";
 import AppHeader from "components/Header/AppHeader";
-import AppFooter from "components/Footer/AppFooter";
 import SearchFilter from "./SearchFilter";
 import MeatIcon from "../../img/icons/meaticon.png";
 import PizzaIcon from "../../img/icons/pizzaicon.png";
 import HamburgerIcon from "../../img/icons/hamburgericon.png";
 
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const LandingPage = () => {
   const navigate = useNavigate();
-
-  //const [isMenu, Menu] = useSearchMenu();
 
   const [showSearchFilter, setShowSearchFilter] = useState(false);
   const [inputLocation, setLocation] = useState("");
@@ -100,22 +97,22 @@ const LandingPage = () => {
                   className="input-location"
                   id="서울"
                   type="radio"
-                  value="Seoul"
-                  checked={inputLocation === 'Seoul'}
+                  value="서울"
+                  checked={inputLocation === '서울'}
                   onChange={handleChangeLocation}
               /><label>서울</label>
               <input
                   className="input-location"
                   type="radio"
-                  value="Daejeon"
-                  checked={inputLocation === 'Daejeon'}
+                  value="대전"
+                  checked={inputLocation === '대전'}
                   onChange={handleChangeLocation}
               /><label>대전</label>
               <input
                   className="input-location"
                   type="radio"
-                  value="Jeju"
-                  checked={inputLocation === 'Jeju'}
+                  value="제주"
+                  checked={inputLocation === '제주'}
                   onChange={handleChangeLocation}
               /><label>제주</label>
           </div>
@@ -164,10 +161,6 @@ const LandingPage = () => {
           )}
         </div>
       </Content>
-
-      <Footer>
-        <AppFooter />
-      </Footer>
     </Layout>
   );
 };

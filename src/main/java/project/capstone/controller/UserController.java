@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
-import project.capstone.domain.Restaurant;
 import project.capstone.domain.UserDto;
 import project.capstone.service.UserService;
 
@@ -97,7 +96,7 @@ public class UserController {
         return "ok";
     }
 
-    @GetMapping("/restaurants")
+    /*@GetMapping("/restaurants")
     public List<Restaurant> searchRestaurants(@RequestParam("location") String location) throws IOException {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         log.info("location={}",location);
@@ -126,5 +125,5 @@ public class UserController {
         }
 
         return list;
-    }
+    }*/
 }
