@@ -11,6 +11,7 @@ import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
 import { useFetchReviews, useFetchRestaurant } from "hooks";
 import { PAGE_SIZE } from "constants/constants";
+import Reservation from "./Reservation";
 
 const { Content, Footer } = Layout;
 
@@ -25,8 +26,9 @@ const RestaurantPage = () => {
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
 
   const [searchParams, setSearchParams] = useState({
-    rating: "",
-    sort: "date",
+    /*rating: "",
+    sort: "date",*/
+    category:""
   });
 
   const routeParams = useParams();
@@ -35,6 +37,7 @@ const RestaurantPage = () => {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       window.scrollTo(0, 0);
+      console.log("RestaurantPage's" ,routeParams );
 
       const restaurantResults = await fetchRestaurant(restaurantId);
       if (restaurantResults && restaurantResults.length === 1) {
@@ -47,7 +50,7 @@ const RestaurantPage = () => {
     fetchRestaurantData();
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchReviewsData = async () => {
       const reviewResults = await fetchReviews({
         ...searchParams,
@@ -56,6 +59,23 @@ const RestaurantPage = () => {
       if (reviewResults) {
         setTotalItems(reviewResults.length);
         setReviewListData(reviewResults);
+      }
+    };
+    fetchReviewsData();
+  }, [searchParams]);*/
+
+  useEffect(() => {
+    const fetchReviewsData = async () => {
+      console.log(searchParams.category);
+      if(searchParams === "reviews"){
+        const reviewResults = await fetchReviews({
+          ...searchParams,
+          restaurantId,
+        });
+        if (reviewResults) {
+          setTotalItems(reviewResults.length);
+          setReviewListData(reviewResults);
+        }
       }
     };
     fetchReviewsData();
@@ -79,32 +99,46 @@ const RestaurantPage = () => {
           setSearchParams={setSearchParams}
         />
 
-        {isFetchingReviews ? (
-          <LoadingItem />
-        ) : totalItems === 0 ? (
-          <EmptyItem description="No reviews yet" />
-        ) : (
-          <List
-            className="rest-item"
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              total: totalItems,
-              pageSize,
-              hideOnSinglePage: true,
-              showSizeChanger: false,
-              showTotal: (total, range) =>
-                `${range[0]}-${range[1]} of ${total}`,
-              onChange: () => {
-                window.scrollTo(0, 0);
-              },
-            }}
-            dataSource={reviewListData}
-            renderItem={(reviewItem) => (
-              <RestaurantReviewItem {...reviewItem} />
-            )}
-          />
-        )}
+        {(() => {
+          switch (searchParams.category) {
+            case "reviews":
+              return (
+                  isFetchingRestaurant? (
+                      <LoadingItem/>
+                  ) : totalItems === 0 ? (
+                      <EmptyItem description="No reviews yet"/>
+                  ) : (
+                      <List
+                          className="rest-item"
+                          itemLayout="vertical"
+                          size="large"
+                          pagination={{
+                            total: totalItems,
+                            pageSize,
+                            hideOnSinglePage: true,
+                            showSizeChanger: false,
+                            showTotal: (total, range) =>
+                                `${range[0]}-${range[1]} of ${total}`,
+                            onChange: () => {
+                              window.scrollTo(0, 0);
+                            },
+                          }}
+                          dataSource={reviewListData}
+                          renderItem={(reviewItem) => (
+                              <RestaurantReviewItem {...reviewItem} />
+                          )}
+                      />
+                  )
+              );
+            case "menu":
+              return <span>메뉴</span>;
+            case "reservation":
+              return <Reservation></Reservation>;
+            default:
+              return <span>위 보기를 고르시오</span>;
+          }
+        })()}
+
       </Content>
 
       <Footer>

@@ -29,10 +29,11 @@ const ReviewerPage = () => {
     sort: "date",
   });
 
-  const routeParams = useParams();
+  const routeParams = useParams();  //쿼리파이미터 조회할수있음
   const reviewerId = routeParams.reviewerId ? routeParams.reviewerId : "";
 
   useEffect(() => {
+    console.log("Reviewpage's params",routeParams);
     const fetchReviewerData = async () => {
       window.scrollTo(0, 0);
 

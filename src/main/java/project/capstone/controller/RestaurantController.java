@@ -2,12 +2,19 @@ package project.capstone.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import project.capstone.domain.ReservationDto;
 import project.capstone.domain.RestaurantDto;
 import project.capstone.service.RestaurantService;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -17,18 +24,10 @@ public class RestaurantController {
     @Autowired
     RestaurantService service;
 
-    @GetMapping("/restaurants")
-    public List<RestaurantDto> fetchRestaurant(@RequestParam("location") String location, @RequestParam("category") String category){
-        log.info("location={}", location);
-        List restaurants = service.getRestaurantList(location, category);
-        return restaurants;
-    }
+    @PostMapping("/reservation")
+    public String useReservation(@Valid @RequestBody ReservationDto reservation) {
+        log.info("reservation={}",reservation);
 
-    @GetMapping("/restaurant/{restaurantId}")
-    public ArrayList<RestaurantDto> restaurantInfo(@PathVariable String restaurantId){
-        log.info("restaurantId = " + restaurantId);
-        ArrayList arrayList = (ArrayList) service.getRestaurantInfo(restaurantId);
-        log.info("arrayList={}",arrayList);
-        return arrayList;
+        return "ok";
     }
 }
