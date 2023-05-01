@@ -51,7 +51,7 @@ const RestaurantPage = () => {
     fetchRestaurantData();
   }, []);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchReviewsData = async () => {
       const reviewResults = await fetchReviews({
         ...searchParams,
@@ -63,7 +63,7 @@ const RestaurantPage = () => {
       }
     };
     fetchReviewsData();
-  }, [searchParams]);*/
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchReviewsData = async () => {

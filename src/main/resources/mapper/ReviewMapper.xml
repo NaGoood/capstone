@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.capstone.dao.ReviewMapper">
+    <select id="selectReviewList" parameterType="int" resultType="project.capstone.domain.ReviewDto">
+        select reviewerId,reviewerName,rating,usefulCount,coolCount,funnyCount,content,date
+        from review
+        where restaurantId = #{restaurantId};
+    </select>
+
+    <select id="selectMyReviews" parameterType="int" resultType="project.capstone.domain.ReviewDto">
+        select restaurantId,reviewerName,restaurantName,imageUrl,reviewId,rating,usefulCount,coolCount,funnyCount,content,date
+        from review
+        where reviewerId = #{reviewerId};
+    </select>
+
+    <select id="selectReviewDetail" parameterType="int" resultType="project.capstone.domain.ReviewDto">
+        select reviewerId,reviewerName,avg(rating) as avgRating,sum(coolCount) as coolCount,sum(funnyCount) as funnyCount,
+               sum(usefulCount) as usefulCount,count(reviewerId) as reviewCount
+        from review
+        group by reviewerId,reviewerName
+        having reviewerId = #{reviewerId};
+    </select>
+
+    <select id="countRestReview" parameterType="int" resultType="int">
+        select count(restaurantId)
+        from review
+        where restaurantId = #{restaurantId};
+    </select>
+
+    <select id="countMyReview" parameterType="int" resultType="int">
+        select count(reviewerId)
+        from review
+        where reviewerId = #{reviewerId};
+    </select>
+
+
+</mapper>

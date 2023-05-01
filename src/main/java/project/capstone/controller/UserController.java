@@ -54,7 +54,6 @@ public class UserController {
         UserDto userDto;
         try {
             userDto = userService.getUser(id);
-            System.out.println("userDto = " + userDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
