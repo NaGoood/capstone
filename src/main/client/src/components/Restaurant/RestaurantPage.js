@@ -12,6 +12,7 @@ import LoadingContainer from "components/Common/LoadingContainer";
 import { useFetchReviews, useFetchRestaurant } from "hooks";
 import { PAGE_SIZE } from "constants/constants";
 import Reservation from "./Reservation";
+import MenuPage from "../Menu/MenuPage";
 
 const { Content, Footer } = Layout;
 
@@ -131,7 +132,7 @@ const RestaurantPage = () => {
                   )
               );
             case "menu":
-              return <span>메뉴</span>;
+              return <MenuPage {...restaurantItemData}/>;
             case "reservation":
               return <Reservation></Reservation>;
             default:

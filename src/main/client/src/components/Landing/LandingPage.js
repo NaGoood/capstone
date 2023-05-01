@@ -142,8 +142,8 @@ const LandingPage = () => {
                               className="input-location"
                               id="pizza"
                               type="radio"
-                              value="pizza"
-                              checked={category === 'pizza'}
+                              value="피자"
+                              checked={category === '피자'}
                               onChange={handleChangeCategory}
                           /><img src={PizzaIcon} alt="피자"/>
                       </td>
@@ -153,8 +153,8 @@ const LandingPage = () => {
                               className="input-location"
                               id="hamburger"
                               type="radio"
-                              value="hamburger"
-                              checked={category === 'hamburger'}
+                              value="햄버거"
+                              checked={category === '햄버거'}
                               onChange={handleChangeCategory}
                           /><img src={HamburgerIcon} alt="햄버거"/>
                       </td>
@@ -164,8 +164,8 @@ const LandingPage = () => {
                               className="input-location"
                               id="meat"
                               type="radio"
-                              value="meat"
-                              checked={category === 'meat'}
+                              value="고기"
+                              checked={category === '고기'}
                               onChange={handleChangeCategory}
                           /><img src={MeatIcon} alt="고기"/>
                       </td>
