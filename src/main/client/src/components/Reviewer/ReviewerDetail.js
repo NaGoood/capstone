@@ -1,10 +1,10 @@
 import React from "react";
-import { Row, Col, Avatar } from "antd";
+import {Row, Col, Avatar, Button} from "antd";
 import { StarFilled } from "@ant-design/icons";
 import { getInitial } from "utils";
 
 const ReviewerDetail = ({
-  name,
+  reviewerName,
   avgRating,
   funnyCount,
   usefulCount,
@@ -16,12 +16,12 @@ const ReviewerDetail = ({
       <Row className="det-row">
         <Col>
           <Avatar className="det-avatar" size={72}>
-            {getInitial(name)}
+            {getInitial(reviewerName)}
           </Avatar>
         </Col>
 
         <Col>
-          <div className="det-name">{name}</div>
+          <div className="det-name">{reviewerName}</div>
 
           <div className="det-stats">
             <StarFilled style={{ color: "#FF643D", fontSize: "26px" }} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Form, Input, Row, Divider, message } from "antd";
+import { Button, Form, Input, Row, message } from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
 
@@ -16,6 +16,7 @@ const SignupPage = () => {
     phoneNumber: "",
     birthDay: ""
   });
+
   const { userName, userId, userPW, phoneNumber, birthDay } = formData;
 
   const onInputChange = (e) => {
@@ -147,7 +148,7 @@ const SignupPage = () => {
                     ]}
                 >
                   <Input
-                      placeholder="Password"
+                      placeholder="생일을 입력해주세요"
                       name="birthDay"
                       value={formData.birthDay}
                       onChange={onInputChange}
@@ -162,7 +163,7 @@ const SignupPage = () => {
                       block
                       loading={isSigningUp}
                   >
-                    Sign Up
+                    회원가입
                   </Button>
                 </Form.Item>
               </Form>

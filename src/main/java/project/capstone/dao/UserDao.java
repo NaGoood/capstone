@@ -12,4 +12,6 @@ public interface UserDao {
     
     // 회원가입
     int insert(UserDto userDto);
+
+    int selectSameId(String userId);
 }

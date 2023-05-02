@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button, Form, Input, Row, Divider, message } from "antd";
+import { Button, Form, Input, Row, message } from "antd";
 import SplitLayout from "./SplitLayout";
 import { useLogin } from "hooks";
 
@@ -62,7 +62,7 @@ const LoginPage = () => {
         <SplitLayout imageUrl="images/login.jpeg" contentLayout="left">
           <Row className="auth-form-container" justify="center">
             <div className="auth-form">
-              <div className="auth-form-header"> Login </div>
+              <div className="auth-form-header"> 로그인 </div>
               <Form
                   name="login-form"
                   layout="vertical"
@@ -118,7 +118,7 @@ const LoginPage = () => {
                       block
                       loading={isLoggingIn}
                   >
-                    Login
+                    로그인
                   </Button>
                 </Form.Item>
               </Form>
@@ -132,7 +132,7 @@ const LoginPage = () => {
                 </div>
               </Row>
 
-              <Divider plain>OR</Divider>
+              {/*<Divider plain>OR</Divider>
 
               <div className="auth-icon-container">
                 <a href="/auth/google">
@@ -150,7 +150,7 @@ const LoginPage = () => {
                       alt="twitter"
                   />
                 </a>
-              </div>
+              </div>*/}
             </div>
           </Row>
         </SplitLayout>

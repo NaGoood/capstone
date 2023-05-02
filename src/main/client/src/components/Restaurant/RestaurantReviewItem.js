@@ -8,7 +8,7 @@ import { getInitial } from "utils";
 
 const RestaurantReviewItem = ({
   reviewerName,
-  reviewerReviewCount,
+  reviewCount,
   reviewerId,
   rating,
   funnyCount,
@@ -42,8 +42,8 @@ const RestaurantReviewItem = ({
           <div className="restrevitem-name-container">
             <div className="restrevitem-name">{reviewerName}</div>
             <div className="restrevitem-count">
-              &#40;{reviewerReviewCount}{" "}
-              {reviewerReviewCount === 1 ? "Review" : "Reviews"}&#41;
+              &#40;{reviewCount}{" "}
+              {reviewCount === 1 ? "Review" : "Reviews"}&#41;
             </div>
           </div>
 

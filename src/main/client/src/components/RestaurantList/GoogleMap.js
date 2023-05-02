@@ -39,33 +39,33 @@ const GoogleMap = ({ google, restaurantItems }) => {
   }, [restaurantItems]);
 
   return (
-    <Map
-      google={google}
-      zoom={10}
-      mapTypeControl={false}
-      initialCenter={centerCoords}
-      center={centerCoords}
-      onClick={onMapClick}
-    >
-      {restaurantItems.map((item) => (
-        <Marker
-          key={item.restaurantId}
-          item={item}
-          position={{
-            lat: item.latitude,
-            lng: item.longitude,
-          }}
-          onClick={onMarkerClick}
-        />
-      ))}
+      <Map
+          google={google}
+          zoom={16}
+          mapTypeControl={false}
+          initialCenter={centerCoords}
+          center={centerCoords}
+          onClick={onMapClick}
+      >
+        {restaurantItems.map((item) => (
+            <Marker
+                key={item.restaurantId}
+                item={item}
+                position={{
+                  lat: item.latitude,
+                  lng: item.longitude,
+                }}
+                onClick={onMarkerClick}
+            />
+        ))}
 
-      <InfoWindow marker={activeMarker} visible={showInfoWindow}>
-        <RestaurantCard {...selectedRestaurant.item} />
-      </InfoWindow>
-    </Map>
+        <InfoWindow marker={activeMarker} visible={showInfoWindow}>
+          <RestaurantCard {...selectedRestaurant.item} />
+        </InfoWindow>
+      </Map>
   );
 };
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+  apiKey: "AIzaSyDifjhQXIWUxkmdt8nRDHHu8bUqM58tmfM",
 })(GoogleMap);

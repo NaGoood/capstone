@@ -31,5 +31,11 @@ public class UserServiceImpl implements UserService {
     }
     // endregion
 
+    // 아이디 중복 검사
+    @Override
+    public int idCheck(String userId) throws Exception {
+        return userDao.selectSameId(userId);
+    }
+
 
 }

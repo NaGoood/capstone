@@ -259,8 +259,8 @@ export const savedRestaurantSortOptions = [
 ];
 
 export const DEFAULT_COORDS = {
-  lat: 33.448376,
-  lng: -112.074036, // Phoenix, AZ
+  lat: 36.339303,
+  lng: 127.394143, // 대전
 };
 
 export const PAGE_SIZE = 10;

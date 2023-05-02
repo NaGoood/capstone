@@ -5,11 +5,11 @@
 }
 
 .auth-form {
-  width: 70%;
+  width: 60%;
 }
 
 .auth-form-header {
-  font-family: "Arvo";
+  font-family: "Jua";
   font-size: 50px;
   text-align: center;
   margin-top: 120px;
@@ -17,7 +17,7 @@
 }
 
 .auth-form-button {
-  font-family: "Cabin";
+  font-family: "Jua";
   font-size: 26px;
   background-color: #25c8c1 !important;
   border-color: #25c8c1 !important;

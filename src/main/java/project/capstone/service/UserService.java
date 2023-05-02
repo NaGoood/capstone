@@ -9,4 +9,5 @@ public interface UserService {
     UserDto getUser(String id) throws Exception;
 
     int save(UserDto userDto) throws Exception;
+    int idCheck(String userId) throws Exception;
 }
