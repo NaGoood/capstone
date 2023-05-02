@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import project.capstone.domain.UserDto;
@@ -28,22 +30,19 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public String singIn(@RequestBody UserDto userDto, HttpServletRequest request,
-                         HttpServletResponse response) throws Exception {
+    public ResponseEntity singIn(@RequestBody UserDto userDto, HttpServletRequest request,
+                                 HttpServletResponse response) throws Exception {
 
         String name = userService.getName(userDto);
         if(name != null && name !=""){
             System.out.println("DB 조회 성공");
-            
             // 세션에 ID 저장
             HttpSession session = request.getSession();
             session.setAttribute("id",userDto.getUserId());
-            return name;
+            return new ResponseEntity(name, HttpStatus.OK);
         } else {
-            System.out.println("name = " + name);
             System.out.println("DB 조회 실패");
-            return "";
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -53,6 +52,7 @@ public class UserController {
         String id = (String) session.getAttribute("id");
         UserDto userDto;
         try {
+            log.info("[현재 유저 불러오기]");
             userDto = userService.getUser(id);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -71,18 +71,18 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED)
-    public HttpStatus signUp(@RequestBody UserDto userDto) throws Exception{
+    public ResponseEntity signUp(@RequestBody UserDto userDto) throws Exception{
         System.out.println("[수신받은 데이터 ] = " + userDto);
 //        userDto.setUserBirth(new java.sql.Date(userDto.getUserBirth().getTime()));
 //        userDto.getUserBirth();
-        int rowCnt = userService.save(userDto);
-        if(rowCnt==1) {
+        int rowCnt = userService.idCheck(userDto.getUserId());
+        if(rowCnt!=1) {
+            userService.save(userDto);
             System.out.println("DB 저장 성공");
-            return HttpStatus.CREATED;
+            return new ResponseEntity(HttpStatus.CREATED);
         }
         else{
-            return HttpStatus.REQUEST_TIMEOUT;
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
 
@@ -94,35 +94,4 @@ public class UserController {
         log.info("messageBody={}" , messageBody);
         return "ok";
     }
-
-    /*@GetMapping("/restaurants")
-    public List<Restaurant> searchRestaurants(@RequestParam("location") String location) throws IOException {
-        ArrayList<Restaurant> restaurants = new ArrayList<>();
-        log.info("location={}",location);
-
-        Restaurant restaurant = new Restaurant("1", "빅스타피자", 5, "대전 동구 동대전로 193-1", "pizza", "4.8", "Y", "bigstart",36.338911,127.448419);
-        Restaurant restaurant2 = new Restaurant("2", "명륜진사갈비", 4, "대전 동구 동대전로 184-3", "meat", "5", "N", "meatImg",36.338074,127.448611);
-
-        restaurants.add(restaurant);
-        restaurants.add(restaurant2);
-
-        return restaurants;
-    }
-
-    @GetMapping("/restaurant/{restaurantId}")
-    public ArrayList<Restaurant> restaurantInfo(@PathVariable String restaurantId){
-
-        log.info("restaurantId={}", restaurantId);
-
-        ArrayList<Restaurant> list = new ArrayList<>();
-
-        for(int i=0; i < list.size(); i++){
-            if(list.get(i).getRestaurantId().equals(restaurantId)){
-                list.add(list.get(i));
-                log.info("list={}", list);
-            }
-        }
-
-        return list;
-    }*/
 }

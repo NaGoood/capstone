@@ -58,7 +58,6 @@ public class RestaurantController {
     @PostMapping("/reservation")
     public String useReservation(@Valid @RequestBody ReservationDto reservation) {
         log.info("reservation={}",reservation);
-
         return "ok";
     }
 

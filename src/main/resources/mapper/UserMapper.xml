@@ -20,4 +20,10 @@
         values
             (#{userName},#{userId},#{userPW},#{phoneNumber},#{userBirth})
     </insert>
+
+    <select id="selectSameId" resultType="int">
+        select count(userId)
+        from user
+        where userId =#{userId}
+    </select>
 </mapper>

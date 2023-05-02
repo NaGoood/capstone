@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import project.capstone.domain.ReviewDto;
 import project.capstone.service.ReviewService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @RestController
@@ -51,6 +52,13 @@ public class ReviewController {
         log.info("[리뷰 세부 정보 조회]");
         ArrayList arrayList = (ArrayList) reviewService.getReviewDetail(reviewerId);
         return arrayList;
+    }
+
+    @PostMapping("/reviewUpdate")
+    public String reviewUpdate(@RequestBody ReviewDto reviewDto) {
+        log.info("[리뷰 수정 요청]");
+        System.out.println("request = " + reviewDto);
+        return "ok";
     }
 
 

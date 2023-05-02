@@ -9,7 +9,7 @@
     </select>
 
     <select id="selectMyReviews" parameterType="int" resultType="project.capstone.domain.ReviewDto">
-        select restaurantId,reviewerName,restaurantName,imageUrl,reviewId,rating,usefulCount,coolCount,funnyCount,content,date
+        select reviewerId,restaurantId,reviewerName,restaurantName,imageUrl,reviewId,rating,usefulCount,coolCount,funnyCount,content,date
         from review
         where reviewerId = #{reviewerId};
     </select>
