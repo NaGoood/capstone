@@ -4,10 +4,9 @@ import { Layout, Input, Affix, Tooltip } from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import SearchFilter from "./SearchFilter";
-import MeatIcon from "icons/meaticon.png";
-import PizzaIcon from "icons/pizzaicon.png";
-import HamburgerIcon from "icons/hamburgericon.png";
-
+import MeatIcon from "../../img/icons/meaticon.png";
+import PizzaIcon from "../../img/icons/pizzaicon.png";
+import HamburgerIcon from "../../img/icons/hamburgericon.png";
 
 const { Content, Footer } = Layout;
 

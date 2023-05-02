@@ -57,7 +57,14 @@ public class ReviewController {
     @PostMapping("/reviewUpdate")
     public String reviewUpdate(@RequestBody ReviewDto reviewDto) {
         log.info("[리뷰 수정 요청]");
-        System.out.println("request = " + reviewDto);
+        System.out.println("reviewDto = " + reviewDto);
+        String content = reviewDto.getContent();
+        Integer reviewId = reviewDto.getReviewId();
+        String rating = reviewDto.getRating();
+        System.out.println("rating = " + rating);
+        String newContent = " "+content+" ";
+        int rowCnt = reviewService.updateReview(newContent,reviewId,rating);
+        System.out.println("rowCnt = " + rowCnt);
         return "ok";
     }
 

@@ -34,5 +34,11 @@
         where reviewerId = #{reviewerId};
     </select>
 
+    <update id="updateReview" parameterType="map">
+        update review
+        set content = #{content},rating = #{rating}
+        where reviewId = #{reviewId};
+    </update>
+
 
 </mapper>

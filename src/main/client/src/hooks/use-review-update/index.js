@@ -6,6 +6,7 @@ const useReviewUpdate = () => {
 
     const reviewUpdate = async (reviewId,rating,content) => {
         setIsReviewUpdate(true);
+        console.log(reviewId,rating,content);
         try {
             const response = await axios.post("/api/reviewUpdate", { reviewId,rating,content});
             return response;

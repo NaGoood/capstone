@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.capstone.dao.ReviewDao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReviewService {
@@ -26,5 +28,13 @@ public class ReviewService {
     }
     public Integer getMyReviewCount(Integer reviewerId) {
         return reviewDao.countMyReview(reviewerId);
+    }
+
+    public Integer updateReview(String content,Integer reviewId,String rating){
+        Map map = new HashMap();
+        map.put("content",content);
+        map.put("reviewId",reviewId);
+        map.put("rating",rating);
+        return reviewDao.updateReview(map);
     }
 }

@@ -8,10 +8,6 @@ import ReviewVote from "./ReviewVote";
 import {isDisabled} from "@testing-library/user-event/dist/utils";
 import {useFetchCurrentUser, useReviewUpdate} from "hooks";
 
-
-
-
-
 const ReviewItem = ({
   restaurantName,
   restaurantId,
@@ -38,14 +34,11 @@ const ReviewItem = ({
     setIsModalOpen(false);
   };
   const onFinish = (values) => {
-        console.log('Success:', values);
-        console.log('별점 :',values.별점[0]);
-        console.log('리뷰아이디',reviewId);
-        formData.content = values.리뷰내용;
-        formData.rating = values.별점[0];
-        formData.reviewId = reviewId;
-        console.log(formData)
-        setIsModalOpen(false);
+       content = values.리뷰내용;
+       rating = values.별점[0];
+       reviewId = reviewId;
+       setIsModalOpen(false);
+        onReviewUpdate();
     };
   const onFinishFailed = (errorInfo) => {
       setIsModalOpen(false);
@@ -59,11 +52,6 @@ const ReviewItem = ({
 
     const [isReviewUpdate, reviewUpdate] = useReviewUpdate();
 
-    const [formData,setFormData] = useState({
-        rating:"",
-        content:"",
-        reviewId:""
-    });
     // endregion
 
     const [reviewOwner,setReviewOwner] = useState(true);
@@ -81,13 +69,14 @@ const ReviewItem = ({
         };
         fetchUser();
     }, []);
-    const onReviewUpdate = async () => {
-        const response = await reviewUpdate(reviewId,rating,content);
-        if(response.status == 200){
-            console.log("서버랑 통신 성공")
+
+        const onReviewUpdate = async () => {
+            const response = await reviewUpdate(reviewId,rating,content);
+            if(response.status == 200){
+                alert("수정완료")
+                window.location.replace("/reviewer/"+reviewerId)
+            }
         }
-    }
-    
   return (
     <div className="revitem-container">
       <Row wrap={false}>
@@ -183,6 +172,7 @@ const ReviewItem = ({
                       label="리뷰내용"
                       name="리뷰내용"
                       initialValue={content}
+                      on
                       rules={[
                         {
                           required: true,
@@ -198,8 +188,7 @@ const ReviewItem = ({
                         span: 16,
                       }}
                   >
-                    <Button type="primary" htmlType="submit" onClick={onReviewUpdate}
-                    >
+                    <Button type="primary" htmlType="submit" onClick={onFinish}>
                       수정
                     </Button>
                   </Form.Item>
