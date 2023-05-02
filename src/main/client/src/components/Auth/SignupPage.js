@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Form, Input, Row, message } from "antd";
+import {Button, Form, Input, Row, message, Select} from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
 
@@ -147,12 +147,28 @@ const SignupPage = () => {
                       },
                     ]}
                 >
-                  <Input
+                  {/*<Input
                       placeholder="생일을 입력해주세요"
                       name="birthDay"
                       value={formData.birthDay}
                       onChange={onInputChange}
-                  />
+                  />*/}
+                    <Select
+                        defaultValue="1999"
+                        style={{
+                            width: 80,
+                        }}
+                        options={[]}
+
+                    />
+                    <Select
+                        defaultValue="01"
+                        style={{width: 80}}
+                    />
+                    <Select
+                        defaultValue="01"
+                        style={{width: 80}}
+                    />
                 </Form.Item>
 
                 <Form.Item>
