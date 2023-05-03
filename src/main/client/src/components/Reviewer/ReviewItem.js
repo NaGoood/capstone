@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {createSearchParams, useNavigate,createRoot} from "react-router-dom";
-import {Row, Col, Tooltip, Button,Form,Modal,Input,Checkbox,message,Space} from "antd";
+import {Row, Col, Tooltip, Button,Form,Modal,Input,Checkbox,message} from "antd";
 import {icons} from "antd/es/image/PreviewGroup";
 import ReviewRate from "./ReviewRate";
 import ReviewContent from "./ReviewContent";
