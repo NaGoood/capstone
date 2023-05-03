@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {createSearchParams, useNavigate} from "react-router-dom";
-import {Row, Col, Tooltip, Button,Form,Modal,Input,Checkbox} from "antd";
+import {createSearchParams, useNavigate,createRoot} from "react-router-dom";
+import {Row, Col, Tooltip, Button,Form,Modal,Input,Checkbox,message,Space} from "antd";
 import {icons} from "antd/es/image/PreviewGroup";
 import ReviewRate from "./ReviewRate";
 import ReviewContent from "./ReviewContent";
 import ReviewVote from "./ReviewVote";
 import {isDisabled} from "@testing-library/user-event/dist/utils";
-import {useFetchCurrentUser, useReviewUpdate} from "hooks";
+import {useFetchCurrentUser, useReviewUpdate,useReviewDelete} from "hooks";
 
 const ReviewItem = ({
   restaurantName,
@@ -20,13 +20,9 @@ const ReviewItem = ({
   imageUrl,reviewId,reviewerId
 }) => {
   const navigate = useNavigate();
-  // region Modal 관련
+
+  // region 수정 Modal 관련
   const [isModalOpen,setIsModalOpen] = useState(false);
-    const [searchParams, setSearchParams] = useState({
-        rating: "",
-        content: "",
-        reviewId : ""
-    });
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -34,11 +30,13 @@ const ReviewItem = ({
     setIsModalOpen(false);
   };
   const onFinish = (values) => {
-       content = values.리뷰내용;
-       rating = values.별점[0];
-       reviewId = reviewId;
-       setIsModalOpen(false);
-        onReviewUpdate();
+          content = values.content;
+          if(values.rating && values.rating.length > 0){
+              rating = values.rating[0];
+              onReviewUpdate();
+          }
+          reviewId = reviewId;
+        setIsModalOpen(false);
     };
   const onFinishFailed = (errorInfo) => {
       setIsModalOpen(false);
@@ -51,7 +49,22 @@ const ReviewItem = ({
     };
 
     const [isReviewUpdate, reviewUpdate] = useReviewUpdate();
+    const [isReviewDelete, reviewDelete] = useReviewDelete();
+    // endregion
 
+
+  // region 삭제 Modal 관련
+    const [isDModalOpen, setIsDModalOpen] = useState(false);
+    const showDModal = () => {
+        setIsDModalOpen(true);
+    };
+    const DhandleOk = () => {
+        setIsDModalOpen(false);
+        onReviewDelete();
+    };
+    const DhandleCancel = () => {
+        setIsDModalOpen(false);
+    };
     // endregion
 
     const [reviewOwner,setReviewOwner] = useState(true);
@@ -70,13 +83,22 @@ const ReviewItem = ({
         fetchUser();
     }, []);
 
-        const onReviewUpdate = async () => {
-            const response = await reviewUpdate(reviewId,rating,content);
-            if(response.status == 200){
-                alert("수정완료")
-                window.location.replace("/reviewer/"+reviewerId)
-            }
+
+    const onReviewUpdate = async () => {
+        const response = await reviewUpdate(reviewId,rating,content);
+        if(response.status == 200){
+            window.location.replace("/reviewer/"+reviewerId)
+            message.success('리뷰 수정 성공!');
         }
+    }
+
+    const onReviewDelete = async () => {
+        const response = await reviewDelete(reviewId);
+        if(response.status == 200){
+            window.location.replace("/reviewer/"+reviewerId)
+            message.success('리뷰 삭제 성공!');
+        }
+    }
   return (
     <div className="revitem-container">
       <Row wrap={false}>
@@ -94,7 +116,6 @@ const ReviewItem = ({
             />
           </Tooltip>
         </Col>
-
         <Col>
           <div className="revitem-name">{restaurantName}</div>
 
@@ -108,7 +129,7 @@ const ReviewItem = ({
             />
           </div>
           <div>
-            <Button type="default" size="" disabled={reviewOwner}
+            <Button type="primary" size="" disabled={reviewOwner}
               onClick={showModal}>수정</Button>
               <Modal title="리뷰 수정" open={isModalOpen} onOk={onFinish} onCancel={handleCancel}
                      okButtonProps={{
@@ -135,7 +156,7 @@ const ReviewItem = ({
                 >
                     <Form.Item
                         label="별점"
-                        name="별점"
+                        name="rating"
                         rules={[
                             {
                                 required: true,
@@ -170,9 +191,8 @@ const ReviewItem = ({
                     </Form.Item>
                   <Form.Item
                       label="리뷰내용"
-                      name="리뷰내용"
+                      name="content"
                       initialValue={content}
-                      on
                       rules={[
                         {
                           required: true,
@@ -194,11 +214,15 @@ const ReviewItem = ({
                   </Form.Item>
                 </Form>
               </Modal>
-            <Button type="primary" size="" disabled={reviewOwner}>삭제</Button>
+              <Button type="dashed" onClick={showDModal} >
+                  삭제
+              </Button>
+                  <Modal title="리뷰 삭제" open={isDModalOpen} onOk={DhandleOk} onCancel={DhandleCancel}>
+                      <p>정말 삭제 하시겠습니까?</p>
+                  </Modal>
           </div>
         </Col>
       </Row>
-
       <ReviewContent content={content} />
     </div>
   );

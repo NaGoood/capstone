@@ -14,3 +14,4 @@ export { default as useUnsaveRestaurant } from "./use-unsave-restaurant";
 export { default as useSearchMenu} from "./use-searchMenu";
 export { default as useReservation} from "./use-reservation";
 export { default as useReviewUpdate} from "./use-review-update";
+export { default as useReviewDelete} from "./use-review-delete";

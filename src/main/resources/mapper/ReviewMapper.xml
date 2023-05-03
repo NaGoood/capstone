@@ -40,5 +40,9 @@
         where reviewId = #{reviewId};
     </update>
 
+    <delete id="deleteReview" parameterType="int">
+        delete from review where reviewId = #{reviewId};
+    </delete>
+
 
 </mapper>

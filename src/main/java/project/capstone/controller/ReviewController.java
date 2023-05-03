@@ -64,8 +64,20 @@ public class ReviewController {
         System.out.println("rating = " + rating);
         String newContent = " "+content+" ";
         int rowCnt = reviewService.updateReview(newContent,reviewId,rating);
-        System.out.println("rowCnt = " + rowCnt);
+        if(rowCnt != 0)
+            return "ok";
+        else
+            return "error";
+    }
+
+    @PostMapping("/reviewDelete")
+    public String reviewDelete(@RequestBody ReviewDto reviewDto) {
+        log.info("[리뷰 삭제 요청]");
+      int rowCnt = reviewService.deleteReview(reviewDto.getReviewId());
+      if(rowCnt != 0)
         return "ok";
+      else
+          return "error";
     }
 
 

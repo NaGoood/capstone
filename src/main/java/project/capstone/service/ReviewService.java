@@ -37,4 +37,8 @@ public class ReviewService {
         map.put("rating",rating);
         return reviewDao.updateReview(map);
     }
+
+    public Integer deleteReview(Integer reviewId){
+        return reviewDao.deleteReview(reviewId);
+    }
 }
