@@ -3,6 +3,7 @@ package project.capstone.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.capstone.dao.ReviewDao;
+import project.capstone.domain.ReviewDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +31,18 @@ public class ReviewService {
         return reviewDao.countMyReview(reviewerId);
     }
 
-    public Integer updateReview(String content,Integer reviewId,String rating){
+    public Integer updateReview(ReviewDto reviewDto){
         Map map = new HashMap();
+
+        String content = reviewDto.getContent();
+        Integer reviewId = reviewDto.getReviewId();
+        String rating = reviewDto.getRating();
+        String newContent = " "+content+" ";
+
         map.put("content",content);
         map.put("reviewId",reviewId);
         map.put("rating",rating);
+
         return reviewDao.updateReview(map);
     }
 

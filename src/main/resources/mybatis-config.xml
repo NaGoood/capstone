@@ -5,11 +5,15 @@
     <typeAliases>
         <typeAlias type="UserDto" alias="project.capstone.domain.UserDto"></typeAlias>
         <typeAlias type="RestaurantDto" alias="project.capstone.domain.RestaurantDto"></typeAlias>
+        <typeAlias type="ReviewDto" alias="project.capstone.domain.ReviewDto"></typeAlias>
+        <typeAlias type="ReservationDto" alias="project.capstone.domain.ReservationDto"></typeAlias>
     </typeAliases>
     
     <mappers>
         <mapper resource="mapper/UserMapper.xml"></mapper>
         <mapper resource="mapper/RestaurantMapper.xml"></mapper>
+        <mapper resource="mapper/ReviewMapper.xml"></mapper>
+        <mapper resource="mapper/ReservationMapper.xml"></mapper>
     </mappers>
 
 </configuration>

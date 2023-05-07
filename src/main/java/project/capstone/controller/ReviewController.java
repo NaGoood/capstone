@@ -3,11 +3,13 @@ package project.capstone.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import project.capstone.domain.RestaurantDto;
 import project.capstone.domain.ReviewDto;
 import project.capstone.service.ReviewService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +30,6 @@ public class ReviewController {
     // endregion
     @GetMapping("/reviews")
     public ArrayList<ReviewDto> restaurantReviews(@RequestParam(required = false,defaultValue = "") Integer restaurantId, @RequestParam(required = false,defaultValue = "") Integer reviewerId){
-        log.info("[리뷰요청받음]");
         ArrayList arrayList;
         if(reviewerId ==null){
             arrayList = (ArrayList)reviewService.getReviewList(restaurantId);
@@ -48,7 +49,7 @@ public class ReviewController {
     }
 
     @GetMapping("/reviewer/{reviewerId}")
-    public ArrayList myReivewsInfo(@PathVariable Integer reviewerId){
+    public ArrayList myReviewsInfo(@PathVariable Integer reviewerId){
         log.info("[리뷰 세부 정보 조회]");
         ArrayList arrayList = (ArrayList) reviewService.getReviewDetail(reviewerId);
         return arrayList;
@@ -57,13 +58,7 @@ public class ReviewController {
     @PostMapping("/reviewUpdate")
     public String reviewUpdate(@RequestBody ReviewDto reviewDto) {
         log.info("[리뷰 수정 요청]");
-        System.out.println("reviewDto = " + reviewDto);
-        String content = reviewDto.getContent();
-        Integer reviewId = reviewDto.getReviewId();
-        String rating = reviewDto.getRating();
-        System.out.println("rating = " + rating);
-        String newContent = " "+content+" ";
-        int rowCnt = reviewService.updateReview(newContent,reviewId,rating);
+        int rowCnt = reviewService.updateReview(reviewDto);
         if(rowCnt != 0)
             return "ok";
         else
@@ -80,5 +75,10 @@ public class ReviewController {
           return "error";
     }
 
+    @PostMapping("/reviewCreate")
+    public String reviewCreate(){
+        log.info("[리뷰 생성 요청]");
+        return "ok";
+    }
 
 }

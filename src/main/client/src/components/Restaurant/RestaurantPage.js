@@ -9,7 +9,7 @@ import RestaurantReviewItem from "./RestaurantReviewItem";
 import EmptyItem from "components/Common/EmptyItem";
 import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
-import {useFetchReviews, useFetchRestaurant, useReviewWrite, useReviewUpdate} from "hooks";
+import {useFetchReviews, useFetchRestaurant} from "hooks";
 import { PAGE_SIZE } from "constants/constants";
 import Reservation from "./Reservation";
 import MenuPage from "../Menu/MenuPage";
@@ -26,26 +26,7 @@ const RestaurantPage = () => {
   const [reviewListData, setReviewListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
-  const [isReviewWrite, reviewWrite] = useReviewWrite();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = (values) => {
-    console.log(values);
-    if(values.rating && values.rating.length > 0){
-      console.log(values.rating[0]);
-      console.log(values.content);
-    }
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
-  const onChange = (checkedValues) => {
-    console.log('checked = ', checkedValues);
-  };
 
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
@@ -103,13 +84,7 @@ const RestaurantPage = () => {
     fetchReviewsData();
   }, [searchParams]);
 
-  const onReviewWrite = async () => {
-    const response = await reviewWrite();
-    if(response.status == 200){
-      // window.location.replace("/reviewer/"+reviewerId)
-      message.success('리뷰 쓰기 성공!');
-    }
-  }
+
 
   return (
     <Layout>
@@ -195,83 +170,6 @@ const RestaurantPage = () => {
               );
           }
         })()}
-        <Button size={"large"} onClick={showModal} className="writeButton"><FormOutlined />리뷰 쓰기</Button>
-        <Modal title="리뷰 쓰기" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <Form
-              name="basic"
-              labelCol={{
-                span: 8,
-              }}
-              wrapperCol={{
-                span: 16,
-              }}
-              style={{
-                maxWidth: 600,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={handleOk}
-              onFinishFailed={handleCancel}
-              autoComplete="off"
-          >
-            <Form.Item
-                label="별점"
-                name="rating"
-                rules={[
-                  {
-                    required: true,
-                    message: '별점을 입력해주세요 !!',
-                  },
-                ]}
-            >
-              <Checkbox.Group
-                  style={{
-                    width: '100%',
-                  }}
-                  onChange={onChange}
-              >
-                <Row>
-                  <Col span={3}>
-                    <Checkbox value="1">1</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="2">2</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="3">3</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="4">4</Checkbox>
-                  </Col>
-                  <Col span={3}>
-                    <Checkbox value="5">5</Checkbox>
-                  </Col>
-                </Row>
-              </Checkbox.Group>
-            </Form.Item>
-            <Form.Item
-                label="리뷰내용"
-                name="content"
-                initialValue=""
-                rules={[
-                  {
-                    required: true,
-                    message: '리뷰 내용을 입력하세요!!',
-                  },
-                ]}
-            >
-              <Input.TextArea />
-            </Form.Item>
-            <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
-            >
-            </Form.Item>
-          </Form>
-        </Modal>
       </Content>
       <Footer>
         <AppFooter />

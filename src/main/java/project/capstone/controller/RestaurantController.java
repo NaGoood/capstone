@@ -1,6 +1,8 @@
 package project.capstone.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StreamUtils;
@@ -43,6 +45,7 @@ public class RestaurantController {
         return returnReviewCount(arrayList);
     }
 
+
     public ArrayList<Object> returnReviewCount(ArrayList<Object> arrayList) {
         for(int i=0; i< arrayList.size(); i++){
             RestaurantDto restaurantDto = (RestaurantDto) arrayList.get(i);
@@ -54,12 +57,4 @@ public class RestaurantController {
         log.info("[Count 계산]");
         return arrayList;
     }
-
-    @PostMapping("/reservation")
-    public String useReservation(@Valid @RequestBody ReservationDto reservation) {
-        log.info("reservation={}",reservation);
-        return "ok";
-    }
-
-
 }

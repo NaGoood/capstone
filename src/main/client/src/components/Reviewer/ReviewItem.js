@@ -30,12 +30,12 @@ const ReviewItem = ({
     setIsModalOpen(false);
   };
   const onFinish = (values) => {
-          content = values.content;
           if(values.rating && values.rating.length > 0){
+              content = values.content;
               rating = values.rating[0];
+              reviewId = reviewId;
               onReviewUpdate();
           }
-          reviewId = reviewId;
         setIsModalOpen(false);
     };
   const onFinishFailed = (errorInfo) => {
@@ -82,7 +82,6 @@ const ReviewItem = ({
         };
         fetchUser();
     }, []);
-
 
     const onReviewUpdate = async () => {
         const response = await reviewUpdate(reviewId,rating,content);
@@ -132,10 +131,7 @@ const ReviewItem = ({
             <Button type="primary" size="" disabled={reviewOwner}
               onClick={showModal}>수정</Button>
               <Modal title="리뷰 수정" open={isModalOpen} onOk={onFinish} onCancel={handleCancel}
-                     okButtonProps={{
-                        disabled: true,}}
-                     cancelButtonProps={{
-                         disabled: true}}>
+                     okButtonProps={{ style: { display: 'none' } }}>>
                 <Form
                     name="basic"
                     labelCol={{
@@ -214,7 +210,7 @@ const ReviewItem = ({
                   </Form.Item>
                 </Form>
               </Modal>
-              <Button type="dashed" onClick={showDModal} >
+              <Button type="dashed" onClick={showDModal} disabled={reviewOwner} >
                   삭제
               </Button>
                   <Modal title="리뷰 삭제" open={isDModalOpen} onOk={DhandleOk} onCancel={DhandleCancel}>

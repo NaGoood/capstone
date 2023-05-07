@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {Row, Col, Avatar, Tooltip, Button} from "antd";
+import {Row, Col, Avatar, Tooltip, Button, message} from "antd";
 import ReviewRate from "components/Reviewer/ReviewRate";
 import ReviewContent from "components/Reviewer/ReviewContent";
 import ReviewVote from "components/Reviewer/ReviewVote";
@@ -18,6 +18,7 @@ const RestaurantReviewItem = ({
   date,
 }) => {
   const navigate = useNavigate();
+
 
   return (
     <div className="restrevitem-container">

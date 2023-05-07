@@ -41,6 +41,11 @@
   cursor: pointer;
 }
 
+.writeButton {
+  margin-left: 0%;
+}
+
+
 @media only screen and (max-width: 1150px) {
   .restdet-header .det-name {
     width: 600px;

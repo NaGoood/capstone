@@ -9,7 +9,7 @@ import RestaurantItem from "components/RestaurantList/RestaurantItem";
 import EmptyItem from "components/Common/EmptyItem";
 import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
-import { useFetchCurrentUser, useFetchSavedRestaurants } from "hooks";
+import { useFetchCurrentUser, useFetchSavedRestaurants,useReservationList } from "hooks";
 import { PAGE_SIZE } from "constants/constants";
 
 const { Content, Footer } = Layout;
@@ -17,11 +17,13 @@ const { Content, Footer } = Layout;
 const UserPage = () => {
   const navigate = useNavigate();
   const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
-  const [isFetchingSavedRestaurants, fetchSavedRestaurants] =
-    useFetchSavedRestaurants();
+  const [isReservationList, reservationList] = useReservationList();
+  // const [isFetchingSavedRestaurants, fetchSavedRestaurants] =
+  //   useFetchSavedRestaurants();
 
+  const [reservationListData,setReservationListData] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [savedRestaurantListData, setSavedRestaurantListData] = useState([]);
+  // const [savedRestaurantListData, setSavedRestaurantListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
 
@@ -41,18 +43,29 @@ const UserPage = () => {
         });
       } else {
         setCurrentUser(user);
-
-        const savedRestaurants = await fetchSavedRestaurants({
+        const reservationLists = await reservationList({
           ...searchParams,
           userId: user.userId,
         });
-        if (savedRestaurants) {
-          setTotalItems(savedRestaurants.length);
-          setSavedRestaurantListData(savedRestaurants);
+        if (reservationLists) {
+          setTotalItems(reservationLists.length);
+          setReservationListData(reservationLists);
         } else {
-          message.error("Fetch saved restaurants failed!");
+          message.error("ReservationList Loading failed!");
           navigate("/", { state: { from: window.location.pathname } });
         }
+
+        // const savedRestaurants = await fetchSavedRestaurants({
+        //   ...searchParams,
+        //   userId: user.userId,
+        // });
+        // if (savedRestaurants) {
+        //   setTotalItems(savedRestaurants.length);
+        //   setSavedRestaurantListData(savedRestaurants);
+        // } else {
+        //   message.error("Fetch saved restaurants failed!");
+        //   navigate("/", { state: { from: window.location.pathname } });
+        // }
       }
     };
     fetchPageData();
@@ -76,7 +89,7 @@ const UserPage = () => {
           setSearchParams={setSearchParams}
         />
 
-        {isFetchingSavedRestaurants ? (
+        {isReservationList ? (
           <LoadingItem />
         ) : totalItems === 0 ? (
           <EmptyItem description="No saved items" />
@@ -96,7 +109,7 @@ const UserPage = () => {
                 window.scrollTo(0, 0);
               },
             }}
-            dataSource={savedRestaurantListData}
+            dataSource={reservationListData}
             renderItem={(restaurantItem) => (
               <RestaurantItem
                 restaurantItemData={restaurantItem}
