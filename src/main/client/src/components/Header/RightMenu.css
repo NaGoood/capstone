@@ -9,6 +9,10 @@
   background-color: #25c8c1;
 }
 
+.rmenu-text{
+  font-family: "Jua";
+}
+
 .rmenu-text:hover,
 .rmenu-analytics:hover,
 .rmenu-avatar:hover {

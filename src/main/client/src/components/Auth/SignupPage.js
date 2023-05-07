@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {Button, Form, Input, Row, message, Select} from "antd";
+import {Button, Form, Input, Row, message, Calendar, DatePicker} from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
+import locale from "antd/es/calendar/locale/ko_KR";
 
 const SignupPage = () => {
   const [isSigningUp, signup] = useSignup();
@@ -14,18 +15,22 @@ const SignupPage = () => {
     userId:"",
     userPW: "",
     phoneNumber: "",
-    birthDay: ""
+    userBirth: ""
   });
 
-  const { userName, userId, userPW, phoneNumber, birthDay } = formData;
+  const { userName, userId, userPW, phoneNumber, userBirth } = formData;
 
   const onInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+    function onSelect(value) {
+        setFormData({...formData, "userBirth": value.format("YYYY-MM-DD")});
+    }
+
   const onInputFinish = async () => {
     form.resetFields();
-    const responseStatus = await signup(userName, userId, userPW, phoneNumber, birthDay);
+    const responseStatus = await signup(userName, userId, userPW, phoneNumber, userBirth);
     switch (responseStatus) {
       case 201:
         message.success(`Registration Success!`);
@@ -147,27 +152,10 @@ const SignupPage = () => {
                       },
                     ]}
                 >
-                  {/*<Input
-                      placeholder="생일을 입력해주세요"
-                      name="birthDay"
-                      value={formData.birthDay}
-                      onChange={onInputChange}
-                  />*/}
-                    <Select
-                        defaultValue="1999"
-                        style={{
-                            width: 80,
-                        }}
-                        options={[]}
-
-                    />
-                    <Select
-                        defaultValue="01"
-                        style={{width: 80}}
-                    />
-                    <Select
-                        defaultValue="01"
-                        style={{width: 80}}
+                    <Calendar
+                        fullscreen={false}
+                        onSelect={onSelect}
+                        locale={locale}
                     />
                 </Form.Item>
 
@@ -192,26 +180,6 @@ const SignupPage = () => {
                   </Link>
                 </div>
               </Row>
-
-              {/*<Divider plain>OR</Divider>*/}
-
-              {/*<div className="auth-icon-container">
-              <a href="/auth/google">
-                <img
-                  className="auth-icon-google"
-                  src="/icons/google.svg"
-                  alt="google"
-                />
-              </a>
-
-              <a href="/auth/twitter">
-                <img
-                  className="auth-icon-twitter"
-                  src="/icons/twitter.svg"
-                  alt="twitter"
-                />
-              </a>
-            </div>*/}
             </div>
           </Row>
         </SplitLayout>

@@ -56,7 +56,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/reservation")
-    public String useReservation(@Valid @RequestBody ReservationDto reservation) {
+    public String useReservation(@RequestBody ReservationDto reservation) {
         log.info("reservation={}",reservation);
         return "ok";
     }

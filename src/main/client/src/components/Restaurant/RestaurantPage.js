@@ -27,8 +27,6 @@ const RestaurantPage = () => {
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
 
   const [searchParams, setSearchParams] = useState({
-    /*rating: "",
-    sort: "date",*/
     category:""
   });
 

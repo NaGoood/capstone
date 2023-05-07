@@ -13,7 +13,6 @@ const MenuPage = ({
     imageUrl
 }) => {
 
-
     const handleCheckMenu = (e) => {
         console.log(restaurantId);
     }
@@ -26,10 +25,6 @@ const MenuPage = ({
             <div>
                 <img className="img-size" src={/*음식 사진 출력*/imageUrl} />
             </div>
-            <input
-                type='radio'
-                value='food'
-            />
             <label>{/*라벨 태그에서 음식 이름 출력*/}김진영의 볼케이노 피자</label>
             <label>15,000원</label>
         </List>
