@@ -15,7 +15,7 @@ public class ReviewDto {
     String restaurantName;
     String rating;
     String content;
-    Date date;
+    String date;
     String imageUrl;
     // 예약어 사용
     Integer usefulCount;
@@ -27,7 +27,7 @@ public class ReviewDto {
 
     public ReviewDto() {}
 
-    public ReviewDto(Integer reviewId, Integer reviewerId, String reviewerName, String restaurantName, String rating, String content, Date date, String imageUrl, Integer usefulCount, Integer funnyCount, Integer coolCount, Double avgRating, Integer reviewCount) {
+    public ReviewDto(Integer reviewId, Integer reviewerId, String reviewerName, String restaurantName, String rating, String content, String date, String imageUrl, Integer usefulCount, Integer funnyCount, Integer coolCount, Double avgRating, Integer reviewCount) {
         this.reviewId = reviewId;
         this.reviewerId = reviewerId;
         this.reviewerName = reviewerName;

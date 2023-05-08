@@ -10,13 +10,16 @@ public class ReservationDto {
     @NotBlank
     private String reservationName;
     @NotBlank
-    private String reservationPhone;
+    private String reservationPhoneNumber;
     @NotBlank
     private String reservationDate;
 
-    public ReservationDto(String reservationName, String reservationPhone, String reservationDate) {
+    private int count;
+
+    public ReservationDto(String reservationName, String reservationPhoneNumber, String reservationDate,int count) {
         this.reservationName = reservationName;
-        this.reservationPhone = reservationPhone;
+        this.reservationPhoneNumber = reservationPhoneNumber;
         this.reservationDate = reservationDate;
+        this.count = count;
     }
 }

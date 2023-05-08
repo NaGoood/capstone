@@ -3,13 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.capstone.dao.ReviewMapper">
     <select id="selectReviewList" parameterType="int" resultType="project.capstone.domain.ReviewDto">
-        select reviewerId,reviewerName,rating,usefulCount,coolCount,funnyCount,content,date_format(date, '%Y-%m-%d') as date
+        select reviewerId,reviewerName,rating,usefulCount,coolCount,funnyCount,content,date
         from review
         where restaurantId = #{restaurantId};
     </select>
 
     <select id="selectMyReviews" parameterType="int" resultType="project.capstone.domain.ReviewDto">
-        select reviewerId,restaurantId,reviewerName,restaurantName,imageUrl,reviewId,rating,usefulCount,coolCount,funnyCount,content,date_format(date, '%Y-%m-%d') as date
+        select reviewerId,restaurantId,reviewerName,restaurantName,imageUrl,reviewId,rating,usefulCount,coolCount,funnyCount,content,date
         from review
         where reviewerId = #{reviewerId};
     </select>
