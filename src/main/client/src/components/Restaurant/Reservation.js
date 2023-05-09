@@ -4,17 +4,17 @@ import {useFetchCurrentUser, useReservation, useSignup} from "hooks";
 import {useNavigate} from "react-router-dom";
 import locale from "antd/es/calendar/locale/ko_KR";
 
-const Reservation = () =>{
+const Reservation = ({restaurantId}) =>{
     const navigate = useNavigate();
     const [isReservation, reservation] = useReservation();
     const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
 
-    const [count , setCount] = useState(0)
+    const [reservNumber , setreservNumber] = useState(0)
     const [currentUser, setCurrentUser] = useState({});
-    const [data, setData] = useState("");
+    const [reservDate, setreservDate] = useState("");
 
     function onSelect(value) {
-        setData(value.format("YYYY-MM-DD"));
+        setreservDate(value.format("YYYY-MM-DD"));
     }
 
 
@@ -35,19 +35,20 @@ const Reservation = () =>{
     }, [])
 
     const onUserReservation = async () => {
-        const response = await reservation(currentUser.userName, currentUser.phoneNumber, data, count);
+        const response = await reservation(currentUser.userId,restaurantId, reservDate, reservNumber);
         console.log("onUserReservation",response);
         if(response.status == 200){
-            console.log("안녕");
+            window.location.replace("/")
+            message.success('예약 완료!');
         }
     }
 
     const reservationPeopleUp = () => {
-        setCount(count + 1);
+        setreservNumber(reservNumber + 1);
     }
 
     const reservationPeopleDown = () => {
-        count <= 0 ? setCount(0) : setCount(count - 1);
+        reservNumber <= 0 ? setreservNumber(0) : setreservNumber(reservNumber - 1);
     }
 
 
@@ -85,7 +86,7 @@ const Reservation = () =>{
 
                 <Form.Item
                     label="날짜"
-                    name="reservationDate"
+                    name="reservDate"
                 >
                     <Calendar
                         fullscreen={false}
@@ -96,10 +97,10 @@ const Reservation = () =>{
 
                 <Form.Item
                     label="인원 수"
-                    name="reservationCount"
+                    name="reservNumber"
                 >
                     <div>
-                        <h1>{count}</h1>
+                        <h1>{reservNumber}</h1>
                         <button onClick={reservationPeopleUp}>+</button>
                         <button onClick={reservationPeopleDown}>-</button>
                     </div>

@@ -2,6 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.capstone.dao.ReservationMapper">
+    <insert id="addReserv" parameterType="project.capstone.domain.ReservationDto">
+        insert into reservation
+            (restaurantId,userId,reservDate,reservTime,reservNumber)
+        values
+            (#{restaurantId},#{userId},#{reservDate},#{reservTime},#{reservNumber})
+    </insert>
 
+    <select id="checkReserv" resultType="project.capstone.domain.RestaurantDto">
+        select *
+        from restaurant
+        where restaurantId = any(
+        select restaurantId
+        from reservation
+        where userId = #{userId})
+    </select>
+
+    <select id="reservInfo" resultType="project.capstone.domain.ReservationDto">
+        select restaurant.restaurantName,reservation.*
+        from reservation JOIN restaurant on reservation.restaurantId = restaurant.restaurantId
+        where reservation.userId = #{userId}
+    </select>
 
 </mapper>

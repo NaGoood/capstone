@@ -43,14 +43,14 @@ const RestaurantItem = ({ restaurantItemData, savedIcon, userId }) => {
 
       <Col>
         <div className="restitem-details">
-          {savedIcon ? (
-            <SavedItemHeader
-              restaurantItemData={restaurantItemData}
-              userId={userId}
-            />
-          ) : (
+          {/*{savedIcon ? (*/}
+          {/*  <SavedItemHeader*/}
+          {/*    restaurantItemData={restaurantItemData}*/}
+          {/*    userId={userId}*/}
+          {/*  />*/}
+          {/*) : (*/}
             <div className="restitem-name">{restaurantName}</div>
-          )}
+          {/*)}*/}
 
           <div className="restitem-rating">
             <Rate

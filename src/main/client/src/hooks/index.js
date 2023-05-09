@@ -17,3 +17,4 @@ export { default as useReviewUpdate} from "./use-review-update";
 export { default as useReviewDelete} from "./use-review-delete";
 export { default as useReviewCreate} from "./use-review-create";
 export { default as useReservationList} from "./use-reservation-list";
+export { default as useReservationInfo} from "./use-reservation-Info";

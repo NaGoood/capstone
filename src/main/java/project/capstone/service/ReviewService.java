@@ -39,7 +39,7 @@ public class ReviewService {
         String rating = reviewDto.getRating();
         String newContent = " "+content+" ";
 
-        map.put("content",content);
+        map.put("content",newContent);
         map.put("reviewId",reviewId);
         map.put("rating",rating);
 

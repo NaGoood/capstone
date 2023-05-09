@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Layout, Affix, List, message } from "antd";
+import {Layout, Affix, List, message, Col} from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import ReviewerDetail from "./ReviewerDetail";
@@ -55,6 +55,7 @@ const ReviewerPage = () => {
         reviewerId,
       });
       if (reviewResults) {
+        console.log("reviewResults",reviewResults);
         setTotalItems(reviewResults.length);
         setReviewListData(reviewResults);
       }

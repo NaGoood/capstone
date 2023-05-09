@@ -4,14 +4,14 @@ import {useState} from "react";
 const useReservation = () => {
     const [isReservation, setIsReservation] = useState(false);
 
-    const reservation = async (reservationName, reservationPhoneNumber, reservationDate , count) => {
+    const reservation = async (userId,restaurantId, reservDate , reservNumber) => {
         setIsReservation(true);
         try {
             const response = await axios.post("/api/reservation", {
-                reservationName,
-                reservationPhoneNumber,
-                reservationDate,
-                count
+                userId,
+                restaurantId,
+                reservDate,
+                reservNumber
             });
             return response;
         } catch (error) {

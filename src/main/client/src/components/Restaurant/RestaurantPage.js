@@ -26,7 +26,7 @@ const RestaurantPage = () => {
   const [reviewListData, setReviewListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
-
+  const [fetchRestId,setfetchRestId] = useState();
 
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
@@ -45,6 +45,7 @@ const RestaurantPage = () => {
       const restaurantResults = await fetchRestaurant(restaurantId);
       if (restaurantResults && restaurantResults.length === 1) {
         setRestaurantItemData(restaurantResults[0]);
+        setfetchRestId(restaurantId);
       } else {
         message.error("Restaurant id does not exist!");
         navigate("/", { state: { from: window.location.pathname } });
@@ -138,7 +139,7 @@ const RestaurantPage = () => {
             case "menu":
               return <MenuPage {...restaurantItemData}/>;
             case "reservation":
-              return <Reservation></Reservation>;
+              return <Reservation restaurantId={fetchRestId}></Reservation>;
             default:
               return (
                   isFetchingRestaurant? (
