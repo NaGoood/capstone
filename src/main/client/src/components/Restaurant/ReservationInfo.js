@@ -2,21 +2,28 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {Row, Col, Tooltip, Space, message, Button, Modal, Form, Checkbox, Input, Avatar, List, Card} from "antd";
 import {CarryOutOutlined,ContactsOutlined,UserOutlined,DashboardOutlined,FireOutlined } from "@ant-design/icons";
+import {useFetchCurrentUser, useReservCancel} from "../../hooks";
 const ReservationInfo = ({ reservInfoData, userName,userId}) => {
 
+
+    const [isReservCancel, reservcancel] = useReservCancel();
     const navigate = useNavigate();
 
     const {
+        reservationId,
         restaurantName,
         reservDate,
         reservNumber,
         reservTime,
         restaurantId,
     } = reservInfoData;
-    const reservCancel = () => {
-        alert("버튼 클릭")
-        console.log("restaurantId : ",restaurantId)
-        console.log("userId : ",userId)
+
+    const reservCancel = async () => {
+        const response = await reservcancel(reservationId,userId,restaurantId);
+        if(response.status == 200){
+            window.location.replace("/")
+            message.success('예약 취소 완료');
+        }
     }
 
     const data = [

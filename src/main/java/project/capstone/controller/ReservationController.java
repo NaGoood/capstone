@@ -41,5 +41,11 @@ public class ReservationController {
         ArrayList list =  (ArrayList) service.getReservInfo(userId);
         return new ResponseEntity(list,HttpStatus.OK);
     }
+
+    @PostMapping("/reservcancel")
+    public String check(@RequestBody ReservationDto reservationDto){
+        System.out.println("reservationDto = " + reservationDto);
+        return null;
+    }
 }
 

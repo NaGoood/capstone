@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class ReservationDto {
 
+    private String reservationId;
     @NotBlank
     private String userId;
     @NotBlank
@@ -22,7 +23,8 @@ public class ReservationDto {
 
     ReservationDto() {}
 
-    public ReservationDto(String userId, String restaurantId, String reservTime,String reservDate,int reservNumber) {
+    public ReservationDto(String reservationId,String userId, String restaurantId, String reservTime,String reservDate,int reservNumber) {
+        this.reservationId = reservationId;
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.reservDate = reservDate;
