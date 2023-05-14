@@ -4,7 +4,7 @@ import { useState } from "react";
 const useSignup = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
 
-  const signup = async (userName, userId, userPW, phoneNumber, birthDay) => {
+  const signup = async (userName, userId, userPW, phoneNumber, userBirth, userType) => {
     setIsSigningUp(true);
 
     try {
@@ -13,7 +13,8 @@ const useSignup = () => {
         userId,
         userPW,
         phoneNumber,
-        birthDay
+        userBirth,
+        userType
       });
       console.log(response.status);
       return response.status;

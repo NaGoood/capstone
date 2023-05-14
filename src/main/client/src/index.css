@@ -35,6 +35,7 @@
 @import "components/Common/PageDivider.css";
 @import "components/NotFound/NotFoundPage.css";
 @import "components/Restaurant/Reservation.css";
+@import "components/Menu/MenuPage.css";
 /* Global */
 .ant-form-item-label label,
 #basic_username,

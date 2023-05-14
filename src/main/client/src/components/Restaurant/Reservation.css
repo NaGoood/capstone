@@ -4,3 +4,19 @@
     padding: 10px;
     left: 170px;
 }
+.input-font{
+    font-family: "Jua";
+}
+
+.left-box {
+    float: left;
+    width: 40%;
+}
+.right-box {
+    width: 600px;
+    height: 400px;
+    background: red;
+    left: 45%;
+    float: right;
+    position: absolute;
+}

@@ -10,12 +10,13 @@ public class UserDto {
 
     UserDto(){}
 
-    public UserDto(String userName, String userId, String userPW, String phoneNumber, String userBirth) {
+    public UserDto(String userName, String userId, String userPW, String phoneNumber, String userBirth, int userType) {
         this.userName = userName;
         this.userId = userId;
         this.userPW = userPW;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
+        this.userType = userType;
     }
 
     private String userName;
@@ -23,6 +24,11 @@ public class UserDto {
     private String userPW;
     private String phoneNumber;
     private String userBirth;
+    private int userType;
+
+    public int getUserType() { return userType; }
+
+    public void setUserType(int userType) { this.userType = userType; }
 
     public String getUserName() {
         return userName;

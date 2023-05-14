@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {Button, Form, Input, Row, message, Select, DatePicker} from "antd";
+import {Button, Form, Input, Row, message, DatePicker, Radio} from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
 import moment from "moment";
@@ -16,13 +16,14 @@ const SignupPage = () => {
         userId:"",
         userPW: "",
         phoneNumber: "",
+        userType: 1
     });
 
     function onSelectBirth(value) {
         setBirthDay(value.format("YYYY-MM-DD"))
     }
 
-    const { userName, userId, userPW, phoneNumber } = formData;
+    const { userName, userId, userPW, phoneNumber, userType } = formData;
 
     const onInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,7 +31,7 @@ const SignupPage = () => {
 
     const onInputFinish = async () => {
         form.resetFields();
-        const responseStatus = await signup(userName, userId, userPW, phoneNumber, birthDay);
+        const responseStatus = await signup(userName, userId, userPW, phoneNumber, birthDay, userType);
         console.log(birthDay);
         switch (responseStatus) {
             case 201:
@@ -160,7 +161,24 @@ const SignupPage = () => {
                                     defaultValue={moment('1990-01-01', 'YYYY-MM-DD')}
                                 />
                             </Form.Item>
-
+                            <Form.Item
+                                label="사용자 구분"
+                                rules={[
+                                    {
+                                        required:true,
+                                        message:"신원을 선택하지 않았습니다"
+                                    }
+                                ]}
+                            >
+                                <Radio.Group
+                                    onChange={onInputChange}
+                                    value={formData.userType}
+                                    name="userType"
+                                >
+                                    <Radio value={1}>손님</Radio>
+                                    <Radio value={2}>사장님</Radio>
+                                </Radio.Group>
+                            </Form.Item>
                             <Form.Item>
                                 <Button
                                     className="auth-form-button"
@@ -182,26 +200,6 @@ const SignupPage = () => {
                                 </Link>
                             </div>
                         </Row>
-
-                        {/*<Divider plain>OR</Divider>*/}
-
-                        {/*<div className="auth-icon-container">
-              <a href="/auth/google">
-                <img
-                  className="auth-icon-google"
-                  src="/icons/google.svg"
-                  alt="google"
-                />
-              </a>
-
-              <a href="/auth/twitter">
-                <img
-                  className="auth-icon-twitter"
-                  src="/icons/twitter.svg"
-                  alt="twitter"
-                />
-              </a>
-            </div>*/}
                     </div>
                 </Row>
             </SplitLayout>

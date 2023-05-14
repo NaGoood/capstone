@@ -7,3 +7,67 @@
 .rest-item {
     margin-left: 10%;
 }
+
+.Card-size {
+    width: 800px;
+    height: 180px;
+    margin: 15px;
+    border: none;
+}
+
+.Card-size:hover{
+    border: #25c8c1;
+}
+
+.div-food-info{
+    position: absolute;
+    left: 200px;
+    bottom: 35px;
+}
+
+.div-select{
+    position: absolute;
+    right: 20px;
+    bottom: 220px;
+}
+
+.rest-item {
+    margin-left: 10%;
+}
+
+.Meta-font{
+    font-family: "Jua";
+    font-size: 15px;
+}
+
+.food-name{
+    font-family: "Jua";
+    font-size: 30px;
+}
+
+.food-info{
+    font-family: "Jua";
+    font-size: 18px;
+    color: #6e7072;
+}
+
+.food-price{
+    font-family: "Jua";
+    color:red;
+    font-size: 16px;
+}
+
+.img-size {
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+}
+
+select{
+    font-family: "Jua";
+    height: 25px;
+}
+
+/*.img-size:hover {
+    transform: scale(1.2);
+}*/

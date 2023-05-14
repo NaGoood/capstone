@@ -67,102 +67,108 @@ const Reservation = ({restaurantId}) =>{
 
     return(
         <div className="div-container-asd">
-            <Form
-                name="reservation-form"
-                layout="vertical"
-                initialValues={{
-                    remember: true,
-                }}
-                requiredMark={false}
-                autoComplete="on"
-                style={{
-                    maxWidth: 550,
-                }}
-            >
-                <Form.Item
-                    label="이름"
-                    name="reservationName"
+            <div className="left-box">
+                <Form
+                    name="reservation-form"
+                    layout="vertical"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    requiredMark={false}
+                    autoComplete="on"
+                    style={{
+                        maxWidth: 550,
+                    }}
                 >
-                    <Typography>
-                        <pre>{currentUser.userName}</pre>
-                    </Typography>
-                </Form.Item>
-
-                <Form.Item
-                    label="전화번호"
-                    name="reservationNumber"
-                >
-                    <Typography>
-                        <pre>{currentUser.phoneNumber}</pre>
-                    </Typography>
-                </Form.Item>
-
-                <Space direction="horizontal">
                     <Form.Item
-                        label="예약 날짜"
-                        name="reservDate"
-                        rules={[
-                            {
-                                required:true,
-                                message:"날짜를 선택해주세요"
-                            }
-                        ]}
+                        label="이름"
+                        name="reservationName"
                     >
-                        <DatePicker
-                            onChange={onSelectDate}
-                            placeholder="날짜를 선택해주세요"
-                        />
+                        <Typography>
+                            <pre className="input-font">{currentUser.userName}</pre>
+                        </Typography>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="전화번호"
+                        name="reservationNumber"
+                    >
+                        <Typography>
+                            <pre className="input-font">{currentUser.phoneNumber}</pre>
+                        </Typography>
+                    </Form.Item>
+
+                    <Space direction="horizontal">
+                        <Form.Item
+                            label="예약 날짜"
+                            name="reservDate"
+                            rules={[
+                                {
+                                    required:true,
+                                    message:"날짜를 선택해주세요"
+                                }
+                            ]}
+                        >
+                            <DatePicker
+                                onChange={onSelectDate}
+                                placeholder="날짜를 선택해주세요"
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            label="예약 시간"
+                            name="reservTime"
+                            rules={[
+                                {
+                                    required:true,
+                                    message:"시간을 선택해주세요"
+                                }
+                            ]}
+                        >
+                            <TimePicker
+                                defaultValue={moment('07:00', "HH:mm")}
+                                format="HH:mm"
+                                minuteStep={30}
+                                onChange={onSelectTime}
+                            />
+                        </Form.Item>
+                    </Space>
+
+                    <Form.Item
+                        label="인원 수"
+                        name="reservNumber"
+                    >
+                        <div>
+                            <h1>{reservNumber}</h1>
+                            <button onClick={reservationPeopleUp}>+</button>
+                            <button onClick={reservationPeopleDown}>-</button>
+                        </div>
                     </Form.Item>
                     <Form.Item
-                        label="예약 시간"
-                        name="reservTime"
-                        rules={[
-                            {
-                                required:true,
-                                message:"시간을 선택해주세요"
-                            }
-                        ]}
+                        label="메뉴 선택하기"
+                        name="selectMenu"
                     >
-                        <TimePicker
-                            defaultValue={moment('07:00', "HH:mm")}
-                            format="HH:mm"
-                            minuteStep={30}
-                            onChange={onSelectTime}
+                        <List
+                            dataSource={[
+                                { key: 1, name: "김진영의 쉬림프 피자", price: "13,000" },
+                                { key: 2, name: "김진영의 볼케이노 피자", price: "15,000" }
+                            ]}
+                            renderItem={item => (
+                                <List.Item key={item.key}>
+                                    <Checkbox
+                                        onChange={selectMenu}
+                                        value={`${item.key} : ${item.name} : ${item.price}`}
+                                    >{`${item.name} : ${item.price}원`}</Checkbox>
+                                </List.Item>
+                            )}
                         />
                     </Form.Item>
-                </Space>
+                    <button onClick={onUserReservation}>예약하기</button>
+                </Form>
+            </div>
 
-                <Form.Item
-                    label="인원 수"
-                    name="reservNumber"
-                >
-                    <div>
-                        <h1>{reservNumber}</h1>
-                        <button onClick={reservationPeopleUp}>+</button>
-                        <button onClick={reservationPeopleDown}>-</button>
-                    </div>
-                </Form.Item>
-                <Form.Item
-                    label="메뉴 선택하기"
-                    name="selectMenu"
-                >
-                    <List
-                        dataSource={[
-                            { key: 1, name: "김진영의 쉬림프 피자", price: "13,000" },
-                            { key: 2, name: "김진영의 볼케이노 피자", price: "15,000" }
-                        ]}
-                        renderItem={item => (
-                            <List.Item key={item.key}>
-                                <Checkbox
-                                    onChange={selectMenu}
-                                    value={`${item.key} : ${item.name} : ${item.price}`}
-                                >{`${item.name} : ${item.price}원`}</Checkbox>
-                            </List.Item>
-                        )}
-                    />
-                </Form.Item>
-                <button onClick={onUserReservation}>예약하기</button>
-            </Form>
+            <div className="right-box">
+
+            </div>
         </div>
     );
 };
