@@ -9,3 +9,7 @@
 .footer-col a:hover {
   text-decoration: underline;
 }
+
+.footer-item {
+  height: 35px;
+}

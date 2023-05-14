@@ -3,6 +3,7 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import { Layout, Input, Affix, Tooltip } from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
+import LandingFooter from "components/Footer/LandingFooter";
 import SearchFilter from "./SearchFilter";
 import MeatIcon from "../../img/icons/meaticon.png";
 import PizzaIcon from "../../img/icons/pizzaicon.png";
@@ -165,7 +166,7 @@ const LandingPage = () => {
       </Content>
 
       <Footer>
-        <AppFooter />
+        <LandingFooter />
       </Footer>
     </Layout>
   );

@@ -47,15 +47,5 @@ public class ReservationController {
         System.out.println("reservationDto = " + reservationDto);
         return null;
     }
-
-    @GetMapping("/menuItem/{restaurantId}")
-    public String useMenuItem(@PathVariable String restaurantId) {
-
-        /**
-         * 레스토랑 아이디로 메뉴 찾기??
-         */
-
-        return "ok";
-    }
 }
 

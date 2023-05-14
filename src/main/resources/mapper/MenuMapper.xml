@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.capstone.dao.MenuMapper">
+    <insert id="addMenu" parameterType="project.capstone.domain.MenuDto">
+        insert into menu
+            (menuId, restaruantId, menuName, menuPrice, menuImg, menuInfo)
+        values
+            (#{menuId},#{restaurantId},#{menuName},#{menuPrice},#{menuImg},#{menuInfo})
+    </insert>
+
+    <select id="menuList" parameterType="project.capstone.domain.MenuDto">
+        select *
+        from menu
+    </select>
+</mapper>

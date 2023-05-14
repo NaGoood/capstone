@@ -43,7 +43,7 @@ const MenuPage = ({
                         </Card>
                     )}
                 />
-            </List>
+        </List>
         </>
     )
 }

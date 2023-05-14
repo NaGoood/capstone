@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {Button, Form, Input, Row, message, Select} from "antd";
+import {Button, Form, Input, Row, message, Select, DatePicker} from "antd";
 import SplitLayout from "./SplitLayout";
 import { useSignup } from "hooks";
+import moment from "moment";
 
 const SignupPage = () => {
     const [isSigningUp, signup] = useSignup();
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
+    const [birthDay, setBirthDay] = useState("");
     const [formData, setFormData] = useState({
         userName: "",
         userId:"",
         userPW: "",
         phoneNumber: "",
-        birthDay: ""
     });
 
-    const { userName, userId, userPW, phoneNumber, birthDay } = formData;
+    function onSelectBirth(value) {
+        setBirthDay(value.format("YYYY-MM-DD"))
+    }
+
+    const { userName, userId, userPW, phoneNumber } = formData;
 
     const onInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,6 +31,7 @@ const SignupPage = () => {
     const onInputFinish = async () => {
         form.resetFields();
         const responseStatus = await signup(userName, userId, userPW, phoneNumber, birthDay);
+        console.log(birthDay);
         switch (responseStatus) {
             case 201:
                 message.success(`Registration Success!`);
@@ -147,27 +153,11 @@ const SignupPage = () => {
                                     },
                                 ]}
                             >
-                                {/*<Input
-                      placeholder="생일을 입력해주세요"
-                      name="birthDay"
-                      value={formData.birthDay}
-                      onChange={onInputChange}
-                  />*/}
-                                <Select
-                                    defaultValue="1999"
-                                    style={{
-                                        width: 80,
-                                    }}
-                                    options={[]}
-
-                                />
-                                <Select
-                                    defaultValue="01"
-                                    style={{width: 80}}
-                                />
-                                <Select
-                                    defaultValue="01"
-                                    style={{width: 80}}
+                                <DatePicker
+                                    onChange={onSelectBirth}
+                                    placeholder="생년월일을 선택해주세요"
+                                    format="YYYY-MM-DD"
+                                    defaultValue={moment('1990-01-01', 'YYYY-MM-DD')}
                                 />
                             </Form.Item>
 

@@ -10,7 +10,7 @@ public class UserDto {
 
     UserDto(){}
 
-    public UserDto(String userName, String userId, String userPW, String phoneNumber, Date userBirth) {
+    public UserDto(String userName, String userId, String userPW, String phoneNumber, String userBirth) {
         this.userName = userName;
         this.userId = userId;
         this.userPW = userPW;
@@ -22,7 +22,7 @@ public class UserDto {
     private String userId;
     private String userPW;
     private String phoneNumber;
-    private Date userBirth;
+    private String userBirth;
 
     public String getUserName() {
         return userName;
@@ -56,11 +56,11 @@ public class UserDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getUserBirth() {
+    public String getUserBirth() {
         return userBirth;
     }
 
-    public void setUserBirth(Date userBirth) {
+    public void setUserBirth(String userBirth) {
         this.userBirth = userBirth;
     }
 }
