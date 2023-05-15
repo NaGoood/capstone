@@ -10,7 +10,7 @@ public class UserDto {
 
     UserDto(){}
 
-    public UserDto(String userName, String userId, String userPW, String phoneNumber, String userBirth, int userType) {
+    public UserDto(String userName, String userId, String userPW, String phoneNumber, String userBirth, String userType) {
         this.userName = userName;
         this.userId = userId;
         this.userPW = userPW;
@@ -24,49 +24,6 @@ public class UserDto {
     private String userPW;
     private String phoneNumber;
     private String userBirth;
-    private int userType;
+    private String userType;
 
-    public int getUserType() { return userType; }
-
-    public void setUserType(int userType) { this.userType = userType; }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserPW() {
-        return userPW;
-    }
-
-    public void setUserPW(String userPW) {
-        this.userPW = userPW;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getUserBirth() {
-        return userBirth;
-    }
-
-    public void setUserBirth(String userBirth) {
-        this.userBirth = userBirth;
-    }
 }

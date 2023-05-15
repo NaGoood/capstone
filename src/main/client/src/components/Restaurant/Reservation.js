@@ -16,6 +16,7 @@ const Reservation = ({restaurantId}) =>{
     const [reservDate, setreservDate] = useState("");
     const [reservtime, setreservTime] = useState("");
     const [menu, setMenu] = useState([""]);
+    const [menuList, setMenuList] = useState([]);
 
 
     function onSelectDate(value) {
@@ -37,6 +38,11 @@ const Reservation = ({restaurantId}) =>{
             } else  {
                 setCurrentUser(user);
                 console.log("currentUser={}",currentUser); //현재 이용자 데이터 확인하기
+                const fetchMenuItem = async () => {
+                    const menuItemList = await menuItem(restaurantId);
+                    setMenuList(menuItemList);
+                };
+                fetchMenuItem();
             }
         }
         fetchUserData();
@@ -145,19 +151,15 @@ const Reservation = ({restaurantId}) =>{
                     </Form.Item>
                     <Form.Item
                         label="메뉴 선택하기"
-                        name="selectMenu"
-                    >
+                        name="selectMenu">
                         <List
-                            dataSource={[
-                                { key: 1, name: "김진영의 쉬림프 피자", price: "13,000" },
-                                { key: 2, name: "김진영의 볼케이노 피자", price: "15,000" }
-                            ]}
+                            dataSource={menuList}
                             renderItem={item => (
-                                <List.Item key={item.key}>
+                                <List.Item key={item.menuId}>
                                     <Checkbox
                                         onChange={selectMenu}
-                                        value={`${item.key} : ${item.name} : ${item.price}`}
-                                    >{`${item.name} : ${item.price}원`}</Checkbox>
+                                        value={`${item.menuId} : ${item.menuName} : ${item.menuPrice}`}
+                                    >{`${item.menuName} : ${item.menuPrice}원`}</Checkbox>
                                 </List.Item>
                             )}
                         />

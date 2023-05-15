@@ -28,7 +28,7 @@ public class MenuController {
     }
 
     @GetMapping("/menuItem/{restaurantId}")
-    public List<String> useMenuItem(@PathVariable String restaurantId) {
+    public List<MenuDto> useMenuItem(@PathVariable String restaurantId) {
 
         /**
          * 레스토랑 아이디로 메뉴 찾기??
@@ -37,9 +37,6 @@ public class MenuController {
          */
 
         ArrayList menuItemList = (ArrayList) service.getMenuList(restaurantId);
-        log.info("restaurantId={}", restaurantId);
-        log.info("menuItem={}", menuItemList);
-
         return menuItemList;
     }
 }

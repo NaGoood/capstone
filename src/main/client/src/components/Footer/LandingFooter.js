@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Col, Form, Input, message, Modal, Row} from "antd";
 import {useNavigate} from "react-router-dom";
 import {useFetchCurrentUser} from "../../hooks";
@@ -8,26 +8,13 @@ const AppFooter = () => {
     const navigate = useNavigate();
     const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
 
+    const mounted = useRef(false);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRestaurant, setRestaurant] = useState([""]);
     const [currentUser, setCurrentUser] = useState({});
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const user = await fetchCurrentUser();
-            if (!user) {
-                message.error("로그인이 필요합니다.")
-                /*navigate("/login", {
-                    state: { form:window.location.pathname },
-                });*/
-                setCurrentUser(null);
-            } else  {
-                console.log("currentUser={}"); //현재 이용자 데이터 확인하기
-                setCurrentUser(user);
-            }
-        }
-        fetchUserData();
-    }, [])
+    const [isModal , setModal] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -40,20 +27,27 @@ const AppFooter = () => {
 
     }
 
-    const modalClick = () => {
-        if (currentUser == null) {
+    const modalClick = async () => {
+        const user = await fetchCurrentUser();
+        setCurrentUser(user);
+        isModal == false ? setModal(true) : (isModal == true ? setModal(false) : console.log("모달"));
+    }
+
+    useEffect(() => {
+        if (!mounted.current) {
+            mounted.current = true;
+        }
+        else if (!currentUser) {
+            message.error("로그인이 필요합니다.");
             navigate("/login", {
                 state: { form:window.location.pathname },
             });
+            setCurrentUser(null);
+        } else  {
+            console.log("LandingFooter" , currentUser); //현재 이용자 데이터 확인하기
+            currentUser.userType === "사장님" ? showModal() : message.error("권한이 없습니다");
         }
-        else if(currentUser.peopleType == 1) {
-
-        }
-        showModal();
-    }
-
-
-
+    }, [isModal])
 
     return (
         <Row justify="space-evenly">
@@ -105,10 +99,7 @@ const AppFooter = () => {
 
             <Col className="footer-col" span={8}>
                 <a
-                    /*// href="https://github.com/ruichen199801/cis550-fa22-project"
-                    href="https://github.com/ruichen199801"
-                    target="_blank"
-                    rel="noopener noreferrer"*/
+                    href="https://github.com/NaGoood/capstone"
                 >
                     도움말
                 </a>

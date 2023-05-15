@@ -1,8 +1,13 @@
 package project.capstone.domain;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 
-public class MenuDto {
+@Data
+ public class MenuDto {
+
+    private String restaurantId;
     @NotBlank
     private String menuImg;
     @NotBlank
@@ -14,51 +19,14 @@ public class MenuDto {
     @NotBlank
     private int menuId;
 
-    public MenuDto(String menuImg, String menuName, String menuPrice, String menuInfo, int menuId) {
+    public MenuDto() {}
+
+    public MenuDto(String restaurantId, String menuImg, String menuName, String menuPrice, String menuInfo, int menuId) {
+        this.restaurantId = restaurantId;
         this.menuImg = menuImg;
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuInfo = menuInfo;
-        this.menuId = menuId;
-    }
-
-    public String getMenuImg() {
-        return menuImg;
-    }
-
-    public void setMenuImg(String menuImg) {
-        this.menuImg = menuImg;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public String getMenuPrice() {
-        return menuPrice;
-    }
-
-    public void setMenuPrice(String menuPrice) {
-        this.menuPrice = menuPrice;
-    }
-
-    public String getMenuInfo() {
-        return menuInfo;
-    }
-
-    public void setMenuInfo(String menuInfo) {
-        this.menuInfo = menuInfo;
-    }
-
-    public int getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(int menuId) {
         this.menuId = menuId;
     }
 }

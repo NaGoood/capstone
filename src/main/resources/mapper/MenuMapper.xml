@@ -9,8 +9,9 @@
             (#{menuId},#{restaurantId},#{menuName},#{menuPrice},#{menuImg},#{menuInfo})
     </insert>
 
-    <select id="menuList" parameterType="project.capstone.domain.MenuDto">
+    <select id="menuList" resultType="project.capstone.domain.MenuDto" parameterType="project.capstone.domain.MenuDto">
         select *
         from menu
+        where restaurantId = #{restaurntId};
     </select>
 </mapper>
