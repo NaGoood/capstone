@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Layout, Affix, List, message } from "antd";
+import {Layout, Affix, List, message, Button, Modal, Form, Checkbox, Row, Col, Input} from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import RestaurantDetail from "./RestaurantDetail";
@@ -9,9 +9,11 @@ import RestaurantReviewItem from "./RestaurantReviewItem";
 import EmptyItem from "components/Common/EmptyItem";
 import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
-import { useFetchReviews, useFetchRestaurant } from "hooks";
+import {useFetchReviews, useFetchRestaurant} from "hooks";
 import { PAGE_SIZE } from "constants/constants";
 import Reservation from "./Reservation";
+import MenuPage from "../Menu/MenuPage";
+import { FormOutlined } from '@ant-design/icons'
 
 const { Content, Footer } = Layout;
 
@@ -24,6 +26,7 @@ const RestaurantPage = () => {
   const [reviewListData, setReviewListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
+  const [fetchRestId,setfetchRestId] = useState();
 
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
@@ -42,6 +45,7 @@ const RestaurantPage = () => {
       const restaurantResults = await fetchRestaurant(restaurantId);
       if (restaurantResults && restaurantResults.length === 1) {
         setRestaurantItemData(restaurantResults[0]);
+        setfetchRestId(restaurantId);
       } else {
         message.error("Restaurant id does not exist!");
         navigate("/", { state: { from: window.location.pathname } });
@@ -50,7 +54,7 @@ const RestaurantPage = () => {
     fetchRestaurantData();
   }, []);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchReviewsData = async () => {
       const reviewResults = await fetchReviews({
         ...searchParams,
@@ -62,7 +66,7 @@ const RestaurantPage = () => {
       }
     };
     fetchReviewsData();
-  }, [searchParams]);*/
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchReviewsData = async () => {
@@ -80,6 +84,8 @@ const RestaurantPage = () => {
     };
     fetchReviewsData();
   }, [searchParams]);
+
+
 
   return (
     <Layout>
@@ -131,16 +137,41 @@ const RestaurantPage = () => {
                   )
               );
             case "menu":
-              return <span>메뉴</span>;
+              return <MenuPage {...restaurantItemData}/>;
             case "reservation":
-              return <Reservation></Reservation>;
+              return <Reservation restaurantId={fetchRestId}></Reservation>;
             default:
-              return <span>위 보기를 고르시오</span>;
+              return (
+                  isFetchingRestaurant? (
+                      <LoadingItem/>
+                  ) : totalItems === 0 ? (
+                      <EmptyItem description="No reviews yet"/>
+                  ) : (
+                      <List
+                          className="rest-item"
+                          itemLayout="vertical"
+                          size="large"
+                          pagination={{
+                            total: totalItems,
+                            pageSize,
+                            hideOnSinglePage: true,
+                            showSizeChanger: false,
+                            showTotal: (total, range) =>
+                                `${range[0]}-${range[1]} of ${total}`,
+                            onChange: () => {
+                              window.scrollTo(0, 0);
+                            },
+                          }}
+                          dataSource={reviewListData}
+                          renderItem={(reviewItem) => (
+                              <RestaurantReviewItem {...reviewItem} />
+                          )}
+                      />
+                  )
+              );
           }
         })()}
-
       </Content>
-
       <Footer>
         <AppFooter />
       </Footer>

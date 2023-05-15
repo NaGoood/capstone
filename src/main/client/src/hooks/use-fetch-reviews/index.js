@@ -9,7 +9,7 @@ const useFetchReviews = () => {
     setIsFetchingReviews(true);
     try {
       const response = await axios.get("/api/reviews", { params });
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.log(error.message);
     } finally {

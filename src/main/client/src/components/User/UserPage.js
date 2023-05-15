@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Layout, Affix, List, message } from "antd";
+import {Layout, Affix, List, message, Col} from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import UserDetail from "./UserDetail";
 import SavedPageDivider from "./SavedPageDivider";
 import RestaurantItem from "components/RestaurantList/RestaurantItem";
 import EmptyItem from "components/Common/EmptyItem";
+import ReservationInfo from "components/Restaurant/ReservationInfo";
 import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
-import { useFetchCurrentUser, useFetchSavedRestaurants } from "hooks";
+import { useFetchCurrentUser, useFetchSavedRestaurants,useReservationList ,useReservationInfo} from "hooks";
 import { PAGE_SIZE } from "constants/constants";
+import restaurantItem from "components/RestaurantList/RestaurantItem";
 
 const { Content, Footer } = Layout;
 
 const UserPage = () => {
   const navigate = useNavigate();
   const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
-  const [isFetchingSavedRestaurants, fetchSavedRestaurants] =
-    useFetchSavedRestaurants();
-
+  const [isReservationList, reservationList] = useReservationList();
+  const [isReservationInfo,reservationInfo] = useReservationInfo();
+  const [reservInfoData,setReservInfoData] = useState([]);
+  const [reservationListData,setReservationListData] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [savedRestaurantListData, setSavedRestaurantListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
 
@@ -41,17 +43,27 @@ const UserPage = () => {
         });
       } else {
         setCurrentUser(user);
-
-        const savedRestaurants = await fetchSavedRestaurants({
+        console.log(user);
+        const reservationLists = await reservationList({
           ...searchParams,
           userId: user.userId,
         });
-        if (savedRestaurants) {
-          setTotalItems(savedRestaurants.length);
-          setSavedRestaurantListData(savedRestaurants);
-        } else {
-          message.error("Fetch saved restaurants failed!");
+        if (!reservationLists) {
+          message.error("예약 내역이 없습니다");
           navigate("/", { state: { from: window.location.pathname } });
+        } else {
+          setTotalItems(reservationLists.length);
+          setReservationListData(reservationLists);
+        }
+
+        const reservInfoItems = await reservationInfo({
+          userId: user.userId
+        });
+        if(!reservInfoItems){
+          message.error("ReservationInfo Loading failed!");
+          navigate("/", { state: { from: window.location.pathname } });
+        } else {
+          setReservInfoData(reservInfoItems);
         }
       }
     };
@@ -68,18 +80,22 @@ const UserPage = () => {
         {isFetchingCurrentUser ? (
           <LoadingContainer type="user" />
         ) : (
-          <UserDetail username={currentUser.username} savedCount={totalItems} />
+          <UserDetail username={currentUser.userName} savedCount={totalItems} />
         )}
 
         <SavedPageDivider
           searchParams={searchParams}
           setSearchParams={setSearchParams}
         />
+          
+          <Col className="reservRestInfo">
+              [ 예약한 식당정보 ]
+          </Col>
 
-        {isFetchingSavedRestaurants ? (
+        {isReservationList ? (
           <LoadingItem />
         ) : totalItems === 0 ? (
-          <EmptyItem description="No saved items" />
+          <EmptyItem description="No Reservation" />
         ) : (
           <List
             className="user-item"
@@ -96,7 +112,7 @@ const UserPage = () => {
                 window.scrollTo(0, 0);
               },
             }}
-            dataSource={savedRestaurantListData}
+            dataSource={reservationListData}
             renderItem={(restaurantItem) => (
               <RestaurantItem
                 restaurantItemData={restaurantItem}
@@ -106,6 +122,35 @@ const UserPage = () => {
             )}
           />
         )}
+
+          <Col className="reservRestInfo">
+              [ 예약 내역 ]
+          </Col>
+          <List
+              className="info-item"
+              itemLayout="horizontal"
+              size="large"
+              pagination={{
+                total: totalItems,
+                pageSize,
+                hideOnSinglePage: true,
+                showSizeChanger: false,
+                showTotal: (total, range) =>
+                    `${range[0]}-${range[1]} of ${total}`,
+                onChange: () => {
+                  window.scrollTo(0, 0);
+                },
+              }}
+              dataSource={reservInfoData}
+              renderItem={(reservationInfo) => (
+                  <ReservationInfo
+                      reservInfoData={reservationInfo}
+                      savedIcon={true}
+                      userName={currentUser.userName}
+                      userId={currentUser.userId}
+                  />
+              )}
+          />
       </Content>
 
       <Footer>

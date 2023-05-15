@@ -12,7 +12,7 @@ const SavedPageDivider = ({ searchParams, setSearchParams }) => {
   return (
     <Row className="divid-container">
       <Col>
-        <div className="divid-header">My Bookmarks</div>
+        <div className="divid-header">My Reservation List</div>
       </Col>
 
       <Col>

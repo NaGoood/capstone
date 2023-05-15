@@ -12,6 +12,7 @@ const useLogin = () => {
         userId,
         userPW,
       });
+      console.log(response);
       return response;
     } catch (error) {
       console.log(error.message);

@@ -1,5 +1,10 @@
+.footer-row{
+  position: fixed;
+}
+
 .footer-col {
   text-align: center;
+  font-family: "Jua";
 }
 
 .footer-col a {

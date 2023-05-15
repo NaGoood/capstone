@@ -1,17 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { Layout, Input, Affix, Tooltip } from "antd";
 import AppHeader from "components/Header/AppHeader";
+import AppFooter from "components/Footer/AppFooter";
+import LandingFooter from "components/Footer/LandingFooter";
 import SearchFilter from "./SearchFilter";
 import MeatIcon from "../../img/icons/meaticon.png";
 import PizzaIcon from "../../img/icons/pizzaicon.png";
 import HamburgerIcon from "../../img/icons/hamburgericon.png";
 
-
-const { Content } = Layout;
+const { Content, Footer } = Layout;
 
 const LandingPage = () => {
   const navigate = useNavigate();
+
+  //const [isMenu, Menu] = useSearchMenu();
 
   const [showSearchFilter, setShowSearchFilter] = useState(false);
   const [inputLocation, setLocation] = useState("");
@@ -21,14 +24,9 @@ const LandingPage = () => {
     category: "",
   });
 
-  useEffect(()=>{
-      setLocation("");
-      setCategory("");
-  },[])
-
   const PostMenu = () =>{
-          //if( inputLocation === "" && category ==="")
-          navigateToSearch();
+      //const response = isMenu(inputLocation , category);
+      navigateToSearch();
   }
 
   const handleChangeCategory = (e) =>{
@@ -98,81 +96,57 @@ const LandingPage = () => {
         />
 
           <div className="div-container-location">
-              <table width="500">
-                  <thead>
-                  <tr height="50">
-                      <td>
-                          <input
-                              className="input-location"
-                              id="서울"
-                              type="radio"
-                              value="서울"
-                              checked={inputLocation === '서울'}
-                              onChange={handleChangeLocation}
-                          /><label>서울</label>
-                      </td>
+              <input
+                  className="input-location"
+                  id="서울"
+                  type="radio"
+                  value="서울"
+                  checked={inputLocation === '서울'}
+                  onChange={handleChangeLocation}
+              /><label>서울</label>
+              <input
+                  className="input-location"
+                  type="radio"
+                  value="대전"
+                  checked={inputLocation === '대전'}
+                  onChange={handleChangeLocation}
+              /><label>대전</label>
+              <input
+                  className="input-location"
+                  type="radio"
+                  value="제주"
+                  checked={inputLocation === '제주'}
+                  onChange={handleChangeLocation}
+              /><label>제주</label>
+          </div>
 
-                      <td>
-                          <input
-                              className="input-location"
-                              type="radio"
-                              value="대전"
-                              checked={inputLocation === '대전'}
-                              onChange={handleChangeLocation}
-                          /><label>대전</label>
-                      </td>
+          <div className="div-container-food">
+              <input
+                  className="input-location"
+                  id="pizza"
+                  type="radio"
+                  value="피자"
+                  checked={category === '피자'}
+                  onChange={handleChangeCategory}
+              /><img src={PizzaIcon} alt="피자"/>
 
-                      <td>
-                          <input
-                              className="input-location"
-                              type="radio"
-                              value="제주"
-                              checked={inputLocation === '제주'}
-                              onChange={handleChangeLocation}
-                          /><label>제주</label>
-                      </td>
-                  </tr>
-                  </thead>
+              <input
+                  className="input-location"
+                  id="hamburger"
+                  type="radio"
+                  value="햄버거"
+                  checked={category === '햄버거'}
+                  onChange={handleChangeCategory}
+              /><img src={HamburgerIcon} alt="햄버거"/>
 
-
-                  <tbody>
-                  <tr height="150">
-                      <td>
-                          <input
-                              className="input-location"
-                              id="pizza"
-                              type="radio"
-                              value="pizza"
-                              checked={category === 'pizza'}
-                              onChange={handleChangeCategory}
-                          /><img src={PizzaIcon} alt="피자"/>
-                      </td>
-
-                      <td>
-                          <input
-                              className="input-location"
-                              id="hamburger"
-                              type="radio"
-                              value="hamburger"
-                              checked={category === 'hamburger'}
-                              onChange={handleChangeCategory}
-                          /><img src={HamburgerIcon} alt="햄버거"/>
-                      </td>
-
-                      <td>
-                          <input
-                              className="input-location"
-                              id="meat"
-                              type="radio"
-                              value="meat"
-                              checked={category === 'meat'}
-                              onChange={handleChangeCategory}
-                          /><img src={MeatIcon} alt="고기"/>
-                      </td>
-                  </tr>
-                  </tbody>
-
-              </table>
+              <input
+                  className="input-location"
+                  id="meat"
+                  type="radio"
+                  value="고기"
+                  checked={category === '고기'}
+                  onChange={handleChangeCategory}
+              /><img src={MeatIcon} alt="고기"/>
           </div>
 
           <div>
@@ -190,6 +164,10 @@ const LandingPage = () => {
           )}
         </div>
       </Content>
+
+      <Footer>
+        <LandingFooter />
+      </Footer>
     </Layout>
   );
 };

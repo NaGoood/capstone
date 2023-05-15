@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Col, Avatar, Tooltip } from "antd";
+import {Row, Col, Avatar, Tooltip, Button, message} from "antd";
 import ReviewRate from "components/Reviewer/ReviewRate";
 import ReviewContent from "components/Reviewer/ReviewContent";
 import ReviewVote from "components/Reviewer/ReviewVote";
@@ -8,7 +8,7 @@ import { getInitial } from "utils";
 
 const RestaurantReviewItem = ({
   reviewerName,
-  reviewerReviewCount,
+  reviewCount,
   reviewerId,
   rating,
   funnyCount,
@@ -18,6 +18,7 @@ const RestaurantReviewItem = ({
   date,
 }) => {
   const navigate = useNavigate();
+
 
   return (
     <div className="restrevitem-container">
@@ -42,11 +43,10 @@ const RestaurantReviewItem = ({
           <div className="restrevitem-name-container">
             <div className="restrevitem-name">{reviewerName}</div>
             <div className="restrevitem-count">
-              &#40;{reviewerReviewCount}{" "}
-              {reviewerReviewCount === 1 ? "Review" : "Reviews"}&#41;
+              &#40;{reviewCount}{" "}
+              {reviewCount === 1 ? "Review" : "Reviews"}&#41;
             </div>
           </div>
-
           <ReviewRate rating={rating} date={date} />
         </Col>
       </Row>
@@ -61,6 +61,7 @@ const RestaurantReviewItem = ({
         />
       </Row>
     </div>
+
   );
 };
 

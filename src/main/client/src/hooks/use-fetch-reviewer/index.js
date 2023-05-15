@@ -8,7 +8,7 @@ const useFetchReviewer = () => {
     setIsFetchingReviewer(true);
     try {
       const response = await axios.get(`/api/reviewer/${reviewerId}`);
-      return response.data.results;
+      return response.data;
     } catch (error) {
       console.log(error.message);
     } finally {

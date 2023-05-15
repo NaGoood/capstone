@@ -8,11 +8,9 @@ import project.capstone.domain.UserDto;
 
 
 @Repository
-@Mapper
 public class UserDaoImpl implements UserDao {
 
     String namespace = "project.capstone.dao.UserMapper.";
-
     @Autowired
     SqlSession session;
 
@@ -32,7 +30,6 @@ public class UserDaoImpl implements UserDao {
 
     // endregion
 
-
     // region Insert
     // 회원가입
     @Override
@@ -41,6 +38,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     // endregion
+
+    @Override
+    public int selectSameId(String userId) {return session.selectOne(namespace+"selectSameId",userId);}
 
 
 

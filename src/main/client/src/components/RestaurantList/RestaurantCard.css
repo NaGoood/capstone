@@ -1,5 +1,5 @@
 .restcard-header {
-  font-family: "Arvo";
+  font-family: "Jua";
   margin-bottom: 5px;
 }
 
@@ -11,6 +11,7 @@
 .restcard-score {
   font-weight: 700;
   margin-left: 30px;
+  font-family: "Jua";
 }
 
 .restcard-city {

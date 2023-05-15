@@ -7,16 +7,28 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class ReservationDto {
 
+    private String reservationId;
     @NotBlank
-    private String reservationName;
+    private String userId;
     @NotBlank
-    private String reservationPhone;
-    @NotBlank
-    private String reservationDate;
+    private String restaurantId;
 
-    public ReservationDto(String reservationName, String reservationPhone, String reservationDate) {
-        this.reservationName = reservationName;
-        this.reservationPhone = reservationPhone;
-        this.reservationDate = reservationDate;
+    private String reservDate;
+
+    private String reservTime;
+
+    private int reservNumber;
+
+    private String restaurantName;
+
+    ReservationDto() {}
+
+    public ReservationDto(String reservationId,String userId, String restaurantId, String reservTime,String reservDate,int reservNumber) {
+        this.reservationId = reservationId;
+        this.userId = userId;
+        this.restaurantId = restaurantId;
+        this.reservDate = reservDate;
+        this.reservTime = reservTime;
+        this.reservNumber = reservNumber;
     }
 }
