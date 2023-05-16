@@ -45,6 +45,16 @@ public class RestaurantController {
         return returnReviewCount(arrayList);
     }
 
+    @PostMapping("/storeState")
+    public String updateStoreState(@RequestBody RestaurantDto restaurantDto){
+        int rowCnt = service_rest.updateRestState(restaurantDto);
+        if(rowCnt == 1){
+            return "ok";
+        }
+        else
+            return "Error";
+    }
+
 
     public ArrayList<Object> returnReviewCount(ArrayList<Object> arrayList) {
         for(int i=0; i< arrayList.size(); i++){

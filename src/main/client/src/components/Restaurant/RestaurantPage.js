@@ -9,7 +9,7 @@ import RestaurantReviewItem from "./RestaurantReviewItem";
 import EmptyItem from "components/Common/EmptyItem";
 import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
-import {useFetchReviews, useFetchRestaurant} from "hooks";
+import {useFetchReviews, useFetchRestaurant, useFetchCurrentUser} from "hooks";
 import { PAGE_SIZE } from "constants/constants";
 import Reservation from "./Reservation";
 import MenuPage from "../Menu/MenuPage";
@@ -21,12 +21,15 @@ const RestaurantPage = () => {
   const navigate = useNavigate();
   const [isFetchingRestaurant, fetchRestaurant] = useFetchRestaurant();
   const [isFetchingReviews, fetchReviews] = useFetchReviews();
+  const [isFetchCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
 
   const [restaurantItemData, setRestaurantItemData] = useState({});
   const [reviewListData, setReviewListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [fetchRestId,setfetchRestId] = useState();
+  const [fetchUserId,setfetchUserId] = useState();
+  const [restOwnerId,setrestOwnerId] = useState();
 
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
@@ -40,12 +43,16 @@ const RestaurantPage = () => {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       window.scrollTo(0, 0);
-      console.log("RestaurantPage's" ,routeParams );
+      console.log("RestaurantPage's" ,routeParams);
 
       const restaurantResults = await fetchRestaurant(restaurantId);
       if (restaurantResults && restaurantResults.length === 1) {
+        const currentUser = await fetchCurrentUser();
         setRestaurantItemData(restaurantResults[0]);
         setfetchRestId(restaurantId);
+        setfetchUserId(currentUser.userId);
+        console.log(fetchUserId)
+        setrestOwnerId(restaurantResults[0].userId);
       } else {
         message.error("Restaurant id does not exist!");
         navigate("/", { state: { from: window.location.pathname } });
@@ -63,6 +70,7 @@ const RestaurantPage = () => {
       if (reviewResults) {
         setTotalItems(reviewResults.length);
         setReviewListData(reviewResults);
+        console.log(reviewResults);
       }
     };
     fetchReviewsData();
@@ -97,7 +105,7 @@ const RestaurantPage = () => {
         {isFetchingRestaurant ? (
           <LoadingContainer type="restaurant" />
         ) : (
-          <RestaurantDetail {...restaurantItemData} />
+          <RestaurantDetail userId ={fetchUserId}  ownerId = {restOwnerId} {...restaurantItemData} />
         )}
 
         <ReviewPageDivider
@@ -137,7 +145,7 @@ const RestaurantPage = () => {
                   )
               );
             case "menu":
-              return <MenuPage {...restaurantItemData}/>;
+              return <MenuPage userId ={fetchUserId} ownerId = {restOwnerId}  {...restaurantItemData}/>;
             case "reservation":
               return <Reservation restaurantId={fetchRestId}></Reservation>;
             default:
@@ -164,7 +172,7 @@ const RestaurantPage = () => {
                           }}
                           dataSource={reviewListData}
                           renderItem={(reviewItem) => (
-                              <RestaurantReviewItem {...reviewItem} />
+                              <RestaurantReviewItem userId ={fetchUserId} ownerId = {restOwnerId} {...reviewItem} />
                           )}
                       />
                   )

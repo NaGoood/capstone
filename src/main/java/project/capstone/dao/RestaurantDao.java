@@ -27,4 +27,8 @@ public class RestaurantDao {
     public List<Object> selectRestInfo(String restaurantId){
         return session.selectList(namespace+"selectRestInfo",restaurantId);
     }
+
+    public Integer updateRestState(Map map){
+        return session.update(namespace+"updateRestState",map);
+    }
 }

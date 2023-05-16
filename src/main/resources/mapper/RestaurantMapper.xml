@@ -14,4 +14,10 @@
         where restaurantId = #{restaurantId}
     </select>
 
+    <update id="updateRestState" parameterType="map">
+        update restaurant
+        set open = #{open}
+        where restaurantId = #{restaurantId}
+    </update>
+
 </mapper>

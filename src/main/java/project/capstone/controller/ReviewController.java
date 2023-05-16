@@ -81,4 +81,10 @@ public class ReviewController {
         return "ok";
     }
 
+    @PostMapping("/reply")
+    public String replyUpdate(@RequestBody ReviewDto reviewDto){
+        reviewService.updateReply(reviewDto);
+        return "ok";
+    }
+
 }

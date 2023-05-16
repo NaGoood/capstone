@@ -6,7 +6,8 @@ import Meta from "antd/es/card/Meta";
 
 const MenuPage = ({
                       restaurantId,
-                      imageUrl
+                        userId,
+                        ownerId
                   }) => {
 
     const [isMenuItem, menuItem] = useMenuItem();
@@ -16,6 +17,8 @@ const MenuPage = ({
         const fetchMenuItem = async () => {
             const menuItemList = await menuItem(restaurantId);
             setMenuList(menuItemList);
+            console.log(userId);
+            console.log(ownerId);
         };
         fetchMenuItem();
     }, [])
