@@ -25,4 +25,6 @@ public class MenuService {
     public List<Object> getMenuList(String restaurantId) {
         return menuDao.selectMenu(restaurantId);
     }
+
+
 }

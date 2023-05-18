@@ -39,4 +39,8 @@ public class ReviewDao {
         return session.delete(namespace+"deleteReview",reviewId);
     }
 
+    public Integer updateReply(Map map){
+        return session.update(namespace+"updateReply",map);
+    }
+
 }

@@ -48,6 +48,20 @@
   margin-left: 0%;
 }
 
+.restitem-open {
+  font-family :"Jua";
+  color : green;
+  margin-left: -1%;
+  font-size: large;
+}
+
+.restitem-closed {
+  font-family :"Jua";
+  color : red;
+  margin-left: -1%;
+  font-size: large;
+}
+
 
 @media only screen and (max-width: 1150px) {
   .restdet-header .det-name {

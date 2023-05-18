@@ -1,16 +1,16 @@
 package project.capstone.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import project.capstone.domain.RestaurantDto;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Repository
-public class RestaurantDao{
+public class RestaurantDao {
 
     String namespace = "project.capstone.dao.RestaurantMapper.";
 
@@ -26,13 +26,5 @@ public class RestaurantDao{
 
     public List<Object> selectRestInfo(String restaurantId){
         return session.selectList(namespace+"selectRestInfo",restaurantId);
-    }
-
-    public int insertRestInfo(RestaurantDto restaurantDto) {
-        return session.insert(namespace+"insertRestInfo", restaurantDto);
-    }
-
-    public int selectRestAddress(String restAddress) {
-        return session.selectOne(namespace+"checkAddress",restAddress);
     }
 }
