@@ -3,11 +3,9 @@ package project.capstone.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import project.capstone.domain.RestaurantDto;
 import project.capstone.domain.ReviewDto;
 import project.capstone.service.ReviewService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 
@@ -78,6 +76,12 @@ public class ReviewController {
     @PostMapping("/reviewCreate")
     public String reviewCreate(){
         log.info("[리뷰 생성 요청]");
+        return "ok";
+    }
+
+    @PostMapping("/reply")
+    public String replyUpdate(@RequestBody ReviewDto reviewDto){
+        reviewService.updateReply(reviewDto);
         return "ok";
     }
 

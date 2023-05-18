@@ -14,3 +14,12 @@
 .footer-col a:hover {
   text-decoration: underline;
 }
+
+.footer-item {
+  height: 35px;
+}
+
+.addRestaurant {
+  left: 320px;
+  top: 90px;
+}

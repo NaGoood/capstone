@@ -6,13 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.capstone.domain.ReservationDto;
-import project.capstone.domain.UserDto;
 import project.capstone.service.ReservationService;
 
 import javax.validation.Valid;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")

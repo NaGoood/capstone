@@ -16,7 +16,7 @@ const SignupPage = () => {
         userId:"",
         userPW: "",
         phoneNumber: "",
-        userType: 1
+        userType: ""
     });
 
     function onSelectBirth(value) {
@@ -175,8 +175,8 @@ const SignupPage = () => {
                                     value={formData.userType}
                                     name="userType"
                                 >
-                                    <Radio value={1}>손님</Radio>
-                                    <Radio value={2}>사장님</Radio>
+                                    <Radio value="손님">손님</Radio>
+                                    <Radio value="사장님">사장님</Radio>
                                 </Radio.Group>
                             </Form.Item>
                             <Form.Item>
@@ -194,9 +194,9 @@ const SignupPage = () => {
 
                         <Row className="auth-prompt">
                             <div>
-                                <span>Already have an account? </span>
+                                <span>아이디가 있으신가요? </span>
                                 <Link to="/login" state={{ from: window.location.pathname }}>
-                                    Log in
+                                    로그인
                                 </Link>
                             </div>
                         </Row>

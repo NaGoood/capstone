@@ -15,10 +15,6 @@
     border: none;
 }
 
-.Card-size:hover{
-    border: #25c8c1;
-}
-
 .div-food-info{
     position: absolute;
     left: 200px;
@@ -66,6 +62,23 @@
 select{
     font-family: "Jua";
     height: 25px;
+}
+
+.List-food{
+    border-bottom: 1px solid silver;
+}
+
+.addMenu {
+    left: 800px;
+}
+
+.addMenuModal {
+    left: 320px;
+    top: 90px;
+}
+
+.Menu-Item {
+    height: 35px;
 }
 
 /*.img-size:hover {

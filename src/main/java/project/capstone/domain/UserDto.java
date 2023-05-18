@@ -1,9 +1,6 @@
 package project.capstone.domain;
 
 import lombok.Data;
-import org.springframework.stereotype.Repository;
-
-import java.util.Date;
 
 @Data
 public class UserDto {

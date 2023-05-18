@@ -9,11 +9,12 @@ import RestaurantReviewItem from "./RestaurantReviewItem";
 import EmptyItem from "components/Common/EmptyItem";
 import LoadingItem from "components/Common/LoadingItem";
 import LoadingContainer from "components/Common/LoadingContainer";
-import {useFetchReviews, useFetchRestaurant} from "hooks";
+import {useFetchReviews, useFetchRestaurant, useFetchCurrentUser} from "hooks";
 import { PAGE_SIZE } from "constants/constants";
 import Reservation from "./Reservation";
 import MenuPage from "../Menu/MenuPage";
 import { FormOutlined } from '@ant-design/icons'
+import ManagerReservation from "./ManagerReservation";
 
 const { Content, Footer } = Layout;
 
@@ -21,12 +22,15 @@ const RestaurantPage = () => {
   const navigate = useNavigate();
   const [isFetchingRestaurant, fetchRestaurant] = useFetchRestaurant();
   const [isFetchingReviews, fetchReviews] = useFetchReviews();
+  const [isFetchCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
 
   const [restaurantItemData, setRestaurantItemData] = useState({});
   const [reviewListData, setReviewListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [fetchRestId,setfetchRestId] = useState();
+  const [fetchUserId,setfetchUserId] = useState();
+  const [restOwnerId,setrestOwnerId] = useState();
 
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
@@ -40,12 +44,16 @@ const RestaurantPage = () => {
   useEffect(() => {
     const fetchRestaurantData = async () => {
       window.scrollTo(0, 0);
-      console.log("RestaurantPage's" ,routeParams );
+      console.log("RestaurantPage's" ,routeParams);
 
       const restaurantResults = await fetchRestaurant(restaurantId);
       if (restaurantResults && restaurantResults.length === 1) {
+        const currentUser = await fetchCurrentUser();
         setRestaurantItemData(restaurantResults[0]);
         setfetchRestId(restaurantId);
+        setfetchUserId(currentUser.userId);
+        console.log(fetchUserId)
+        setrestOwnerId(restaurantResults[0].userId);
       } else {
         message.error("Restaurant id does not exist!");
         navigate("/", { state: { from: window.location.pathname } });
@@ -63,6 +71,7 @@ const RestaurantPage = () => {
       if (reviewResults) {
         setTotalItems(reviewResults.length);
         setReviewListData(reviewResults);
+        console.log(reviewResults);
       }
     };
     fetchReviewsData();
@@ -88,94 +97,94 @@ const RestaurantPage = () => {
 
 
   return (
-    <Layout>
-      <Affix>
-        <AppHeader />
-      </Affix>
+      <Layout>
+        <Affix>
+          <AppHeader />
+        </Affix>
 
-      <Content>
-        {isFetchingRestaurant ? (
-          <LoadingContainer type="restaurant" />
-        ) : (
-          <RestaurantDetail {...restaurantItemData} />
-        )}
+        <Content>
+          {isFetchingRestaurant ? (
+              <LoadingContainer type="restaurant" />
+          ) : (
+              <RestaurantDetail userId ={fetchUserId}  ownerId = {restOwnerId} {...restaurantItemData} />
+          )}
 
-        <ReviewPageDivider
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
+          <ReviewPageDivider
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+          />
 
-        {(() => {
-          switch (searchParams.category) {
-            case "reviews":
-              return (
-                  isFetchingRestaurant? (
-                      <LoadingItem/>
-                  ) : totalItems === 0 ? (
-                      <EmptyItem description="No reviews yet"/>
-                  ) : (
-                      <List
-                          className="rest-item"
-                          itemLayout="vertical"
-                          size="large"
-                          pagination={{
-                            total: totalItems,
-                            pageSize,
-                            hideOnSinglePage: true,
-                            showSizeChanger: false,
-                            showTotal: (total, range) =>
-                                `${range[0]}-${range[1]} of ${total}`,
-                            onChange: () => {
-                              window.scrollTo(0, 0);
-                            },
-                          }}
-                          dataSource={reviewListData}
-                          renderItem={(reviewItem) => (
-                              <RestaurantReviewItem {...reviewItem} />
-                          )}
-                      />
-                  )
-              );
-            case "menu":
-              return <MenuPage {...restaurantItemData}/>;
-            case "reservation":
-              return <Reservation restaurantId={fetchRestId}></Reservation>;
-            default:
-              return (
-                  isFetchingRestaurant? (
-                      <LoadingItem/>
-                  ) : totalItems === 0 ? (
-                      <EmptyItem description="No reviews yet"/>
-                  ) : (
-                      <List
-                          className="rest-item"
-                          itemLayout="vertical"
-                          size="large"
-                          pagination={{
-                            total: totalItems,
-                            pageSize,
-                            hideOnSinglePage: true,
-                            showSizeChanger: false,
-                            showTotal: (total, range) =>
-                                `${range[0]}-${range[1]} of ${total}`,
-                            onChange: () => {
-                              window.scrollTo(0, 0);
-                            },
-                          }}
-                          dataSource={reviewListData}
-                          renderItem={(reviewItem) => (
-                              <RestaurantReviewItem {...reviewItem} />
-                          )}
-                      />
-                  )
-              );
-          }
-        })()}
-      </Content>
-      <Footer>
-        <AppFooter />
-      </Footer>
-    </Layout>
+          {(() => {
+            switch (searchParams.category) {
+              case "reviews":
+                return (
+                    isFetchingRestaurant? (
+                        <LoadingItem/>
+                    ) : totalItems === 0 ? (
+                        <EmptyItem description="No reviews yet"/>
+                    ) : (
+                        <List
+                            className="rest-item"
+                            itemLayout="vertical"
+                            size="large"
+                            pagination={{
+                              total: totalItems,
+                              pageSize,
+                              hideOnSinglePage: true,
+                              showSizeChanger: false,
+                              showTotal: (total, range) =>
+                                  `${range[0]}-${range[1]} of ${total}`,
+                              onChange: () => {
+                                window.scrollTo(0, 0);
+                              },
+                            }}
+                            dataSource={reviewListData}
+                            renderItem={(reviewItem) => (
+                                <RestaurantReviewItem {...reviewItem} />
+                            )}
+                        />
+                    )
+                );
+              case "menu":
+                return <MenuPage userId ={fetchUserId} ownerId = {restOwnerId}  {...restaurantItemData}/>;
+              case "reservation":
+                return ( fetchUserId==restOwnerId ? <ManagerReservation restaurantId={fetchRestId}/>   : <Reservation restaurantId={fetchRestId}></Reservation>)
+              default:
+                return (
+                    isFetchingRestaurant? (
+                        <LoadingItem/>
+                    ) : totalItems === 0 ? (
+                        <EmptyItem description="No reviews yet"/>
+                    ) : (
+                        <List
+                            className="rest-item"
+                            itemLayout="vertical"
+                            size="large"
+                            pagination={{
+                              total: totalItems,
+                              pageSize,
+                              hideOnSinglePage: true,
+                              showSizeChanger: false,
+                              showTotal: (total, range) =>
+                                  `${range[0]}-${range[1]} of ${total}`,
+                              onChange: () => {
+                                window.scrollTo(0, 0);
+                              },
+                            }}
+                            dataSource={reviewListData}
+                            renderItem={(reviewItem) => (
+                                <RestaurantReviewItem userId ={fetchUserId} ownerId = {restOwnerId} {...reviewItem} />
+                            )}
+                        />
+                    )
+                );
+            }
+          })()}
+        </Content>
+        <Footer>
+          <AppFooter />
+        </Footer>
+      </Layout>
   );
 };
 

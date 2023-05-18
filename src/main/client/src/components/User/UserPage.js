@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {Layout, Affix, List, message, Col} from "antd";
+import {Layout, Affix, List, message, Col, Row} from "antd";
 import AppHeader from "components/Header/AppHeader";
 import AppFooter from "components/Footer/AppFooter";
 import UserDetail from "./UserDetail";
@@ -126,10 +126,15 @@ const UserPage = () => {
           <Col className="reservRestInfo">
               [ 예약 내역 ]
           </Col>
+
           <List
               className="info-item"
               itemLayout="horizontal"
               size="large"
+              grid={{
+                  gutter: 8,     // 카드간의 간격
+                  column: 5,
+              }}
               pagination={{
                 total: totalItems,
                 pageSize,

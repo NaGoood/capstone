@@ -49,4 +49,12 @@ public class ReviewService {
     public Integer deleteReview(Integer reviewId){
         return reviewDao.deleteReview(reviewId);
     }
+
+    public Integer updateReply(ReviewDto reviewDto){
+        Map map = new HashMap();
+        map.put("reviewId",reviewDto.getReviewId());
+        map.put("reply",reviewDto.getReply());
+
+        return reviewDao.updateReply(map);
+    }
 }

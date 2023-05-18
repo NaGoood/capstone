@@ -17,7 +17,7 @@ const SavedPageDivider = ({ searchParams, setSearchParams }) => {
 
       <Col>
         <div className="savedivid-sort">
-          <div className="divid-text">Sort:</div>
+          {/*<div className="divid-text">Sort:</div>
           <Select
             className="divid-select"
             bordered={false}
@@ -28,7 +28,7 @@ const SavedPageDivider = ({ searchParams, setSearchParams }) => {
             }
             options={savedRestaurantSortOptions}
             onChange={onSortChange}
-          />
+          />*/}
         </div>
       </Col>
     </Row>

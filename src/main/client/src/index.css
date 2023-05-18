@@ -36,6 +36,7 @@
 @import "components/NotFound/NotFoundPage.css";
 @import "components/Restaurant/Reservation.css";
 @import "components/Menu/MenuPage.css";
+@import "components/Restaurant/ManagerReservation.css";
 /* Global */
 .ant-form-item-label label,
 #basic_username,

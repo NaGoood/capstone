@@ -5,7 +5,7 @@ import {FormOutlined, StarFilled} from "@ant-design/icons";
 import {
   useFetchCurrentUser,
   useFetchSavedRestaurant, useReviewCreate,
-  useSaveRestaurant,
+  useSaveRestaurant, useStoreState,
   useUnsaveRestaurant,
 } from "hooks";
 import { splitString, formatRatingScore, formatOpen } from "utils";
@@ -19,17 +19,31 @@ const RestaurantDetail = ({
   avgRating,
   open,
   imageUrl,
+  ownerId,
 }) => {
   const navigate = useNavigate();
   const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
   const [fetchSavedRestaurant] = useFetchSavedRestaurant();
   const [saveRestaurant] = useSaveRestaurant();
   const [unsaveRestaurant] = useUnsaveRestaurant();
+  const [storeState] = useStoreState();
 
-  const [userId, setUserId] = useState(0);
+  const [userId,setUserId] = useState([]);
   const [restaurantSaved, setRestaurantSaved] = useState(false);
   const [isReviewCreate, reviewCreate] = useReviewCreate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isOwner = ownerId === userId;
+
+  useEffect(() => {
+    const getUser = async () => {
+      const currentUser = await fetchCurrentUser();
+      setUserId(currentUser.userId);
+      console.log("RestaurantDetail=,",userId)
+    };
+    getUser();
+  }, [userId]);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -43,6 +57,7 @@ const RestaurantDetail = ({
     }
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -55,67 +70,33 @@ const RestaurantDetail = ({
     // reviewerId,reviewerName,rating,content
     const response = await reviewCreate();
     if(response.status == 200){
-      window.location.replace("/restaurant/"+restaurantId)
+      //window.location.replace("/restaurant/"+restaurantId)
       message.success('리뷰 쓰기 성공!');
     }
   }
 
-  // useEffect(() => {
-  //   const fetchPageData = async () => {
-  //     const user = await fetchCurrentUser();
-  //     if (user) {
-  //       setUserId(user.userId);
-  //
-  //       const savedRestaurant = await fetchSavedRestaurant({
-  //         userId: user.userId,
-  //         restaurantId: window.location.pathname.split("/")[2],
-  //       });
-  //       if (savedRestaurant && savedRestaurant.length === 1) {
-  //         setRestaurantSaved(true);
-  //       }
-  //     }
-  //   };
-  //   fetchPageData();
-  // }, []);
+  const changeState = async () =>{
+    console.log(userId);
+    if(open == "Y")
+      open = "N"
+    else
+      open = "Y"
 
-  // const onBookmarkClick = async () => {
-  //   if (userId === 0) {
-  //     message.error("You need to log in first!");
-  //     navigate("/login", {
-  //       state: { from: window.location.pathname },
-  //     });
-  //   } else {
-  //     if (!restaurantSaved) {
-  //       const saveResponseStatus = await saveRestaurant(
-  //         userId,
-  //         restaurantId,
-  //         new Date().toLocaleDateString()
-  //       );
-  //       if (saveResponseStatus === 201) {
-  //         message.success("Restaurant saved to profile!");
-  //         setRestaurantSaved(true);
-  //       } else {
-  //         message.error("Save failed!");
-  //       }
-  //     } else {
-  //       const unsaveResponseStatus = await unsaveRestaurant(restaurantId);
-  //       if (unsaveResponseStatus === 200) {
-  //         message.success("Restaurant unsaved!");
-  //         setRestaurantSaved(false);
-  //       } else {
-  //         message.error("Unsave failed!");
-  //       }
-  //     }
-  //   }
-  // };
+    const response = await storeState(restaurantId,open);
+    if(response.status == 200){
+      window.location.reload()
+      message.success('가게상태 수정완료!');
+    }
+  }
 
   const categoryItems = splitString(categories).map((category) => {
     return (
-      <span className="restdet-category" key={category}>
+        <span className="restdet-category" key={category}>
         {category}
       </span>
     );
   });
+
 
   return (
     <div className="det-container">
@@ -128,23 +109,6 @@ const RestaurantDetail = ({
           <Space direction="vertical" size="middle">
             <div className="restdet-header">
               <div className="det-name">{restaurantName}</div>
-              {/*<Tooltip*/}
-              {/*  placement="bottom"*/}
-              {/*  title={*/}
-              {/*    restaurantSaved ? "Unsave restaurant" : "Save restaurant"*/}
-              {/*  }*/}
-              {/*>*/}
-              {/*  <img*/}
-              {/*    className="restdet-icon"*/}
-              {/*    src={*/}
-              {/*      restaurantSaved*/}
-              {/*        ? "/icons/bookmark-fill.svg"*/}
-              {/*        : "/icons/bookmark.svg"*/}
-              {/*    }*/}
-              {/*    alt="bookmark"*/}
-              {/*    onClick={onBookmarkClick}*/}
-              {/*  />*/}
-              {/*</Tooltip>*/}
             </div>
 
             <div className="det-stats">
@@ -171,7 +135,13 @@ const RestaurantDetail = ({
             </Tooltip>
 
             <div className={open === "Y" ? "restitem-open" : "restitem-closed"}>
-              {formatOpen(open)}
+              { isOwner ? (
+                  <Button type="text" className={open === "Y" ? "restitem-open" : "restitem-closed"} onClick={changeState}>
+                    {formatOpen(open)}
+                  </Button>
+              ) : (
+                  <div>{formatOpen(open)}</div>
+              )}
             </div>
             <div>
               <Button size={"large"} onClick={showModal} className="writeButton"><FormOutlined />리뷰 쓰기</Button>

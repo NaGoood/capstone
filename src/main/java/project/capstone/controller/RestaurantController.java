@@ -1,22 +1,14 @@
 package project.capstone.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.StreamUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.capstone.domain.ReservationDto;
 import project.capstone.domain.RestaurantDto;
 import project.capstone.service.RestaurantService;
 import project.capstone.service.ReviewService;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +35,30 @@ public class RestaurantController {
         log.info("[식당 세부 정보 조회]");
         ArrayList arrayList = (ArrayList) service_rest.getRestaurantInfo(restaurantId);
         return returnReviewCount(arrayList);
+    }
+
+    @PostMapping("/storeState")
+    public String updateStoreState(@RequestBody RestaurantDto restaurantDto){
+        int rowCnt = service_rest.updateRestState(restaurantDto);
+        if(rowCnt == 1){
+            return "ok";
+        }
+        else
+            return "Error";
+    }
+
+    @PostMapping("/restaurant/save")
+    public ResponseEntity saveRestaurant(@RequestBody RestaurantDto restaurantDto) {
+
+        log.info("restaurantInfo={}", restaurantDto);
+        String restAddress = restaurantDto.getAddress();
+
+        if(service_rest.checkRestaurant(restAddress) == 1) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            service_rest.setRestaurantInfo(restaurantDto);
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
     }
 
 

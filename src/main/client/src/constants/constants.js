@@ -264,3 +264,146 @@ export const DEFAULT_COORDS = {
 };
 
 export const PAGE_SIZE = 10;
+
+export const RESERVATION_LIST_COLUMNS = [
+  {
+    title: '고객이름',
+    dataIndex: 'userName',
+    key: 'userName',
+  },
+  {
+    title: '고객 전화번호',
+    dataIndex: 'userPhoneNumber',
+    key: 'userPhoneNumber',
+  },
+  {
+    title: '예약시간',
+    dataIndex: 'reservationDate',
+    filters: [
+      {
+        text: '1월',
+        value: '-01-',
+      },
+      {
+        text: '2월',
+        value: '-02-',
+      },
+      {
+        text: '3월',
+        value: '-03-',
+      },
+      {
+        text: '4월',
+        value: '-04-',
+      },
+      {
+        text: '5월',
+        value: '-05-',
+      },
+      {
+        text: '6월',
+        value: '-06-',
+      },
+      {
+        text: '7월',
+        value: '-07-',
+      },
+      {
+        text: '8월',
+        value: '-08-',
+      },
+      {
+        text: '9월',
+        value: '-09-',
+      },
+      {
+        text: '10월',
+        value: '-10-',
+      },
+      {
+        text: '11월',
+        value: '-11-',
+      },
+      {
+        text: '12월',
+        value: '-12-',
+      },
+    ],
+    onFilter: (value, record) => record.reservationDate.includes(value),
+    filterSearch: true,
+    width: '40%'
+  },
+  {
+    title: '인원수',
+    dataIndex: 'ReservationPeopleCount',
+    key: 'ReservationPeopleCount',
+  },
+  {
+    title: '메뉴',
+    dataIndex: 'Menu',
+    key: 'Menu',
+  },
+  {
+    title: '취소 횟수',
+    dataIndex: 'CancelCount',
+    key: 'CancelCount',
+  }
+];
+
+export const RESERVATION_LIST_DATASOURCE = [
+  {
+    key: '1',
+    userName: '나용준',
+    userPhoneNumber: '010-1111-1111',
+    reservationDate: '2023-05-03',
+    ReservationPeopleCount:'3',
+    Menu:'나용준피자',
+    CancelCount:'1'
+
+  },
+  {
+    key: '2',
+    userName: '김진영',
+    userPhoneNumber: '010-2222-2222',
+    reservationDate: '2023-04-13',
+    ReservationPeopleCount:'3',
+    Menu:'김진영피자',
+    CancelCount:'1'
+  },
+  {
+    key: '3',
+    userName: '양호신',
+    userPhoneNumber: '010-3333-3333',
+    reservationDate: '2023-03-23',
+    ReservationPeopleCount:'3',
+    Menu:'양호신피자',
+    CancelCount:'1'
+  },
+  {
+    key: '4',
+    userName: '김민건',
+    userPhoneNumber: '010-4444-4444',
+    reservationDate: '2023-12-03',
+    ReservationPeopleCount:'3',
+    Menu:'김민건피자',
+    CancelCount:'1'
+  },
+  {
+    key: '5',
+    userName: '최대욱',
+    userPhoneNumber: '010-5555-5555',
+    reservationDate: '2023-09-21',
+    ReservationPeopleCount:'3',
+    Menu:'최대욱피자',
+    CancelCount:'1'
+  },
+  {
+    key: '6',
+    userName: '김용직',
+    userPhoneNumber: '010-6666-6666',
+    reservationDate: '2023-06-18',
+    ReservationPeopleCount:'3',
+    Menu:'김용직피자',
+    CancelCount:'1'
+  },
+];

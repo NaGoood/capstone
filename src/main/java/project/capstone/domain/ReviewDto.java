@@ -1,11 +1,6 @@
 package project.capstone.domain;
 
 import lombok.Data;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
-import java.util.List;
 
 @Data
 public class ReviewDto {
@@ -24,10 +19,12 @@ public class ReviewDto {
     Double avgRating;
     Integer reviewCount;
 
+    String reply;
+
 
     public ReviewDto() {}
 
-    public ReviewDto(Integer reviewId, Integer reviewerId, String reviewerName, String restaurantName, String rating, String content, String date, String imageUrl, Integer usefulCount, Integer funnyCount, Integer coolCount, Double avgRating, Integer reviewCount) {
+    public ReviewDto(Integer reviewId, Integer reviewerId, String reviewerName, String restaurantName, String rating, String content, String date, String imageUrl, Integer usefulCount, Integer funnyCount, Integer coolCount, Double avgRating, Integer reviewCount, String reply) {
         this.reviewId = reviewId;
         this.reviewerId = reviewerId;
         this.reviewerName = reviewerName;
@@ -41,5 +38,6 @@ public class ReviewDto {
         this.coolCount = coolCount;
         this.avgRating = avgRating;
         this.reviewCount = reviewCount;
+        this.reply  = reply;
     }
 }

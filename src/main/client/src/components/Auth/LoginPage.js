@@ -75,7 +75,7 @@ const LoginPage = () => {
                   autoComplete="off"
               >
                 <Form.Item
-                    label="userId"
+                    label="아이디"
                     name="userId"
                     rules={[
                       {
@@ -93,7 +93,7 @@ const LoginPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                    label="userPW"
+                    label="비밀번호"
                     name="userPW"
                     rules={[
                       {
@@ -125,9 +125,9 @@ const LoginPage = () => {
 
               <Row className="auth-prompt">
                 <div>
-                  <span>Not registered yet? </span>
+                  <span>회원가입이 필요하신가요? </span>
                   <Link to="/signup" state={{ from: window.location.pathname }}>
-                    Create an account
+                    회원가입
                   </Link>
                 </div>
               </Row>

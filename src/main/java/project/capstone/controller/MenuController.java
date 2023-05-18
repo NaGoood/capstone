@@ -17,7 +17,7 @@ public class MenuController {
     @Autowired
     MenuService service;
 
-    @PostMapping("/menuItem")
+    @PostMapping("/menuItem/save")
     public String registerMenu(@RequestBody MenuDto menuItem) {
 
         log.info("menuItem={}", menuItem);

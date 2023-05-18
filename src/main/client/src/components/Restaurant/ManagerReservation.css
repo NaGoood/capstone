@@ -1,0 +1,12 @@
+.reservation-List{
+    position: relative;
+    justify-content: left;
+    padding: 10px;
+    left: 170px;
+    width: 80%;
+    font-family: "Jua";
+}
+
+.filter-input{
+    font-family: "Jua";
+}
