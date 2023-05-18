@@ -32,7 +32,6 @@ const SignupPage = () => {
     const onInputFinish = async () => {
         form.resetFields();
         const responseStatus = await signup(userName, userId, userPW, phoneNumber, birthDay, userType);
-        console.log(birthDay);
         switch (responseStatus) {
             case 201:
                 message.success(`Registration Success!`);

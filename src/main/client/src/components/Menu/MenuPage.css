@@ -68,6 +68,20 @@ select{
     height: 25px;
 }
 
+.addMenu {
+    left: 800px;
+}
+
+.addMenuModal {
+    left: 320px;
+    top: 90px;
+}
+
+.Menu-Item {
+    height: 35px;
+}
+
+
 /*.img-size:hover {
     transform: scale(1.2);
 }*/

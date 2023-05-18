@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import project.capstone.domain.ReservationDto;
@@ -45,6 +46,19 @@ public class RestaurantController {
         return returnReviewCount(arrayList);
     }
 
+    @PostMapping("/restaurant/save")
+    public ResponseEntity saveRestaurant(@RequestBody RestaurantDto restaurantDto) {
+
+        log.info("restaurantInfo={}", restaurantDto);
+        String restAddress = restaurantDto.getAddress();
+
+        if(service_rest.checkRestaurant(restAddress) == 1) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            service_rest.setRestaurantInfo(restaurantDto);
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
+    }
 
     public ArrayList<Object> returnReviewCount(ArrayList<Object> arrayList) {
         for(int i=0; i< arrayList.size(); i++){

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class RestaurantDto {
 
+    private String userId;
     private Integer restaurantId;
     private String restaurantName;
     private int reviewCount;
@@ -18,7 +19,8 @@ public class RestaurantDto {
 
     RestaurantDto(){}
 
-    public RestaurantDto(Integer restaurantId, String restaurantName, int reviewCount, String address, String categories, String avgRating, String open, String imageUrl,double latitude,double longitude){
+    public RestaurantDto(String userId, Integer restaurantId, String restaurantName, int reviewCount, String address, String categories, String avgRating, String open, String imageUrl,double latitude,double longitude){
+        this.userId = userId;
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.reviewCount = reviewCount;

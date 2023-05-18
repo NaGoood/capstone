@@ -14,4 +14,17 @@
         where restaurantId = #{restaurantId}
     </select>
 
+    <insert id="insertRestInfo" parameterType="project.capstone.domain.RestaurantDto">
+        insert into restaurant
+            (restaurantName, address, imageUrl, categories, userId)
+        values
+            (#{restaurantName}, #{address}, #{imageUrl}, #{categories}, #{userId})
+    </insert>
+
+    <select id="checkAddress" resultType="int">
+        SELECT EXISTS
+            (SELECT * FROM restaurant
+                      WHERE address = #{checkAddress});
+    </select>
+
 </mapper>

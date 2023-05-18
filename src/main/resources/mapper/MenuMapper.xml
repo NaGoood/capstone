@@ -4,7 +4,7 @@
 <mapper namespace="project.capstone.dao.MenuMapper">
     <insert id="addMenu" parameterType="project.capstone.domain.MenuDto">
         insert into menu
-            (menuId, restaruantId, menuName, menuPrice, menuImg, menuInfo)
+            (menuId, restaurantId, menuName, menuPrice, menuImg, menuInfo)
         values
             (#{menuId},#{restaurantId},#{menuName},#{menuPrice},#{menuImg},#{menuInfo})
     </insert>

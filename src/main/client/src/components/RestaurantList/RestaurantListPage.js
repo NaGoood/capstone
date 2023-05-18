@@ -17,6 +17,7 @@ const RestaurantListPage = () => {
   const navigate = useNavigate();
   const [isFetchingRestaurants, fetchRestaurants] = useFetchRestaurants();
 
+
   const [restaurantListData, setRestaurantListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
