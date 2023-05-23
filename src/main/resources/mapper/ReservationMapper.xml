@@ -24,4 +24,10 @@
         where reservation.userId = #{userId}
     </select>
 
+    <select id="storeReservationList" resultType="project.capstone.domain.ReservationDto">
+        select userName,phoneNumber,reservDate,reservTime,reservNumber,cancelCount
+        from reservation join user on user.userId = reservation.userId
+        where restaurantId = #{restaurantId};
+    </select>
+
 </mapper>

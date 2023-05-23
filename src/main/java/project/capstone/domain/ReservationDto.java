@@ -12,6 +12,8 @@ public class ReservationDto {
     private String userId;
     @NotBlank
     private String restaurantId;
+    @NotBlank
+    private String menuId;
 
     private String reservDate;
 
@@ -21,14 +23,21 @@ public class ReservationDto {
 
     private String restaurantName;
 
+    private String userName;
+
+    private String phoneNumber;
+
+    private int cancelCount;
+
     ReservationDto() {}
 
-    public ReservationDto(String reservationId,String userId, String restaurantId, String reservTime,String reservDate,int reservNumber) {
+    public ReservationDto(String reservationId, String userId, String restaurantId, String reservTime, String reservDate, int reservNumber, String menuId) {
         this.reservationId = reservationId;
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.reservDate = reservDate;
         this.reservTime = reservTime;
         this.reservNumber = reservNumber;
+        this.menuId = menuId;
     }
 }

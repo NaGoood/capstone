@@ -1,14 +1,63 @@
 import {useMemo, useRef, useState} from "react";
-import {Button, Input, Space, Table} from "antd";
+import {Button, Input, message, Space, Table} from "antd";
 import {RESERVATION_LIST_COLUMNS, RESERVATION_LIST_DATASOURCE} from "../../constants/constants";
 import {SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words"
+import {useEffect} from "react";
+import {useFetchCurrentUser} from "../../hooks";
+import {useNavigate} from "react-router-dom";
+import useStoreReservationList from "../../hooks/use-Reservaion-List";
 
 const ManagerReservation = ({restaurantId}) =>{
 
+    const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+    const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
+    const [isStoreReservationList, fetchstoreReservationList] = useStoreReservationList();
     const searchInput = useRef(null);
+
+    const [reservationData, setReservationData] = useState([]);
+
+    let list= [];
+    let keyCount;
+
+    //const [dataSource,setDataSource] = useState()
+
+    useEffect(() => {
+        const fetchRservationList = async () => {
+            const user = await fetchCurrentUser();
+            if (!user) {
+                message.error("로그인이 필요합니다.")
+                navigate("/login", {
+                    state: { form:window.location.pathname },
+                });
+            } else  {
+                const reservationList = await fetchstoreReservationList(restaurantId);
+                setReservationData(reservationList);
+                console.log("ManagerReservation=" , reservationData);
+                keyCount=1;
+                reservationList.data.map(function(e){
+                    const data = {
+                        "key" : keyCount,
+                        "userName" : e.userName,
+                        'phoneNumber' : e.phoneNumber,
+                        'reservDate' : e.reservDate,
+                        'reservTime' : e.reservTime,
+                        'reservNumber' : e.reservNumber,
+                        'menu' : "메뉴",
+                        'cancelCount' : e.cancelCount
+                    }
+                    keyCount++;
+                    list.push(data);
+                })
+                console.log(list);
+                console.log(RESERVATION_LIST_DATASOURCE);
+            };
+        }
+        fetchRservationList();
+    }, [])
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -128,13 +177,13 @@ const ManagerReservation = ({restaurantId}) =>{
         },
         {
             title: '고객 전화번호',
-            dataIndex: 'userPhoneNumber',
-            key: 'userPhoneNumber',
-            ...getColumnSearchProps('userPhoneNumber')
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
+            ...getColumnSearchProps('phoneNumber')
         },
         {
-            title: '예약시간',
-            dataIndex: 'reservationDate',
+            title: '예약날짜',
+            dataIndex: 'reservDate',
             filters: [
                 {
                     text: '1월',
@@ -185,29 +234,35 @@ const ManagerReservation = ({restaurantId}) =>{
                     value: '-12-',
                 },
             ],
-            onFilter: (value, record) => record.reservationDate.includes(value),
+            onFilter: (value, record) => record.reservDate.includes(value),
             filterSearch: true,
             width: '40%'
         },
         {
+            title: '예약시간',
+            dataIndex: 'reservTime',
+            key: 'reservTime',
+        }
+        ,
+        {
             title: '인원수',
-            dataIndex: 'ReservationPeopleCount',
-            key: 'ReservationPeopleCount',
+            dataIndex: 'reservNumber',
+            key: 'reservNumber',
         },
         {
             title: '메뉴',
-            dataIndex: 'Menu',
-            key: 'Menu',
+            dataIndex: 'menu',
+            key: 'menu',
         },
         {
             title: '취소 횟수',
-            dataIndex: 'CancelCount',
-            key: 'CancelCount',
+            dataIndex: 'cancelCount',
+            key: 'cancelCount',
         }];
 
     return(
         <div className="reservation-List">
-            <Table dataSource={dataSource} columns={columns}/>;
+            <Table dataSource={reservationData} columns={columns} rowKey="restaurantId"/>;
         </div>
     );
 };

@@ -26,5 +26,8 @@ public class ReservationDao {
         return session.selectList(namespace+"reservInfo",userId);
     }
 
+    public List<Object> selectStoreReservationList(String restaurantId) {
+        return session.selectList(namespace + "storeReservationList", restaurantId);
+    }
 
 }

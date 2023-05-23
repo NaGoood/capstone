@@ -10,6 +10,7 @@ import project.capstone.service.ReservationService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -43,6 +44,16 @@ public class ReservationController {
     public String check(@RequestBody ReservationDto reservationDto){
         System.out.println("reservationDto = " + reservationDto);
         return null;
+    }
+
+    @GetMapping("/storeReservationList/{restaurantId}")
+    public List<ReservationDto> getStoreReservationList(@PathVariable String restaurantId){
+        log.info("[식당 예약자 조회]");
+
+        ArrayList storeReservationList = (ArrayList) service.getStoreReservationList(restaurantId);
+        log.info("storeReservationList ={}" , storeReservationList);
+
+        return storeReservationList;
     }
 }
 

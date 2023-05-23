@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Calendar, Checkbox, DatePicker, Form, List, message, Space, TimePicker, Typography} from "antd";
+import {Calendar, Checkbox, DatePicker, Form, List, message, Space, Table, TimePicker, Typography} from "antd";
 import {useFetchCurrentUser, useReservation, useSignup} from "hooks";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
@@ -14,7 +14,7 @@ const Reservation = ({restaurantId}) =>{
     const [reservNumber , setreservNumber] = useState(0)
     const [currentUser, setCurrentUser] = useState({});
     const [reservDate, setreservDate] = useState("");
-    const [reservtime, setreservTime] = useState("");
+    const [reservTime, setreservTime] = useState("");
     const [menu, setMenu] = useState([""]);
     const [menuList, setMenuList] = useState([]);
 
@@ -49,7 +49,7 @@ const Reservation = ({restaurantId}) =>{
     }, [])
 
     const onUserReservation = async () => {
-        const response = await reservation(currentUser.userId,restaurantId, reservDate, reservNumber);
+        const response = await reservation(currentUser.userId, restaurantId, reservDate, reservNumber, reservTime, menu.menuId);
         console.log("onUserReservation",response);
         if(response.status == 200){
             window.location.replace("/")
@@ -65,11 +65,24 @@ const Reservation = ({restaurantId}) =>{
         reservNumber <= 0 ? setreservNumber(0) : setreservNumber(reservNumber - 1);
     }
 
-    const selectMenu = (e) => {
-        console.log(e.target.value);
-        setMenu(e.target.value);
+    function selectMenu(selectedMenu) {
+        console.log(selectedMenu);
+        setMenu(selectedMenu.menuId);
         console.log(menu);
     }
+
+    const columns = [
+        {
+            title: '이름',
+            dataIndex: 'menuName',
+        },
+        {
+            title: '가격',
+            dataIndex: 'menuPrice',
+            render: (text) => <>{text}원</>,
+        },
+    ]
+
 
     return(
         <div className="div-container-asd">
@@ -151,8 +164,18 @@ const Reservation = ({restaurantId}) =>{
                     </Form.Item>
                     <Form.Item
                         label="메뉴 선택하기"
-                        name="selectMenu">
-                        <List
+                        name="selectMenu"
+                    >
+                        <Table
+                            dataSource={menuList}
+                            columns={columns}
+                            rowSelection={{
+                                type: "checkbox",
+                                onSelect: selectMenu,
+                            }}
+                            rowKey='menuId'
+                        />
+                        {/*<List
                             dataSource={menuList}
                             renderItem={item => (
                                 <List.Item key={item.menuId}>
@@ -162,7 +185,7 @@ const Reservation = ({restaurantId}) =>{
                                     >{`${item.menuName} : ${item.menuPrice}원`}</Checkbox>
                                 </List.Item>
                             )}
-                        />
+                        />*/}
                     </Form.Item>
                     <button onClick={onUserReservation}>예약하기</button>
                 </Form>

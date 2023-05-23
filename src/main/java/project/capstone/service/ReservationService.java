@@ -20,4 +20,7 @@ public class ReservationService {
 
     public List<Object> getReservInfo(int userId){ return reservDao.selectReserv(userId); }
 
+    public List<Object> getStoreReservationList(String restaurantId) {
+        return reservDao.selectStoreReservationList(restaurantId);
+    }
 }
