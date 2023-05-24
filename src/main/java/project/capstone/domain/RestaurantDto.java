@@ -6,6 +6,8 @@ import lombok.Data;
 public class RestaurantDto {
 
     private Integer restaurantId;
+
+    private String userId;
     private String restaurantName;
     private int reviewCount;
     private String address;
@@ -16,10 +18,13 @@ public class RestaurantDto {
     private double latitude;
     private double longitude;
 
+    private String gltf;
+
     RestaurantDto(){}
 
-    public RestaurantDto(Integer restaurantId, String restaurantName, int reviewCount, String address, String categories, String avgRating, String open, String imageUrl,double latitude,double longitude){
+    public RestaurantDto(Integer restaurantId, String userId, String restaurantName, int reviewCount, String address, String categories, String avgRating, String open, String imageUrl, String gltf,double latitude, double longitude) {
         this.restaurantId = restaurantId;
+        this.userId = userId;
         this.restaurantName = restaurantName;
         this.reviewCount = reviewCount;
         this.address = address;
@@ -29,5 +34,6 @@ public class RestaurantDto {
         this.imageUrl = imageUrl;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.gltf = gltf;
     }
 }

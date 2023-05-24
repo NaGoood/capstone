@@ -28,6 +28,8 @@ const RestaurantPage = () => {
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [fetchRestId,setfetchRestId] = useState();
 
+  console.log(restaurantItemData);
+
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
     sort: "date",*/

@@ -1,22 +1,53 @@
 import {useEffect, useState} from "react";
 import {Calendar, Checkbox, DatePicker, Form, List, message, Space, TimePicker, Typography} from "antd";
-import {useFetchCurrentUser, useReservation, useSignup} from "hooks";
+import {useFetchCurrentUser,useFetchRestaurant, useReservation, useSignup} from "hooks";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import useMenuItem from "../../hooks/use-menuItem";
+
+//3d
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { PerspectiveCamera } from 'three';
+import Model from "./Model";
+import SeatSelection from "./SeatSelection";
 
 const Reservation = ({restaurantId}) =>{
     const navigate = useNavigate();
     const [isReservation, reservation] = useReservation();
     const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
+    const [isFetchingRestaurant, fetchRestaurant] = useFetchRestaurant();
     const [isMenuItem, menuItem] = useMenuItem();
-
     const [reservNumber , setreservNumber] = useState(0)
     const [currentUser, setCurrentUser] = useState({});
     const [reservDate, setreservDate] = useState("");
     const [reservtime, setreservTime] = useState("");
     const [menu, setMenu] = useState([""]);
     const [menuList, setMenuList] = useState([]);
+
+
+    //3d
+    const [modelInfo, setModelInfo] = useState();
+    const [SeatSelectionOpen, setSeatSelectionOpen] = useState(false);
+    const [ModelOpen, setModelOpen] = useState(true);
+    const camera = new PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.5, 1000);
+    camera.position.set(10, 10, 10);
+    const camera1 = new PerspectiveCamera(11, window.innerWidth / window.innerHeight, 0.5, 1000);
+    camera1.position.set(0, 110, 0); // 카메라 위치 조정
+    camera1.lookAt(0, 0, 0); // 모델을 중심으로 시야를 조정할 수 있습니다.
+     // 모델을 중심으로 시야를 조정할 수 있습니다.
+
+    const on3DModels =  () => {
+        setSeatSelectionOpen(false);
+        setModelOpen(true);
+    }
+
+    //3D 끝
+
+    const onSeatSelection = () => {
+        setModelOpen(false);
+        setSeatSelectionOpen(true);
+    };
 
 
     function onSelectDate(value) {
@@ -30,6 +61,7 @@ const Reservation = ({restaurantId}) =>{
     useEffect(() => {
         const fetchUserData = async () => {
             const user = await fetchCurrentUser();
+
             if (!user) {
                 message.error("로그인이 필요합니다.")
                 navigate("/login", {
@@ -43,6 +75,11 @@ const Reservation = ({restaurantId}) =>{
                     setMenuList(menuItemList);
                 };
                 fetchMenuItem();
+                const fetch3DModels = async()=>{
+                    const Models = await fetchRestaurant(restaurantId);
+                    setModelInfo(Models[0].gltf);
+                };
+                fetch3DModels();
             }
         }
         fetchUserData();
@@ -167,8 +204,25 @@ const Reservation = ({restaurantId}) =>{
                     <button onClick={onUserReservation}>예약하기</button>
                 </Form>
             </div>
-
             <div className="right-box">
+                <div className="model-container">
+                {!SeatSelectionOpen && ModelOpen && ( // 모델을 보이거나 숨기는 조건부 렌더링
+                    <Canvas camera={camera} gl={{ alpha: true }}>
+                        <OrbitControls />
+                        <ambientLight />
+                        <Model position={[0, 0, 0]} />
+                    </Canvas>
+                )}{SeatSelectionOpen && !ModelOpen && ( // 모델을 보이거나 숨기는 조건부 렌더링
+                        <Canvas camera={camera1} >
+                            <ambientLight />
+                            <SeatSelection position={[0, 0, 0]}/>
+                        </Canvas>
+                    )}
+                </div>
+                <div>
+                    <button onClick={on3DModels}>3D Model</button>&nbsp;
+                    <button onClick={onSeatSelection}>좌석선택</button>
+                </div>
 
             </div>
         </div>
