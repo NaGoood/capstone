@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import project.capstone.domain.ReservationDto;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ReservationDao {
@@ -19,12 +20,15 @@ public class ReservationDao {
     }
 
     public List<Object> selectRest(int userId){
-       return session.selectList(namespace+"checkReserv",userId);
+        return session.selectList(namespace+"checkReserv",userId);
     }
 
     public List<Object> selectReserv(int userId) {
         return session.selectList(namespace+"reservInfo",userId);
     }
 
+    public List<Object> selectTableInfo(int restaurantId) {return session.selectList(namespace+"tableInfo",restaurantId);}
+
+    public Integer updateTable(Map map) {return session.update(namespace+"updateTable",map);}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.capstone.domain.ReservationDto;
+import project.capstone.domain.TableDto;
 import project.capstone.domain.UserDto;
 import project.capstone.service.ReservationService;
 
@@ -24,9 +25,12 @@ public class ReservationController {
     @PostMapping("/reservation")
     public String useReservation(@Valid @RequestBody ReservationDto reservation) {
         log.info("reservation={}",reservation);
-        int rowCnt = service.save(reservation);
-        if(rowCnt == 1)
-            System.out.println("예약완료");
+        int tableNumber = reservation.getTableNumber();
+        int tableType = reservation.getTableType();
+        boolean tableValue = false;
+        service.updateTable(tableNumber,tableType,tableValue);
+        service.save(reservation);
+        System.out.println("예약완료");
         return "ok";
     }
 
@@ -45,7 +49,16 @@ public class ReservationController {
     @PostMapping("/reservcancel")
     public String check(@RequestBody ReservationDto reservationDto){
         System.out.println("reservationDto = " + reservationDto);
+
         return null;
     }
-}
 
+
+    @GetMapping("/table/{restaurantId}")
+    public ArrayList<TableDto> tableInfo(@PathVariable String restaurantId){
+        ArrayList arrayList = (ArrayList) service.getTableInfo(Integer.parseInt(restaurantId));
+        System.out.println("arrayList = " + arrayList);
+        return arrayList;
+    }
+
+}

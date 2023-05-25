@@ -19,3 +19,4 @@ export { default as useReviewCreate} from "./use-review-create";
 export { default as useReservationList} from "./use-reservation-list";
 export { default as useReservationInfo} from "./use-reservation-Info";
 export { default as useReservCancel} from "./use-reservation-cancel";
+export { default as useTableInfo} from "./use-tableInfo";

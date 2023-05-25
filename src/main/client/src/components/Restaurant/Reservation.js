@@ -4,6 +4,7 @@ import {useFetchCurrentUser,useFetchRestaurant, useReservation, useSignup} from 
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import useMenuItem from "../../hooks/use-menuItem";
+import useTableInfo from "../../hooks/use-tableInfo"
 
 //3d
 import { Canvas } from '@react-three/fiber';
@@ -24,10 +25,11 @@ const Reservation = ({restaurantId}) =>{
     const [reservtime, setreservTime] = useState("");
     const [menu, setMenu] = useState([""]);
     const [menuList, setMenuList] = useState([]);
-
+    const [tableNumber,setTableNumber] = useState("");
+    const [tableType,setTableType] = useState("");
+    const [isTableInfo,tableInfo] = useTableInfo();
 
     //3d
-    const [modelInfo, setModelInfo] = useState();
     const [SeatSelectionOpen, setSeatSelectionOpen] = useState(false);
     const [ModelOpen, setModelOpen] = useState(true);
     const camera = new PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.5, 1000);
@@ -75,22 +77,28 @@ const Reservation = ({restaurantId}) =>{
                     setMenuList(menuItemList);
                 };
                 fetchMenuItem();
-                const fetch3DModels = async()=>{
-                    const Models = await fetchRestaurant(restaurantId);
-                    setModelInfo(Models[0].gltf);
+                const fetchTableInfo = async()=>{
+                    const table = await tableInfo(restaurantId);
+                    console.log(table);
                 };
-                fetch3DModels();
+                fetchTableInfo();
             }
         }
         fetchUserData();
     }, [])
 
     const onUserReservation = async () => {
-        const response = await reservation(currentUser.userId,restaurantId, reservDate, reservNumber);
-        console.log("onUserReservation",response);
-        if(response.status == 200){
-            window.location.replace("/")
-            message.success('예약 완료!');
+        if(tableNumber === "") {
+            message.error("좌석을 선택해주세요 !!!")
+            return;
+        } else {
+            const response = await reservation(currentUser.userId, restaurantId, reservDate, reservNumber, tableNumber,tableType);
+            console.log("onUserReservation", response);
+            if (response.status == 200) {
+                setTableNumber("");
+                window.location.replace("/")
+                message.success('예약 완료!');
+            }
         }
     }
 
@@ -107,6 +115,7 @@ const Reservation = ({restaurantId}) =>{
         setMenu(e.target.value);
         console.log(menu);
     }
+
 
     return(
         <div className="div-container-asd">
@@ -215,7 +224,7 @@ const Reservation = ({restaurantId}) =>{
                 )}{SeatSelectionOpen && !ModelOpen && ( // 모델을 보이거나 숨기는 조건부 렌더링
                         <Canvas camera={camera1} >
                             <ambientLight />
-                            <SeatSelection position={[0, 0, 0]}/>
+                            <SeatSelection reservNumber={reservNumber} onSelectionInfo={setTableNumber} onSelectionInfo2 = {setTableType} position={[0, 0, 0]}/>
                         </Canvas>
                     )}
                 </div>
@@ -223,7 +232,6 @@ const Reservation = ({restaurantId}) =>{
                     <button onClick={on3DModels}>3D Model</button>&nbsp;
                     <button onClick={onSeatSelection}>좌석선택</button>
                 </div>
-
             </div>
         </div>
     );
