@@ -3,6 +3,7 @@ package project.capstone.domain;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 public class ReservationDto {
@@ -12,8 +13,10 @@ public class ReservationDto {
     private String userId;
     @NotBlank
     private String restaurantId;
-    @NotBlank
-    private String menuId;
+    @NotEmpty
+    private String[] reservMenu;
+
+    private String menuName;
 
     private String reservDate;
 
@@ -31,13 +34,14 @@ public class ReservationDto {
 
     ReservationDto() {}
 
-    public ReservationDto(String reservationId, String userId, String restaurantId, String reservTime, String reservDate, int reservNumber, String menuId) {
+    public ReservationDto(String reservationId, String userId, String restaurantId, String reservTime, String reservDate, int reservNumber, String[] reservMenu, String menuName) {
         this.reservationId = reservationId;
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.reservDate = reservDate;
         this.reservTime = reservTime;
         this.reservNumber = reservNumber;
-        this.menuId = menuId;
+        this.menuName = menuName;
+        this.reservMenu = reservMenu;
     }
 }

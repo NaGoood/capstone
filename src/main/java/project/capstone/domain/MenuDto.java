@@ -17,11 +17,11 @@ import javax.validation.constraints.NotBlank;
     @NotBlank
     private String menuInfo;
     @NotBlank
-    private int menuId;
+    private String menuId;
 
     public MenuDto() {}
 
-    public MenuDto(String restaurantId, String menuImg, String menuName, String menuPrice, String menuInfo, int menuId) {
+    public MenuDto(String restaurantId, String menuImg, String menuName, String menuPrice, String menuInfo, String menuId) {
         this.restaurantId = restaurantId;
         this.menuImg = menuImg;
         this.menuName = menuName;

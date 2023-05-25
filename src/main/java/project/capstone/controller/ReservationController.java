@@ -9,6 +9,7 @@ import project.capstone.domain.ReservationDto;
 import project.capstone.service.ReservationService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,23 @@ public class ReservationController {
 
     @PostMapping("/reservation")
     public String useReservation(@Valid @RequestBody ReservationDto reservation) {
+
         log.info("reservation={}",reservation);
+
+        StringBuilder menuString = new StringBuilder();
+        String[] reservMenu = reservation.getReservMenu();
+
+        for (int i = 0; i < reservMenu.length; i++) {
+            menuString.append(reservMenu[i]);
+            if (menuString == null) {
+                return "XXX";
+            } else if (i < reservMenu.length - 1) {
+                menuString.append(",");
+            }
+        }
+        String menuName = menuString.toString();
+        reservation.setMenuName(menuName);
+
         int rowCnt = service.save(reservation);
         if(rowCnt == 1)
             System.out.println("예약완료");

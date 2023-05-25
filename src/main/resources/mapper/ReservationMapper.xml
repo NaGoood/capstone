@@ -4,9 +4,9 @@
 <mapper namespace="project.capstone.dao.ReservationMapper">
     <insert id="addReserv" parameterType="project.capstone.domain.ReservationDto">
         insert into reservation
-            (restaurantId,userId,reservDate,reservTime,reservNumber)
+            (restaurantId,userId,reservDate,reservTime,reservNumber, menuName)
         values
-            (#{restaurantId},#{userId},#{reservDate},#{reservTime},#{reservNumber})
+            (#{restaurantId},#{userId},#{reservDate},#{reservTime},#{reservNumber}, #{menuName})
     </insert>
 
     <select id="checkReserv" resultType="project.capstone.domain.RestaurantDto">

@@ -15,7 +15,7 @@ const Reservation = ({restaurantId}) =>{
     const [currentUser, setCurrentUser] = useState({});
     const [reservDate, setreservDate] = useState("");
     const [reservTime, setreservTime] = useState("");
-    const [menu, setMenu] = useState([""]);
+    const [reservMenu, setreservMenu] = useState([]);
     const [menuList, setMenuList] = useState([]);
 
 
@@ -49,7 +49,7 @@ const Reservation = ({restaurantId}) =>{
     }, [])
 
     const onUserReservation = async () => {
-        const response = await reservation(currentUser.userId, restaurantId, reservDate, reservNumber, reservTime, menu.menuId);
+        const response = await reservation(currentUser.userId, restaurantId, reservDate, reservNumber, reservTime, [reservMenu]);
         console.log("onUserReservation",response);
         if(response.status == 200){
             window.location.replace("/")
@@ -65,11 +65,17 @@ const Reservation = ({restaurantId}) =>{
         reservNumber <= 0 ? setreservNumber(0) : setreservNumber(reservNumber - 1);
     }
 
-    function selectMenu(selectedMenu) {
+    function selectMenu(selectedMenu, selected) {
         console.log(selectedMenu);
-        setMenu(selectedMenu.menuId);
-        console.log(menu);
+        if (selected) {
+            setreservMenu(prevSelectedMenus => [...prevSelectedMenus, selectedMenu.menuName]);
+        } else {
+            setreservMenu(prevSelectedMenus => prevSelectedMenus.filter(id => id !== selectedMenu.menuName));
+        }
+
+        console.log(reservMenu);
     }
+
 
     const columns = [
         {
@@ -175,17 +181,6 @@ const Reservation = ({restaurantId}) =>{
                             }}
                             rowKey='menuId'
                         />
-                        {/*<List
-                            dataSource={menuList}
-                            renderItem={item => (
-                                <List.Item key={item.menuId}>
-                                    <Checkbox
-                                        onChange={selectMenu}
-                                        value={`${item.menuId} : ${item.menuName} : ${item.menuPrice}`}
-                                    >{`${item.menuName} : ${item.menuPrice}원`}</Checkbox>
-                                </List.Item>
-                            )}
-                        />*/}
                     </Form.Item>
                     <button onClick={onUserReservation}>예약하기</button>
                 </Form>

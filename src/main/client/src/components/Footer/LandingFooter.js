@@ -201,6 +201,25 @@ const AppFooter = () => {
                             ></Input>
                         </Form.Item>
                         <Form.Item
+                            label="3D 이미지"
+                            name="restaurant3DImg"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "좌석 사진을 등록해주세요",
+                                },
+                            ]}
+                        >
+                            <Input
+                                className="footer-item"
+                                type="file"
+                                placeholder="사진을 선택해주세요"
+                                name="restaurantImg"
+                                id="file-input"
+                                onChange={onChangRestaurantImg}
+                            ></Input>
+                        </Form.Item>
+                        <Form.Item
                             label="가게 종류"
                             name="restaurantCategory"
                             rules={[
