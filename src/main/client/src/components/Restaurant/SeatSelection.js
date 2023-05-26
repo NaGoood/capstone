@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 import { Box } from '@react-three/drei';
 
-function SeatSelection({reservNumber, onSelectionInfo, onSelectionInfo2}) {
+function SeatSelection({reservNumber, tableCheck, onSelectionInfo, onSelectionInfo2}) {
 
     //변수
 
@@ -180,6 +180,61 @@ function SeatSelection({reservNumber, onSelectionInfo, onSelectionInfo2}) {
                 seat_2: [0, 0, 0],
                 seat_3: [0, 0, 0]
             }));
+
+            tableCheck.map((element)=>{
+                if(element.tableType === 1){
+                    if(element.tableNumber === 1){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_1: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 2){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_2: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 3){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_3: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 4){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_4: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 5){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_5: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 6){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_6: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 7){
+                        if(element.tableValue === false){
+                            setMulti_person_1((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_7: [0, 0, 0]
+                                };});}}
+                }
+            })
+
         }else if(reservNumber === 5 || reservNumber === 6 ){
             setMulti_person_1((prevState) => ({
                 ...prevState,
@@ -205,6 +260,44 @@ function SeatSelection({reservNumber, onSelectionInfo, onSelectionInfo2}) {
                 seat_2: [0, 0, 0],
                 seat_3: [0, 0, 0]
             }));
+            tableCheck.map((element)=>{
+            if(element.tableType === 2){
+                if(element.tableNumber === 1){
+                    if(element.tableValue === false){
+                        setMulti_person_2((prevState) => {
+                            return {
+                                ...prevState,
+                                seat_1: [0, 0, 0]
+                            };});}}
+                if(element.tableNumber === 2){
+                    if(element.tableValue === false){
+                        setMulti_person_2((prevState) => {
+                            return {
+                                ...prevState,
+                                seat_2: [0, 0, 0]
+                            };});}}
+                if(element.tableNumber === 3){
+                    if(element.tableValue === false){
+                        setMulti_person_2((prevState) => {
+                            return {
+                                ...prevState,
+                                seat_3: [0, 0, 0]
+                            };});}}
+                if(element.tableNumber === 4){
+                    if(element.tableValue === false){
+                        setMulti_person_2((prevState) => {
+                            return {
+                                ...prevState,
+                                seat_4: [0, 0, 0]
+                            };});}}
+                if(element.tableNumber === 5){
+                    if(element.tableValue === false){
+                        setMulti_person_2((prevState) => {
+                            return {
+                                ...prevState,
+                                seat_5: [0, 0, 0]
+                            };});}}
+            }})
         }else if(reservNumber === 7 || reservNumber === 8 ){
             setMulti_person_1((prevState) => ({
                 ...prevState,
@@ -230,6 +323,31 @@ function SeatSelection({reservNumber, onSelectionInfo, onSelectionInfo2}) {
                 seat_2: [2, 2, 2],
                 seat_3: [2, 2, 2]
             }));
+            tableCheck.map((element)=>{
+                if(element.tableType === 3){
+                    if(element.tableNumber === 1){
+                        if(element.tableValue === false){
+                            setMulti_person_3((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_1: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 2){
+                        if(element.tableValue === false){
+                            setMulti_person_3((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_2: [0, 0, 0]
+                                };});}}
+                    if(element.tableNumber === 3){
+                        if(element.tableValue === false){
+                            setMulti_person_3((prevState) => {
+                                return {
+                                    ...prevState,
+                                    seat_3: [0, 0, 0]
+                                };});}}
+                }
+            })
         }else{
             setMulti_person_1((prevState) => ({
                 ...prevState,

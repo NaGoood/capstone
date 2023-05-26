@@ -28,7 +28,7 @@ const Reservation = ({restaurantId}) =>{
     const [tableNumber,setTableNumber] = useState("");
     const [tableType,setTableType] = useState("");
     const [isTableInfo,tableInfo] = useTableInfo();
-
+    const [tableCheck, setTableCheck] = useState([]);
     //3d
     const [SeatSelectionOpen, setSeatSelectionOpen] = useState(false);
     const [ModelOpen, setModelOpen] = useState(true);
@@ -79,7 +79,7 @@ const Reservation = ({restaurantId}) =>{
                 fetchMenuItem();
                 const fetchTableInfo = async()=>{
                     const table = await tableInfo(restaurantId);
-                    console.log(table);
+                    setTableCheck(table);
                 };
                 fetchTableInfo();
             }
@@ -224,7 +224,7 @@ const Reservation = ({restaurantId}) =>{
                 )}{SeatSelectionOpen && !ModelOpen && ( // 모델을 보이거나 숨기는 조건부 렌더링
                         <Canvas camera={camera1} >
                             <ambientLight />
-                            <SeatSelection reservNumber={reservNumber} onSelectionInfo={setTableNumber} onSelectionInfo2 = {setTableType} position={[0, 0, 0]}/>
+                            <SeatSelection reservNumber={reservNumber} tableCheck={tableCheck} onSelectionInfo={setTableNumber} onSelectionInfo2 = {setTableType} position={[0, 0, 0]}/>
                         </Canvas>
                     )}
                 </div>
