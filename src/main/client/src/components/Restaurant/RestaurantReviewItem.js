@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {Row, Col, Avatar, Tooltip, Button, message, Modal, Form, Checkbox, Input} from "antd";
 import ReviewRate from "components/Reviewer/ReviewRate";
 import ReviewContent from "components/Reviewer/ReviewContent";
 import ReviewVote from "components/Reviewer/ReviewVote";
-import {useReplyUpdate} from "hooks";
+import {useReplyUpdate,  useFetchCurrentUser} from "hooks";
 import { getInitial } from "utils";
 import {FormOutlined} from "@ant-design/icons";
 
@@ -18,19 +18,33 @@ const RestaurantReviewItem = ({
                                   coolCount,
                                   content,
                                   date,
-                                  reply,
-                                  reviewId,
-                                  userId,
+                                  reply, reviewId,
                                   ownerId
                               }) => {
     const navigate = useNavigate();
 
     const [isReplyUpdate,replyUpdate] = useReplyUpdate();
+    const [isFetchingCurrentUser, fetchCurrentUser] = useFetchCurrentUser();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const showButton = ownerId === userId && reply;
+    const [userId,setUserId] = useState([]);
+    const [showButton, setShowButton] = useState(ownerId === userId && reply);
+
+    useEffect(() => {
+        setShowButton(ownerId === userId && reply);
+    }, [ownerId, userId, reply]);
     const showModal = () => {
         setIsModalOpen(true);
     };
+
+    useEffect(() => {
+        const getUser = async () => {
+            const currentUser = await fetchCurrentUser();
+            setUserId(currentUser.userId);
+            console.log(userId)
+        };
+        getUser()
+    }, [userId]);
+
 
     const onFinish = (values) => {
         if(values.content != undefined){
@@ -85,7 +99,7 @@ const RestaurantReviewItem = ({
                     <ReviewRate rating={rating} date={date} />
                 </Col>
                 <div>
-                    {showButton && (
+                    {userId != undefined && showButton && (
                         <Button onClick={showModal}><FormOutlined />{reply ? '답글 수정' : '답글 쓰기'}</Button>
                     )}
                 </div>

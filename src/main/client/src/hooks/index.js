@@ -21,3 +21,5 @@ export { default as useReservationInfo} from "./use-reservation-Info";
 export { default as useReservCancel} from "./use-reservation-cancel";
 export { default as useReplyUpdate} from "./use-reply-update";
 export { default as useStoreState} from "./use-store-state";
+export { default as useTableInfo} from "./use-tableInfo";
+export { default as useStoreReservationList} from "./use-reservation-store-list";

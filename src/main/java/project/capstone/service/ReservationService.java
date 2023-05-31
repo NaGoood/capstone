@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import project.capstone.dao.ReservationDao;
 import project.capstone.domain.ReservationDto;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReservationService {
@@ -20,7 +22,19 @@ public class ReservationService {
 
     public List<Object> getReservInfo(int userId){ return reservDao.selectReserv(userId); }
 
+
     public List<Object> getStoreReservationList(String restaurantId) {
         return reservDao.selectStoreReservationList(restaurantId);
     }
+
+    public List<Object> getTableInfo(int restaurantId) { return reservDao.selectTableInfo(restaurantId);}
+
+    public int updateTable(int tableNumber, int tableType,boolean tableValue) {
+        Map map = new HashMap();
+        map.put("tableNumber",tableNumber);
+        map.put("tableType",tableType);
+        map.put("tableValue",tableValue);
+        return reservDao.updateTable(map);
+    }
+
 }

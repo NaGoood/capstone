@@ -13,10 +13,6 @@ public class ReservationDto {
     private String userId;
     @NotBlank
     private String restaurantId;
-    @NotEmpty
-    private String[] reservMenu;
-
-    private String menuName;
 
     private String reservDate;
 
@@ -28,13 +24,23 @@ public class ReservationDto {
 
     private String userName;
 
+
     private String phoneNumber;
 
     private int cancelCount;
 
+    @NotEmpty
+    private String[] reservMenu;
+
+    private String menuName;
+
+    private int tableNumber;
+
+    private Integer tableType;
+
     ReservationDto() {}
 
-    public ReservationDto(String reservationId, String userId, String restaurantId, String reservTime, String reservDate, int reservNumber, String[] reservMenu, String menuName) {
+    public ReservationDto(String reservationId, String userId, String restaurantId, String reservTime, String reservDate, int reservNumber, String[] reservMenu, String menuName,int tableNumber, Integer tableType) {
         this.reservationId = reservationId;
         this.userId = userId;
         this.restaurantId = restaurantId;
@@ -43,5 +49,7 @@ public class ReservationDto {
         this.reservNumber = reservNumber;
         this.menuName = menuName;
         this.reservMenu = reservMenu;
+        this.tableNumber = tableNumber;
+        this.tableType = tableType;
     }
 }

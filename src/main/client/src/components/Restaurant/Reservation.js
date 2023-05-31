@@ -1,9 +1,16 @@
 import {useEffect, useState} from "react";
 import {Calendar, Checkbox, DatePicker, Form, List, message, Space, Table, TimePicker, Typography} from "antd";
-import {useFetchCurrentUser, useReservation, useSignup} from "hooks";
+import {useFetchCurrentUser, useReservation, useSignup,useTableInfo} from "hooks";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import useMenuItem from "../../hooks/use-menuItem";
+
+//3d
+import { Canvas } from  '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { PerspectiveCamera } from 'three';
+import Model from "./Model";
+import SeatSelection from "./SeatSelection";
 
 const Reservation = ({restaurantId}) =>{
     const navigate = useNavigate();
@@ -17,7 +24,32 @@ const Reservation = ({restaurantId}) =>{
     const [reservTime, setreservTime] = useState("");
     const [reservMenu, setreservMenu] = useState([]);
     const [menuList, setMenuList] = useState([]);
+    const [menu, setMenu] = useState([""]);
+    const [tableNumber,setTableNumber] = useState("");
+    const [tableType,setTableType] = useState("");
+    const [isTableInfo,tableInfo] = useTableInfo();
+    const [tableCheck, setTableCheck] = useState([]);
+    //3d
+    const [SeatSelectionOpen, setSeatSelectionOpen] = useState(false);
+    const [ModelOpen, setModelOpen] = useState(true);
+    const camera = new PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.5, 1000);
+    camera.position.set(10, 10, 10);
+    const camera1 = new PerspectiveCamera(11, window.innerWidth / window.innerHeight, 0.5, 1000);
+    camera1.position.set(0, 110, 0); // 카메라 위치 조정
+    camera1.lookAt(0, 0, 0); // 모델을 중심으로 시야를 조정할 수 있습니다.
+    // 모델을 중심으로 시야를 조정할 수 있습니다.
 
+    const on3DModels =  () => {
+        setSeatSelectionOpen(false);
+        setModelOpen(true);
+    }
+
+    //3D 끝
+
+    const onSeatSelection = () => {
+        setModelOpen(false);
+        setSeatSelectionOpen(true);
+    };
 
     function onSelectDate(value) {
         setreservDate(value.format("YYYY-MM-DD"));
@@ -43,17 +75,27 @@ const Reservation = ({restaurantId}) =>{
                     setMenuList(menuItemList);
                 };
                 fetchMenuItem();
+                const fetchTableInfo = async()=>{
+                    const table = await tableInfo(restaurantId);
+                    setTableCheck(table);
+                };
+                fetchTableInfo();
             }
         }
         fetchUserData();
     }, [])
 
     const onUserReservation = async () => {
-        const response = await reservation(currentUser.userId, restaurantId, reservDate, reservNumber, reservTime, [reservMenu]);
-        console.log("onUserReservation",response);
-        if(response.status == 200){
-            window.location.replace("/")
-            message.success('예약 완료!');
+        if (tableNumber === "") {
+            message.error("좌석을 선택해주세요 !!!")
+            return;
+        } else {
+            const response = await reservation(currentUser.userId, restaurantId, reservDate, reservNumber, tableNumber, tableType, reservTime, [reservMenu]);
+            console.log("onUserReservation", response);
+            if (response.status == 200) {
+                window.location.replace("/")
+                message.success('예약 완료!');
+            }
         }
     }
 
@@ -187,7 +229,24 @@ const Reservation = ({restaurantId}) =>{
             </div>
 
             <div className="right-box">
-
+                <div className="model-container">
+                    {!SeatSelectionOpen && ModelOpen && ( // 모델을 보이거나 숨기는 조건부 렌더링
+                        <Canvas camera={camera} gl={{ alpha: true }}>
+                            <OrbitControls />
+                            <ambientLight />
+                            <Model position={[0, 0, 0]} />
+                        </Canvas>
+                    )}{SeatSelectionOpen && !ModelOpen && ( // 모델을 보이거나 숨기는 조건부 렌더링
+                    <Canvas camera={camera1} >
+                        <ambientLight />
+                        <SeatSelection reservNumber={reservNumber} tableCheck={tableCheck} onSelectionInfo={setTableNumber} onSelectionInfo2 = {setTableType} position={[0, 0, 0]}/>
+                    </Canvas>
+                )}
+                </div>
+                <div>
+                    <button onClick={on3DModels}>3D Model</button>&nbsp;
+                    <button onClick={onSeatSelection}>좌석선택</button>
+                </div>
             </div>
         </div>
     );

@@ -1,15 +1,12 @@
-import {Button, Card, Form, Input, List, Modal, message} from "antd";
+import {Button, Card, Form, Input, List, Modal,message} from "antd";
 import {useEffect, useRef, useState} from "react";
 import useMenuItem from "../../hooks/use-menuItem";
-import Meta from "antd/es/card/Meta";
 import useSaveMenu from "../../hooks/use-save-menu";
 import {useFetchCurrentUser} from "../../hooks";
 import {useNavigate} from "react-router-dom";
 
-
-const MenuPage = ({
-                      restaurantId
-                  }) => {
+//userId: 가게을 등록한 userId , currentId : 현재 로그인한 Id
+const MenuPage = ({restaurantId , currentId , userId}) => {
 
     const [isMenuItem, menuItem] = useMenuItem();
     const [isSaveMenu, saveMenu] = useSaveMenu();
@@ -119,7 +116,7 @@ const MenuPage = ({
             setCurrentUser(null);
         } else  {
             console.log("LandingFooter" , currentUser); //현재 이용자 데이터 확인하기
-            currentUser.userType === "사장님" ? showModal() : message.error("권한이 없습니다");
+            currentUser.userId === userId ? showModal() : message.error("사장님만 사용할 수 있는 기능입니다.");
         }
     }, [isModal])
 
@@ -133,7 +130,7 @@ const MenuPage = ({
                     header={<div>
                         <div className="Meta-font">
                             메인 메뉴
-                            <Button className="addMenu" type="primary" onClick={modalClick}>메뉴 추가하기</Button>
+                            {userId === currentId ? (<Button className="addMenu" type="primary" onClick={modalClick}>메뉴 추가하기</Button>) : (<div/>)}
                             <Modal
                                 title="메뉴 등록"
                                 open={isModalOpen}
@@ -239,7 +236,7 @@ const MenuPage = ({
                                 <div className="div-food-info">
                                     <h1 className="food-name">{item.menuName}</h1>
                                     <h1 className="food-info">{item.menuInfo}</h1>
-                                    <h1 className="food-price">{item.menuPrice}</h1>
+                                    <h1 className="food-price">{item.menuPrice}원</h1>
                                 </div>
                             </Card>
                         </div>

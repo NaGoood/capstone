@@ -175,8 +175,8 @@ const SignupPage = () => {
                                     value={formData.userType}
                                     name="userType"
                                 >
-                                    <Radio value="손님">손님</Radio>
-                                    <Radio value="사장님">사장님</Radio>
+                                    <Radio value="손님">일반 고객</Radio>
+                                    <Radio value="사장님">관리자</Radio>
                                 </Radio.Group>
                             </Form.Item>
                             <Form.Item>

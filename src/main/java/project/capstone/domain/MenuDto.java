@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
- public class MenuDto {
+public class MenuDto {
 
     private String restaurantId;
     @NotBlank

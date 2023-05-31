@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.capstone.domain.ReservationDto;
+import project.capstone.domain.TableDto;
 import project.capstone.service.ReservationService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +22,11 @@ public class ReservationController {
 
     @PostMapping("/reservation")
     public String useReservation(@Valid @RequestBody ReservationDto reservation) {
-
         log.info("reservation={}",reservation);
+
+        int tableNumber = reservation.getTableNumber();
+        int tableType = reservation.getTableType();
+        boolean tableValue = false;
 
         StringBuilder menuString = new StringBuilder();
         String[] reservMenu = reservation.getReservMenu();
@@ -39,6 +42,7 @@ public class ReservationController {
         String menuName = menuString.toString();
         reservation.setMenuName(menuName);
 
+        service.updateTable(tableNumber,tableType,tableValue);
         int rowCnt = service.save(reservation);
         if(rowCnt == 1)
             System.out.println("예약완료");
@@ -63,6 +67,13 @@ public class ReservationController {
         return null;
     }
 
+    @GetMapping("/table/{restaurantId}")
+    public ArrayList<TableDto> tableInfo(@PathVariable String restaurantId){
+        ArrayList arrayList = (ArrayList) service.getTableInfo(Integer.parseInt(restaurantId));
+        System.out.println("arrayList = " + arrayList);
+        return arrayList;
+    }
+
     @GetMapping("/storeReservationList/{restaurantId}")
     public List<ReservationDto> getStoreReservationList(@PathVariable String restaurantId){
         log.info("[식당 예약자 조회]");
@@ -70,7 +81,11 @@ public class ReservationController {
         ArrayList storeReservationList = (ArrayList) service.getStoreReservationList(restaurantId);
         log.info("storeReservationList ={}" , storeReservationList);
 
+
+
         return storeReservationList;
     }
-}
 
+
+
+}

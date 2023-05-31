@@ -4,12 +4,12 @@ import {RESERVATION_LIST_COLUMNS, RESERVATION_LIST_DATASOURCE} from "../../const
 import {SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words"
 import {useEffect} from "react";
-import {useFetchCurrentUser} from "../../hooks";
+import {useFetchCurrentUser, useStoreReservationList} from "../../hooks";
 import {useNavigate} from "react-router-dom";
-import useStoreReservationList from "../../hooks/use-Reservaion-List";
 
 const ManagerReservation = ({restaurantId}) =>{
 
+    //region 변수
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -17,13 +17,13 @@ const ManagerReservation = ({restaurantId}) =>{
     const [isStoreReservationList, fetchstoreReservationList] = useStoreReservationList();
     const searchInput = useRef(null);
 
-    const [reservationData, setReservationData] = useState([]);
+    const [dataSource,setDataSource] = useState([]);
 
-    let list= [];
-    let keyCount;
+    const [filteredInfo, setFilteredInfo] = useState({});
+    const [sortedInfo, setSortedInfo] = useState({});
+    //endregion
 
-    //const [dataSource,setDataSource] = useState()
-
+    //region uesEffect
     useEffect(() => {
         const fetchRservationList = async () => {
             const user = await fetchCurrentUser();
@@ -34,29 +34,22 @@ const ManagerReservation = ({restaurantId}) =>{
                 });
             } else  {
                 const reservationList = await fetchstoreReservationList(restaurantId);
-                setReservationData(reservationList);
-                console.log("ManagerReservation=" , reservationData);
-                keyCount=1;
-                reservationList.data.map(function(e){
-                    const data = {
-                        "key" : keyCount,
-                        "userName" : e.userName,
-                        'phoneNumber' : e.phoneNumber,
-                        'reservDate' : e.reservDate,
-                        'reservTime' : e.reservTime,
-                        'reservNumber' : e.reservNumber,
-                        'menu' : "메뉴",
-                        'cancelCount' : e.cancelCount
-                    }
-                    keyCount++;
-                    list.push(data);
-                })
-                console.log(list);
-                console.log(RESERVATION_LIST_DATASOURCE);
-            };
+                setDataSource(reservationList.data);
+                console.log("ManagerReservation=" , dataSource);
+                console.log("ManagerReservation=" , reservationList);
+            }
         }
         fetchRservationList();
     }, [])
+
+    //endregion
+
+    //region 테이블 필터
+    const handleChange = (pagination, filters, sorter) => {
+        console.log('Various parameters', pagination, filters, sorter);
+        setFilteredInfo(filters);
+        setSortedInfo(sorter);
+    };
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -167,7 +160,9 @@ const ManagerReservation = ({restaurantId}) =>{
             ),
     });
 
-    const dataSource = RESERVATION_LIST_DATASOURCE;
+    //endregion
+
+    //region 테이블 컬럼
     const columns = [
         {
             title: '고객이름',
@@ -184,6 +179,7 @@ const ManagerReservation = ({restaurantId}) =>{
         {
             title: '예약날짜',
             dataIndex: 'reservDate',
+            key: 'reservDate',
             filters: [
                 {
                     text: '1월',
@@ -236,6 +232,12 @@ const ManagerReservation = ({restaurantId}) =>{
             ],
             onFilter: (value, record) => record.reservDate.includes(value),
             filterSearch: true,
+
+            filteredValue: filteredInfo.reservDate || null,
+            sorter: (a, b) => a.reservDate.length - b.reservDate.length,
+            sortOrder: sortedInfo.columnKey === 'reservDate' ? sortedInfo.order : null,
+            ellipsis: true,
+
             width: '40%'
         },
         {
@@ -251,18 +253,19 @@ const ManagerReservation = ({restaurantId}) =>{
         },
         {
             title: '메뉴',
-            dataIndex: 'menu',
-            key: 'menu',
+            dataIndex: 'menuName',
+            key: 'menuName',
         },
         {
             title: '취소 횟수',
             dataIndex: 'cancelCount',
             key: 'cancelCount',
         }];
+    //endregion
 
     return(
         <div className="reservation-List">
-            <Table dataSource={reservationData} columns={columns} rowKey="restaurantId"/>;
+            <Table dataSource={dataSource} columns={columns} onChange={handleChange} />
         </div>
     );
 };

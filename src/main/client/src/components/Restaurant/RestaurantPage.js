@@ -28,9 +28,9 @@ const RestaurantPage = () => {
   const [reviewListData, setReviewListData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
-  const [fetchRestId,setfetchRestId] = useState();
-  const [fetchUserId,setfetchUserId] = useState();
-  const [restOwnerId,setrestOwnerId] = useState();
+  const [fetchRestId,setfetchRestId] = useState();    //
+  const [fetchUserId,setfetchUserId] = useState();    //현재 유저
+  const [restOwnerId,setrestOwnerId] = useState();    //가게 등록된 유저
 
   const [searchParams, setSearchParams] = useState({
     /*rating: "",
@@ -52,7 +52,6 @@ const RestaurantPage = () => {
         setRestaurantItemData(restaurantResults[0]);
         setfetchRestId(restaurantId);
         setfetchUserId(currentUser.userId);
-        console.log(fetchUserId)
         setrestOwnerId(restaurantResults[0].userId);
       } else {
         message.error("Restaurant id does not exist!");
@@ -140,15 +139,15 @@ const RestaurantPage = () => {
                             }}
                             dataSource={reviewListData}
                             renderItem={(reviewItem) => (
-                                <RestaurantReviewItem {...reviewItem} />
+                                <RestaurantReviewItem ownerId = {restOwnerId} {...reviewItem} />
                             )}
                         />
                     )
                 );
               case "menu":
-                return <MenuPage userId ={fetchUserId} ownerId = {restOwnerId}  {...restaurantItemData}/>;
+                return <MenuPage  currentId={fetchUserId} {...restaurantItemData}/>;
               case "reservation":
-                return ( fetchUserId==restOwnerId ? <ManagerReservation restaurantId={fetchRestId}/>   : <Reservation restaurantId={fetchRestId}></Reservation>)
+                return ( fetchUserId==restOwnerId ? <ManagerReservation {...restaurantItemData}/>   : <Reservation restaurantId={fetchRestId}></Reservation>)
               default:
                 return (
                     isFetchingRestaurant? (
